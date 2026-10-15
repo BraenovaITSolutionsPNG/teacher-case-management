@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
+  ASSISTANT_FUNCTIONS,
   DOCUMENT_CLASSES,
   ESCALATION_LEVELS,
   LEGAL_CRITERIA_KEYS,
   MAX_ESCALATION_LEVEL,
   NATIONAL_SECTIONS,
+  OFFICER_DUTIES,
   REFERRAL_CRITERIA,
   checkGoldenRule,
   isLegalReferral,
@@ -215,6 +217,68 @@ describe("§5 referral criteria", () => {
     expect(isLegalReferral([legal])).toBe(true);
     expect(isLegalReferral(["outside_delegation", "commission_decision"])).toBe(
       false
+    );
+  });
+});
+
+// ---------------------------------------------------------------------------
+// §4 and §12 the responsibilities the manual assigns
+// ---------------------------------------------------------------------------
+
+describe("§4 Provincial Matters officer responsibilities", () => {
+  it("carries the six duties the manual lists", () => {
+    expect(OFFICER_DUTIES.map(duty => duty.key)).toEqual([
+      "receiving",
+      "registration",
+      "assessment",
+      "investigation",
+      "resolution",
+      "referral",
+    ]);
+  });
+
+  it("states the steps the manual gives under each duty", () => {
+    const receiving = OFFICER_DUTIES.find(duty => duty.key === "receiving");
+    expect(receiving?.steps).toEqual([
+      "Receive teacher applications, complaints, queries and requests",
+      "Check that applications are properly completed",
+      "Confirm supporting documents",
+    ]);
+
+    const referral = OFFICER_DUTIES.find(duty => duty.key === "referral");
+    expect(referral?.steps).toHaveLength(5);
+    expect(referral?.steps[4]).toBe("Follow up until an outcome is received");
+  });
+});
+
+describe("§12 Professional Assistant's five functions", () => {
+  it("carries the five functions the manual structures the role around", () => {
+    expect(ASSISTANT_FUNCTIONS.map(fn => fn.key)).toEqual([
+      "office_coordination",
+      "case_monitoring",
+      "briefing_director",
+      "follow_up",
+      "reporting",
+    ]);
+  });
+
+  it("lists the weekly, monthly and quarterly reports under reporting", () => {
+    const reporting = ASSISTANT_FUNCTIONS.find(
+      fn => fn.key === "reporting"
+    );
+    expect(reporting?.steps).toContain("Weekly outstanding matters list");
+    expect(reporting?.steps).toContain("Monthly provincial report");
+    expect(reporting?.steps).toContain("Quarterly performance report");
+  });
+
+  it("keeps the six monitoring subjects under case monitoring", () => {
+    const monitoring = ASSISTANT_FUNCTIONS.find(
+      fn => fn.key === "case_monitoring"
+    );
+    // The central register itself, plus the six matters it must surface.
+    expect(monitoring?.steps).toHaveLength(7);
+    expect(monitoring?.steps).toContain(
+      "Identify matters awaiting National Section responses"
     );
   });
 });

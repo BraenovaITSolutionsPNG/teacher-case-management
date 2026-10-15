@@ -84,6 +84,152 @@ export function sectionForCategory(category: MatterCategory): string {
 }
 
 // ---------------------------------------------------------------------------
+// §4 Roles of Provincial Matters Officers
+// "Provincial officers should be responsible for:"-the five duties, each with
+// the steps the manual lists under it. Rendered by the officer's guide so the
+// responsibilities visible to an officer are the same ones the server enforces.
+// ---------------------------------------------------------------------------
+
+export const OFFICER_DUTIES: {
+  key: string;
+  label: string;
+  note?: string;
+  steps: string[];
+}[] = [
+  {
+    key: "receiving",
+    label: "Receiving matters",
+    steps: [
+      "Receive teacher applications, complaints, queries and requests",
+      "Check that applications are properly completed",
+      "Confirm supporting documents",
+    ],
+  },
+  {
+    key: "registration",
+    label: "Registering each matter",
+    steps: [
+      "Register every matter received, with its unique reference number",
+    ],
+  },
+  {
+    key: "assessment",
+    label: "Assessment",
+    steps: [
+      "Identify the nature of the matter",
+      "Determine whether it falls within provincial delegated authority",
+      "Identify whether another TSC Section must be consulted",
+    ],
+  },
+  {
+    key: "investigation",
+    label: "Investigation",
+    note: "Where appropriate",
+    steps: [
+      "Check teacher records",
+      "Obtain information from the school",
+      "Verify appointment and employment information",
+      "Obtain relevant supporting documents",
+      "Record findings objectively",
+    ],
+  },
+  {
+    key: "resolution",
+    label: "Resolution",
+    note: "Where authorized",
+    steps: [
+      "Resolve the matter",
+      "Provide the teacher with the appropriate response",
+      "Record the decision",
+      "Close the case",
+    ],
+  },
+  {
+    key: "referral",
+    label: "Referral",
+    note: "Where the matter is outside provincial authority",
+    steps: [
+      "Prepare a referral",
+      "Attach the complete case file",
+      "Identify the specific issue requiring consideration",
+      "Refer it to the correct National Section",
+      "Follow up until an outcome is received",
+    ],
+  },
+];
+
+// ---------------------------------------------------------------------------
+// §12 Role of the Professional Assistant to the Director
+// "My role can be structured around five functions." Kept as a reference table
+// for the same reason as §4 above: the guide and the monitoring board are
+// different renderings of one list.
+// ---------------------------------------------------------------------------
+
+export const ASSISTANT_FUNCTIONS: {
+  key: string;
+  label: string;
+  steps: string[];
+}[] = [
+  {
+    key: "office_coordination",
+    label: "Office coordination",
+    steps: [
+      "Incoming correspondence",
+      "Outgoing correspondence",
+      "Meetings",
+      "Briefings",
+      "Provincial reports",
+      "Follow-up action",
+      "Submission of files",
+    ],
+  },
+  {
+    key: "case_monitoring",
+    label: "Case monitoring",
+    steps: [
+      "Maintain the central register",
+      "Identify new matters",
+      "Identify outstanding matters",
+      "Identify delay matters",
+      "Identify legal matters",
+      "Identify matters awaiting National Section responses",
+      "Identify matters requiring the Director's attention",
+    ],
+  },
+  {
+    key: "briefing_director",
+    label: "Briefing the Director",
+    steps: [
+      "Issue: what is the problem",
+      "Background: what happened",
+      "Action taken: what has already been done",
+      "Current position: where the matter is now",
+      "Issue requiring decision: what the Director needs to decide",
+      "Recommendation: what action is proposed",
+    ],
+  },
+  {
+    key: "follow_up",
+    label: "Follow-up",
+    steps: [
+      "Monitor the response from Appointments, Industrial and General, or Legal",
+      "Follow up within the approval timeframe",
+    ],
+  },
+  {
+    key: "reporting",
+    label: "Reporting",
+    steps: [
+      "Weekly outstanding matters list",
+      "Monthly provincial report",
+      "Quarterly performance report",
+      "Urgent and legal matters report",
+      "Matters requiring Commission attention",
+    ],
+  },
+];
+
+// ---------------------------------------------------------------------------
 // §5 Matters that should be referred
 // "A Provincial officer should refer a matter when:"-a matter cannot be held
 // indefinitely, so the officer records which trigger applied rather than
