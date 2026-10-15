@@ -3,10 +3,10 @@
  *
  * There are two kinds of date in this platform and they are not interchangeable:
  *
- *   - A **calendar date** - the day a matter was received, a due date, the date a
+ *  -A **calendar date**-the day a matter was received, a due date, the date a
  *     matter was closed. An officer means a day of the month, not an instant. The
  *     register counts these by month, and a deadline is a day, not a moment.
- *   - An **instant** - when a row was written, when a referral was answered, when
+ *  -An **instant**-when a row was written, when a referral was answered, when
  *     an officer was last seen. These are points on a timeline and belong in the
  *     reader's own timezone.
  *
@@ -16,7 +16,7 @@
  * both halves of the stack turn that string into the *same* instant: `new
  * Date("2026-10-05")` is UTC midnight by specification, and so is `z.coerce.date()`
  * on the server. So a stored calendar date is always UTC midnight, and reading it
- * back with local getters is a bug - in any browser west of UTC, 2026-10-05T00:00Z
+ * back with local getters is a bug-in any browser west of UTC, 2026-10-05T00:00Z
  * is still 4 October locally, so the officer typed the 5th and was shown the 4th,
  * on the register, on the case file, and in the due-date field itself. Only UTC
  * getters can read that value back as the day that was entered.
@@ -27,7 +27,7 @@
  * So the two are separate functions with separate names, rather than one `format`
  * that a caller has to know the provenance of. The duplication this replaces -
  * three copies of `formatDate`, two of which read calendar dates with local
- * getters - is itself the defect: the copies had already drifted.
+ * getters-is itself the defect: the copies had already drifted.
  *
  * `todayInputValue` is the one deliberate exception and reads *local* date parts,
  * because "today" is a fact about where the officer is sitting, not about UTC.
@@ -83,7 +83,7 @@ export function todayInputValue(): string {
  * The value is left as the `YYYY-MM-DD` string rather than becoming a `Date`, so
  * the server's `z.coerce.date()` is the single place that decides what instant a
  * calendar date means. Round-tripping it through `new Date(...)` on the client
- * would work today - both parsers agree on UTC midnight - but it would put the
+ * would work today-both parsers agree on UTC midnight-but it would put the
  * decision in two places, and the two would not stay in step.
  *
  * Returns `null` for anything that is not a complete `YYYY-MM-DD`, which is the
@@ -98,7 +98,7 @@ export function parseDateInput(value: string): Date | null {
  * A calendar date for an officer to read: "5 Oct 2026".
  *
  * UTC, per the note at the top of this file. `padDay` gives the two-digit form
- * the oversight list prints - "05 Oct 2026" - which is what the register and the
+ * the oversight list prints-"05 Oct 2026"-which is what the register and the
  * case file did not, so it stays a choice rather than a second copy.
  */
 export function formatDateOnly(
@@ -138,7 +138,7 @@ export function formatInstant(value: Date | string | null | undefined): string {
  *
  * Hand-written rather than reached through `Intl` because the value has to be
  * formatted from its *UTC* parts, and `Intl.DateTimeFormat` can only be pointed
- * at a timezone - not at a set of parts. `timeZone: "UTC"` would work and reads
+ * at a timezone-not at a set of parts. `timeZone: "UTC"` would work and reads
  * worse, and would put the correctness of this file on the ICU data rather than on
  * it.
  */

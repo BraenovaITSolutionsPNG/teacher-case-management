@@ -30,7 +30,7 @@ async function main() {
   // `current_schema()` rather than a literal 'public': the schema holding the
   // application's tables is whichever one the connection resolves to, and
   // hardcoding 'public' would report an empty list against a project configured
-  // otherwise - a false "schema not applied" for a database that is fine.
+  // otherwise-a false "schema not applied" for a database that is fine.
   const result = await db.execute(sql`
     SELECT table_name AS name FROM information_schema.tables
     WHERE table_schema = current_schema() AND table_type = 'BASE TABLE'
@@ -62,7 +62,7 @@ async function main() {
   // The credential column must be gone.
   //
   // Not a cosmetic check. `passwordHash` held scrypt hashes that nothing can
-  // verify any more, because Supabase holds the credential now - so leaving the
+  // verify any more, because Supabase holds the credential now-so leaving the
   // column means leaving a copy of every officer's old password in a table whose
   // contents are readable by anything that reaches the database. Its presence
   // is the single clearest sign that a migration predating the move to Supabase
@@ -109,7 +109,7 @@ async function main() {
   // signing in at all.
   //
   // A table can also have RLS enabled with no policies, which denies everything
-  // to anon and authenticated - that is the intended state here, and the
+  // to anon and authenticated-that is the intended state here, and the
   // count below reports it rather than failing on it. A non-zero policy count is
   // worth a human look: a policy on the register's tables is a decision nobody
   // in this codebase made.

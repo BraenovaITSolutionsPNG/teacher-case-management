@@ -5,7 +5,7 @@ import type { NextConfig } from "next";
  * deletes what the dev server had cached. Running one while the other is
  * serving does not degrade gracefully: the dev server comes back up serving
  * production chunks with no cache of its own, so every route and every click
- * pays a full cold Turbopack compile - measured at 27s, then 58s, then 98s to
+ * pays a full cold Turbopack compile-measured at 27s, then 58s, then 98s to
  * rebuild the same code, growing with each build.
  *
  * Giving development its own directory means the two can run at once and a
@@ -40,7 +40,7 @@ const nextConfig: NextConfig = {
   // No `eslint` key. Next 16 removed support for it and warns on every build
   // that it is present, which is the worst kind of warning: it trains you to
   // ignore the output of the build. It was only ever here to skip linting, and
-  // there is nothing to skip - eslint is not a dependency and there is no config,
+  // there is nothing to skip-eslint is not a dependency and there is no config,
   // so `next lint` has never run in this project. Type errors are not ignored
   // (`typescript.ignoreBuildErrors` below is false), which is the check that does
   // run.

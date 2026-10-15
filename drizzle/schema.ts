@@ -13,7 +13,7 @@ import {
 // The `updatedAt` columns above use `$onUpdateFn` where MySQL had
 // `onUpdateNow()`. The two are not the same mechanism and the difference
 // matters: MySQL applied `ON UPDATE CURRENT_TIMESTAMP` in the database, so it
-// fired for any UPDATE that reached the table - including one written by hand in
+// fired for any UPDATE that reached the table-including one written by hand in
 // a SQL client or a future script. `$onUpdateFn` is applied by Drizzle when it
 // builds an update statement, so it fires for every write that goes through this
 // schema and not for one that bypasses it. For an application's own writes the
@@ -45,8 +45,8 @@ export { matterTypeValues, provinceValues };
 
 // PostgreSQL enum types are schema-level objects in a single namespace, not a
 // per-column attribute the way MySQL's inline enum was. Two columns both called
-// `status` - a matter's status and a referral's status, which are unrelated
-// lists - would collide on the type name, so the types are given distinct names
+// `status`-a matter's status and a referral's status, which are unrelated
+// lists-would collide on the type name, so the types are given distinct names
 // while the columns keep the names the application already uses.
 //
 // Each is declared here and referenced as a column below rather than inlined,
@@ -87,7 +87,7 @@ export const referralStatus = pgEnum("referral_status", [
  *
  * `openId` holds the Supabase user uuid, as `supabase:<uuid>`; the platform has
  * no OAuth flow of its own. `authUserId` is the same uuid unadorned, and is the
- * column sign-in resolves against - see server/_core/supabaseSession.ts.
+ * column sign-in resolves against-see server/_core/supabaseSession.ts.
  */
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
@@ -97,7 +97,7 @@ export const users = pgTable("users", {
   loginMethod: varchar("loginMethod", { length: 64 }),
   /**
    * The name an officer types at sign-in. Unique, and separate from the email so
-   * a username does not have to be an email address - the Commission issues
+   * a username does not have to be an email address-the Commission issues
    * employee references, and a person should not have to remember which of
    * their addresses this system knows them by.
    *
@@ -112,7 +112,7 @@ export const users = pgTable("users", {
    * Not the same thing as `id`: the register refers to officers by `id`, and
    * those references must not move when the identity layer is replaced. This is
    * the join that survives such a change. Unique, because one Supabase identity
-   * is one officer - a duplicate here would mean the same person appearing twice
+   * is one officer-a duplicate here would mean the same person appearing twice
    * in the register, with two histories and two sets of permissions.
    *
    * Nullable so the column can be added before the identities exist and so a
@@ -218,7 +218,7 @@ export const caseEvents = pgTable("caseEvents", {
     // the timeline is always ordered, and the pair lets the server walk the
     // index and stop rather than reading rows and sorting them.
     index("caseEvents_caseId_createdAt_idx").on(table.caseId, table.createdAt),
-    // "Matters this officer has acted on" - counted when an account is
+    // "Matters this officer has acted on"-counted when an account is
     // deactivated, and the filter behind the audit trail.
     index("caseEvents_actorId_idx").on(table.actorId),
     // The global audit trail, newest first, across all matters.
@@ -251,7 +251,7 @@ export const referrals = pgTable("referrals", {
   referredByName: varchar("referredByName", { length: 160 }),
 }, (table) => [
   // A matter's referral history, newest first, and "referrals this officer
-  // made" - both counted on the admin page before an account is deactivated.
+  // made"-both counted on the admin page before an account is deactivated.
   index("referrals_caseId_referredAt_idx").on(table.caseId, table.referredAt),
   index("referrals_referredById_idx").on(table.referredById),
   // §12D follow-up: every referral still awaiting a National Section's
@@ -264,7 +264,7 @@ export const referrals = pgTable("referrals", {
 
 /**
  * §11 File Management. "Each matter should have a complete case file
- * containing:" - eleven classes of document. The class drives the closure
+ * containing:"-eleven classes of document. The class drives the closure
  * checklist rather than a free-text attachment list.
  */
 export const caseDocuments = pgTable("caseDocuments", {

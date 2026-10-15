@@ -4,27 +4,27 @@ This directory contains cloud functions that sync data changes from Supabase to 
 
 ## Current Status
 
-✅ **Committed to GitHub** - All files are version controlled and ready for deployment  
-✅ **Vercel App Safe** - Your live web app on Vercel is completely unaffected by these changes  
-✅ **Functions Ready** - 5 cloud functions implemented and tested  
-✅ **Documentation Complete** - Full setup and integration guides provided  
+✅ **Committed to GitHub**-All files are version controlled and ready for deployment  
+✅ **Vercel App Safe**-Your live web app on Vercel is completely unaffected by these changes  
+✅ **Functions Ready**-5 cloud functions implemented and tested  
+✅ **Documentation Complete**-Full setup and integration guides provided  
 
 ## What This Does
 
 These functions provide:
 
-✅ **Real-time Dashboard Updates** - Live counts and metrics without page refreshes  
-✅ **Instant Case Status Changes** - Real-time visibility into case status updates  
-✅ **Push Notifications** - New case events appear instantly  
-✅ **Fallback to Supabase** - Existing Supabase logic remains as source of truth  
-✅ **Health Monitoring** - Built-in health check endpoint  
+✅ **Real-time Dashboard Updates**-Live counts and metrics without page refreshes  
+✅ **Instant Case Status Changes**-Real-time visibility into case status updates  
+✅ **Push Notifications**-New case events appear instantly  
+✅ **Fallback to Supabase**-Existing Supabase logic remains as source of truth  
+✅ **Health Monitoring**-Built-in health check endpoint  
 
 ## Important Notes
 
 ### 🔒 Your Vercel App is Safe
 - **No changes were made** to your existing Next.js application
 - **Supabase remains** the primary backend and authentication provider
-- **Firebase files are additive** - they don't affect current functionality
+- **Firebase files are additive**-they don't affect current functionality
 - **Zero risk** to your live production application
 
 ### 💳 Blaze Plan Required for Deployment
@@ -36,9 +36,9 @@ These functions provide:
 ## Setup Instructions
 
 ### Prerequisites
-1. **Firebase account** - Already authenticated ✅
-2. **Firebase project** - `tsc-case-management` already created ✅
-3. **Blaze plan upgrade** - Required before deployment (see above)
+1. **Firebase account**-Already authenticated ✅
+2. **Firebase project**-`tsc-case-management` already created ✅
+3. **Blaze plan upgrade**-Required before deployment (see above)
 
 ### Option 1: Deploy to Firebase (After Blaze Upgrade)
 ```bash
@@ -49,7 +49,7 @@ cd firebase-functions
 firebase deploy --only functions
 ```
 
-### Option 2: Local Testing (Free - No Upgrade Needed)
+### Option 2: Local Testing (Free-No Upgrade Needed)
 ```bash
 # Install Firebase CLI if not present
 npm install -g firebase-tools
@@ -130,7 +130,7 @@ firebase emulators:start
 - File storage (Supabase Storage)
 - **Status**: Fully operational on Vercel
 
-### Firebase (Real-time Layer - Ready for Deployment)
+### Firebase (Real-time Layer-Ready for Deployment)
 - Realtime Database for live updates
 - Cloud Functions for data sync
 - Health monitoring and diagnostics
@@ -144,12 +144,12 @@ firebase emulators:start
 
 ## Benefits
 
-1. **Real-time Experience** - No more page refreshes for data updates (when deployed)
-2. **Reduced Server Load** - Lighter client queries with Firebase caching (when deployed)
-3. **Better Performance** - Immediate visibility into system changes (when deployed)
-4. **Enhanced User Experience** - Officers see updates instantly (when deployed)
-5. **Reliable Architecture** - Clear separation of concerns
-6. **Zero Risk** - Current system continues working without interruption
+1. **Real-time Experience**-No more page refreshes for data updates (when deployed)
+2. **Reduced Server Load**-Lighter client queries with Firebase caching (when deployed)
+3. **Better Performance**-Immediate visibility into system changes (when deployed)
+4. **Enhanced User Experience**-Officers see updates instantly (when deployed)
+5. **Reliable Architecture**-Clear separation of concerns
+6. **Zero Risk**-Current system continues working without interruption
 
 ## Free Tier Options
 
@@ -187,21 +187,21 @@ Build → Cloud Functions → select function → Logs
 ### Common Issues
 
 1. **Functions Not Deploying**
-   - **Solution**: Upgrade to Blaze plan first
-   - Verify all dependencies are installed: `npm install`
-   - Check Firebase authentication: `firebase login`
-   - Ensure correct project ID: `firebase use tsc-case-management`
+  -**Solution**: Upgrade to Blaze plan first
+  -Verify all dependencies are installed: `npm install`
+  -Check Firebase authentication: `firebase login`
+  -Ensure correct project ID: `firebase use tsc-case-management`
 
 2. **Real-time Updates Not Working**
-   - Verify Firebase configuration in Next.js (when integrated)
-   - Check internet connection
-   - Restart affected components
-   - Verify functions are deployed and running
+  -Verify Firebase configuration in Next.js (when integrated)
+  -Check internet connection
+  -Restart affected components
+  -Verify functions are deployed and running
 
 3. **Dashboard Stale Data**
-   - Wait for scheduled function to run (every minute)
-   - Check function logs for errors
-   - Manually trigger dashboard update if needed
+  -Wait for scheduled function to run (every minute)
+  -Check function logs for errors
+  -Manually trigger dashboard update if needed
 
 ## Maintenance
 
@@ -228,10 +228,10 @@ For issues or questions:
 ## Getting Started
 
 ### Immediate (No Payment Required)
-1. ✅ **Files committed to GitHub** - All code is version controlled
-2. ✅ **Vercel app unaffected** - Continue using Supabase as before
-3. ✅ **Local testing available** - Use Firebase Emulator Suite for free
-4. ✅ **Documentation complete** - Full setup guides provided
+1. ✅ **Files committed to GitHub**-All code is version controlled
+2. ✅ **Vercel app unaffected**-Continue using Supabase as before
+3. ✅ **Local testing available**-Use Firebase Emulator Suite for free
+4. ✅ **Documentation complete**-Full setup guides provided
 
 ### When Ready for Real-Time Features
 1. Upgrade to Blaze plan in Firebase Console

@@ -1,8 +1,8 @@
 // First, and deliberately: `next dev` and `next build` load .env themselves, a
 // plain `tsx` script does not, and `ENV` below reads the environment once at
 // import time. dotenv never overwrites a variable that is already set, so an
-// explicit DATABASE_URL on the command line - which is how this is run against
-// a hosted database - still wins.
+// explicit DATABASE_URL on the command line-which is how this is run against
+// a hosted database-still wins.
 import "dotenv/config";
 import { ENV } from "./_core/env";
 import { getUserByEmail, setUserRole } from "./db";
@@ -27,7 +27,7 @@ import { provisionUser, setPasswordDirectly } from "./auth/provisioning";
  *
  * Idempotent, because this is run every time a database is rebuilt. Re-running
  * it leaves an existing account alone unless SEED_ADMIN_PASSWORD is offered
- * again, which is how a deliberately lost password is replaced - and that
+ * again, which is how a deliberately lost password is replaced-and that
  * replacement now goes through Supabase, because this process can no longer
  * write a credential the sign-in path would read.
  *
@@ -35,7 +35,7 @@ import { provisionUser, setPasswordDirectly } from "./auth/provisioning";
  *   SUPABASE_SERVICE_ROLE_KEY=... SEED_ADMIN_PASSWORD=... pnpm db:seed
  *
  * SEED_ADMIN_PASSWORD is optional. Without it the account is created with no
- * password, and the operator is told to use a reset link - which is the better
+ * password, and the operator is told to use a reset link-which is the better
  * arrangement when one is available, because no administrator ever handles the
  * password.
  *
@@ -48,7 +48,7 @@ import { provisionUser, setPasswordDirectly } from "./auth/provisioning";
 
 /**
  * The account's identity. Every field has an environment override and a default,
- * and the defaults are the placeholder values from before Supabase - an
+ * and the defaults are the placeholder values from before Supabase-an
  * `example.com` address that can receive nothing.
  */
 const OWNER = {
@@ -78,7 +78,7 @@ async function main() {
 
   // Refused in production rather than warned about. The placeholder address
   // cannot receive a recovery mail, so the one account that can unlock the
-  // platform becomes unrecoverable by the only documented route - and the
+  // platform becomes unrecoverable by the only documented route-and the
   // failure is discovered at the worst possible moment, by whoever is not in
   // possession of the service role key. `example.com` is reserved by RFC 2606
   // precisely so it can be recognised as a placeholder, which is what this tests.

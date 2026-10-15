@@ -6,19 +6,19 @@ import { cn } from "@/lib/utils";
  * The platform's loading animation.
  *
  * A spinner says "something is happening". This says what: a ring being drawn,
- * an arc travelling around it, and three rules filling in sequence - a matter
+ * an arc travelling around it, and three rules filling in sequence-a matter
  * being taken in and worked. That is the thing an officer is waiting for, so
  * the animation is the honest one rather than a generic gear.
  *
  * Three things it deliberately is not:
  *
- *  - Not indeterminate-length. There is no fake percentage. The ring is a
+ * -Not indeterminate-length. There is no fake percentage. The ring is a
  *    progress cycle, not a count, because the app cannot know how much is left.
- *  - Not blocking. `PageLoader` covers the viewport; `InlineLoader` sits in a
+ * -Not blocking. `PageLoader` covers the viewport; `InlineLoader` sits in a
  *    button. Same mark, two jobs.
- *  - Not motion the reader did not ask for. Every animation is a keyframe that
+ * -Not motion the reader did not ask for. Every animation is a keyframe that
  *    `prefers-reduced-motion` switches off, leaving a static "in progress" pose
- *    in its place (see index.css) - because a frozen spinner reads as a dead
+ *    in its place (see index.css)-because a frozen spinner reads as a dead
  *    page, which is the opposite of the message.
  */
 

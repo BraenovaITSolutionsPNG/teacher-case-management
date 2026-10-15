@@ -263,7 +263,7 @@ describe("§12C case brief", () => {
 
   it("names the empty section instead of reporting a schema limit", async () => {
     // The regression. The officer was looking at the validator's own report -
-    // origin, code, minimum, path - because that is what a `z.string().min(4)`
+    // origin, code, minimum, path-because that is what a `z.string().min(4)`
     // says. What the issues carry now is a sentence naming the section, which
     // is what the form shows against the offending textarea and what
     // `formatInputError` folds into the message a client receives.

@@ -111,14 +111,14 @@ const roleEnum = z.enum(ROLE_VALUES);
  *
  * The message is the same sentence the brief form shows against the offending
  * box, so a rejection and a client-side warning read identically. Without it
- * the officer gets the schema's default - "Too small: expected string to have
- * >=4 characters" - which names neither the section nor what to do about it.
+ * the officer gets the schema's default-"Too small: expected string to have
+ * >=4 characters"-which names neither the section nor what to do about it.
  *
  * The message is chosen per failure rather than fixed, because "this section is
  * required" and "write at least four characters" are different instructions for
  * two different mistakes. A single fixed message would say the second to an
  * officer who had left the box empty, and the form's own check would say the
- * first to the same officer - the same mistake worded two ways depending on
+ * first to the same officer-the same mistake worded two ways depending on
  * which side happened to catch it.
  */
 function briefSection(key: string) {
@@ -131,7 +131,7 @@ function briefSection(key: string) {
     .trim()
     .min(CASE_BRIEF_MIN_LENGTH, {
       // `error` rather than the deprecated `message`, because only `error` takes
-      // a function - and the function is the point: it is what lets the message
+      // a function-and the function is the point: it is what lets the message
       // depend on whether the officer left the box empty or wrote too little.
       error: issue =>
         caseBriefFieldError(
@@ -151,7 +151,7 @@ function briefSection(key: string) {
  * pursuing is not made to carry two invented sections, and the moment it is
  * flagged the same two sections become mandatory again.
  *
- * The key is not used here - the length floor for these two is applied in the
+ * The key is not used here-the length floor for these two is applied in the
  * refinement below, once the flag in the same payload is known.
  */
 function conditionalBriefSection() {
@@ -207,12 +207,12 @@ const DOCUMENT_TYPE_LABELS = ["PDF", "PNG", "JPEG", "WebP", "Word", "Excel"];
  * 10MB, against a 32MB max_allowed_packet.
  *
  * The bytes travel as base64 inside a JSON body, which inflates by a third -
- * 10MB becomes about 13.3MB - so the server limit has to be comfortably above
+ * 10MB becomes about 13.3MB-so the server limit has to be comfortably above
  * the encoded size or the driver rejects the packet with an error that says
  * nothing about which upload was too large. This is comfortably under 32MB with
  * room for the envelope.
  *
- * The alternative - a presigned PUT straight to the browser - would lift the
+ * The alternative-a presigned PUT straight to the browser-would lift the
  * ceiling, but the local-disk development fallback cannot issue one, so the
  * upload would work in production and fail in development. One code path is
  * worth more here than an unconstrained ceiling.
@@ -223,7 +223,7 @@ const DOCUMENT_MAX_BYTES = CASEFILE_MAX_BYTES;
  * Magic numbers for the accepted document types.
  *
  * DOCX and XLSX are ZIP containers, so `%PK` alone cannot separate them from
- * each other or from any other zip - the file's internal part names are what
+ * each other or from any other zip-the file's internal part names are what
  * distinguish them, and those are read from the tail of the central directory.
  * A caller that renames a spreadsheet to `.docx` is refused, which matters
  * because the stored extension is derived from this.
@@ -367,7 +367,7 @@ const IMAGE_SIGNATURES: {
 
 /**
  * The accepted format the bytes actually are, or null. The type the client
- * declared has to agree with this - a mismatch is rejected rather than believed,
+ * declared has to agree with this-a mismatch is rejected rather than believed,
  * so the object is never stored under a content type that lies about its
  * contents.
  */
@@ -467,8 +467,8 @@ export const appRouter = router({
 
         const extension = AVATAR_EXTENSIONS[actual];
         // The key the officer is replacing, read before it is overwritten.
-        // Every write gets its own key - `storagePut` appends a random suffix,
-        // not a content hash - so a second image is a second object rather than a
+        // Every write gets its own key-`storagePut` appends a random suffix,
+        // not a content hash-so a second image is a second object rather than a
         // replacement of the first, and nothing downstream removes it, which
         // meant every changed profile picture left the old one in the bucket
         // forever. Four avatars and no way back is a slow leak nobody would
@@ -548,17 +548,17 @@ export const appRouter = router({
      * Ends the session in three places, because one of them failing leaves the
      * officer unable to leave a shared machine:
      *
-     *  - Supabase is told, so the session stops resolving server-side even if the
+     * -Supabase is told, so the session stops resolving server-side even if the
      *    browser keeps the cookie.
-     *  - Every Supabase session cookie *present on this request* is deleted by
+     * -Every Supabase session cookie *present on this request* is deleted by
      *    name. This is the part that cannot be delegated. `@supabase/ssr` only
      *    writes a deletion for a session it found in its own store, and inside a
      *    tRPC procedure running on a route handler that store is the one
-     *    `next/headers` handed over - so the call can succeed and put nothing on
+     *    `next/headers` handed over-so the call can succeed and put nothing on
      *    the wire at all. Observed: a sign-out answered 200 with a single
      *    Set-Cookie, for `app_session_id`, which nothing in this app has set
      *    since the move to Supabase. The session cookie went untouched, and
-     *    `auth.me` resolved the same session again on the next request - an
+     *    `auth.me` resolved the same session again on the next request-an
      *    officer pressing Sign out returned to the screen they pressed it on,
      *    with no way off it.
      *
@@ -568,7 +568,7 @@ export const appRouter = router({
      *    the base name deletes a cookie that was never sent. A cookie of that
      *    shape that arrived on this request is by definition a session cookie,
      *    so there is nothing to guess at.
-     *  - `COOKIE_NAME` is cleared as well, for the deployment that still has it.
+     * -`COOKIE_NAME` is cleared as well, for the deployment that still has it.
      *    Nothing sets it now, so this is a no-op rather than a deletion of a
      *    cookie somebody might rely on.
      *
@@ -606,7 +606,7 @@ export const appRouter = router({
      * officer who is also signed in on a shared or borrowed machine no way out of
      * that one. This is the other half: it is a `protectedProcedure` rather than an
      * administrator one, because managing your own sessions is not an
-     * administrative act - and the user id comes from `ctx`, never from the
+     * administrative act-and the user id comes from `ctx`, never from the
      * client, so there is no input here that could ask about anybody else.
      */
     sessions: protectedProcedure.query(async ({ ctx }) => {
@@ -730,7 +730,7 @@ export const appRouter = router({
      * on the very screen it exists for. Gated here on `matter:register`, which
      * every tier that can assign an officer holds.
      *
-     * Free text is still accepted alongside it - the register carries an
+     * Free text is still accepted alongside it-the register carries an
      * officer as a name, and a name with no account behind it is a valid
      * assignment that resolves to a null id rather than an error. This list is
      * a convenience, not a validation rule.
@@ -829,7 +829,7 @@ export const appRouter = router({
 
         // A few of the fields `update` accepts are governed by capabilities other
         // than matter:update. Without this, each of the dedicated procedures -
-        // flagForDirector, commissionerUpdate, the escalation ladder - would be
+        // flagForDirector, commissionerUpdate, the escalation ladder-would be
         // bypassable through the general one, and the capability would be a label
         // on a button rather than a boundary on the API. Stated once, for every
         // field that has one, and checked before the matter is read: a refusal
@@ -960,8 +960,8 @@ export const appRouter = router({
             decisionRequired: z.boolean().default(false),
           })
           // Only the flag is checked here, because only the flag arrives in the
-          // payload. The other half of `briefNeedsDecision` - a matter sitting at
-          // DEC - depends on the stored status and is enforced in the resolver,
+          // payload. The other half of `briefNeedsDecision`-a matter sitting at
+          // DEC-depends on the stored status and is enforced in the resolver,
           // which reads it rather than believing a value the client sent.
           .superRefine((brief, ctx) => {
             if (!brief.decisionRequired) return;
@@ -989,7 +989,7 @@ export const appRouter = router({
           });
         }
         // A matter at DEC is asking the Director for a decision whether or not
-        // the flag was set - the status says so - and the Director's queue is
+        // the flag was set-the status says so-and the Director's queue is
         // built from `decisionRequired || status === "DEC"`. Enforcing the same
         // pair here is what stops a matter appearing in that queue with a brief
         // that never says what is being decided. The status is read from the
@@ -1035,7 +1035,7 @@ export const appRouter = router({
         await addCaseEvent({
           caseId: id,
           eventType: "case_brief",
-          note: `Case brief prepared for the Director${brief.decisionRequired ? " - decision required" : ""}`,
+          note: `Case brief prepared for the Director${brief.decisionRequired ? "-decision required" : ""}`,
           actorId: ctx.user.id,
           actorName: nameOf(ctx.user),
         });
@@ -1083,8 +1083,8 @@ export const appRouter = router({
      * §11 log an item against the matter's case file.
      *
      * The file bytes are optional. A logged-only entry is a deliberate part of
-     * the manual - a class can be recorded as present before the scan is
-     * attached - so `data` absent is a valid call, not a partial one. When it is
+     * the manual-a class can be recorded as present before the scan is
+     * attached-so `data` absent is a valid call, not a partial one. When it is
      * present the object goes to the same store the profile image uses.
      */
     addDocument: requireCapability("file:write")
@@ -1208,7 +1208,7 @@ export const appRouter = router({
      * Gated on the same capability that adds one, so a role cannot file a
      * document it is not allowed to unfile. The removal is recorded on the
      * activity timeline by the database layer, and the object is removed from
-     * storage here - a row deleted while its file is left behind would be an
+     * storage here-a row deleted while its file is left behind would be an
      * orphan nobody can reach and nobody accounts for.
      */
     removeDocument: requireCapability("file:write")
@@ -1243,8 +1243,8 @@ export const appRouter = router({
     /**
      * §12D follow-up: record the National Section's response. Gated on its own
      * capability because under §12 this is the Professional Assistant's standing
-     * duty - monitoring what the National Sections have been asked and chasing
-     * them to an answer - rather than casework on a matter they hold.
+     * duty-monitoring what the National Sections have been asked and chasing
+     * them to an answer-rather than casework on a matter they hold.
      */
     recordReferralResponse: requireCapability("referral:followUp")
       .input(
@@ -1365,7 +1365,7 @@ export const appRouter = router({
     /**
      * The Commission decides; the Director records what was decided (§6, §12D).
      *
-     * Moves the matter to "Awaiting decision" - DEC records that a decision is
+     * Moves the matter to "Awaiting decision"-DEC records that a decision is
      * outstanding, and the matter is closed later through `update` with the
      * outcome, date and communication the Golden Rule requires. It is written to
      * the activity trail like every other change to a matter: a decision that
@@ -1469,7 +1469,7 @@ export const appRouter = router({
      * The officer names the oversight screen offers in its reassignment picker.
      * Gated on platform:oversight rather than platform:stats, because that picker
      * is the oversight screen's own control: on platform:stats the Administrator
-     * tier - which holds oversight - was refused the list it needed to reassign a
+     * tier-which holds oversight-was refused the list it needed to reassign a
      * matter, and the capability it does hold stopped being usable.
      */
     officers: requireCapability("platform:oversight").query(() =>
@@ -1600,9 +1600,9 @@ export const appRouter = router({
        *
        * Refused in three cases, each of which would either lock the platform out
        * or quietly damage the register:
-       *   - deleting yourself, which would end your session mid-action;
-       *   - deleting the last active platform administrator, with no way back in;
-       *   - deleting anyone who appears in the accountability trail. §15 requires
+       *  -deleting yourself, which would end your session mid-action;
+       *  -deleting the last active platform administrator, with no way back in;
+       *  -deleting anyone who appears in the accountability trail. §15 requires
        *     that every office handling a matter stays identifiable, and there are
        *     no foreign keys to stop a delete from orphaning those rows. Deactivate
        *     the account instead: it keeps the trail and closes the sign-in.
@@ -1651,7 +1651,7 @@ export const appRouter = router({
             ].filter(Boolean);
             throw new TRPCError({
               code: "BAD_REQUEST",
-              message: `This person appears in the accountability trail (${parts.join(", ")}), so deleting them would break the accountability trail. Deactivate the account instead - it closes the sign-in and keeps the record.`,
+              message: `This person appears in the accountability trail (${parts.join(", ")}), so deleting them would break the accountability trail. Deactivate the account instead-it closes the sign-in and keeps the record.`,
             });
           }
           // The Supabase identity is cleared before the row goes, so a failure
@@ -1917,7 +1917,7 @@ export const appRouter = router({
           // §17 applies to an oversight override as much as to an officer's own
           // change. Without this check the override was the one route that could
           // close a matter with no outcome, no date and no record of who
-          // communicated it - and the compliance report would then count that
+          // communicated it-and the compliance report would then count that
           // breach against the province. Oversight corrects a record; it does not
           // suspend the rule the record is measured against.
           //

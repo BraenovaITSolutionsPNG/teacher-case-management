@@ -7,8 +7,8 @@ import type { ReactNode } from "react";
 /**
  * The three states a screen can be in that are not "the data".
  *
- * Every screen in this platform has to answer the same three questions - is it
- * still arriving, did it fail, is there nothing to show - and until now each
+ * Every screen in this platform has to answer the same three questions-is it
+ * still arriving, did it fail, is there nothing to show-and until now each
  * answered them in its own way. Five screens had five error presentations, four
  * of them a bare sentence in a paragraph, one a local component that belonged to
  * a single file; empty states were typed out inline wherever they were needed;
@@ -18,7 +18,7 @@ import type { ReactNode } from "react";
  * content, so to a screen reader it is a page that is simply empty, and a failure
  * is a sentence indistinguishable from any other sentence on the page. Someone
  * reading this platform with a screen reader is told, on every load, that
- * nothing is there - and then, on a failure, that nothing is there again, this
+ * nothing is there-and then, on a failure, that nothing is there again, this
  * time with no indication that anything went wrong.
  *
  * So all three are announced. A loading state is a polite status with the label
@@ -34,7 +34,7 @@ import type { ReactNode } from "react";
 /**
  * A region that is still arriving.
  *
- * Wraps whatever the skeleton is - rows, panels, a page - so the announcement
+ * Wraps whatever the skeleton is-rows, panels, a page-so the announcement
  * travels with the shape rather than the caller having to remember it.
  *
  * `aria-busy` rather than `aria-live` alone: the region is marked busy so
@@ -126,7 +126,7 @@ export function ErrorState({
  * have finished", the other says "something is wrong". Conflating them teaches
  * officers to ignore the empty state, which is how a real fault gets ignored.
  *
- * `children` when there is something to say beyond the sentence - a link to the
+ * `children` when there is something to say beyond the sentence-a link to the
  * thing that would fill this screen, which is more useful than asking them to
  * guess where to go next.
  */
@@ -157,7 +157,7 @@ export function EmptyState({
  * A column of placeholder rows, for a list that has not arrived.
  *
  * Exists because `LoadingState` deliberately insists on being told the shape it
- * stands in for - a table given a paragraph of grey tells an officer nothing about
+ * stands in for-a table given a paragraph of grey tells an officer nothing about
  * what is coming, and a panel given table rows tells them less. This is the one
  * shape common enough to be worth naming: a list of records.
  *

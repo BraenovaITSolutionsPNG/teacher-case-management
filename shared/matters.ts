@@ -1,7 +1,7 @@
 // The two classification lists a matter is filed under. Single source of truth:
-// the list was previously written out three times - in the drizzle schema for
+// the list was previously written out three times-in the drizzle schema for
 // the enum, again as a zod enum in the router, and again in the register's
-// filter - which is exactly the arrangement that lets a province exist in the
+// filter-which is exactly the arrangement that lets a province exist in the
 // interface but be refused by the API.
 //
 // `matterTypeValues` is a narrower restatement of MATTER_CATEGORIES in

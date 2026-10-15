@@ -11,7 +11,7 @@ import { Camera, Loader2, Trash2 } from "lucide-react";
  * Officer portrait.
  *
  * Uploads go through the `auth.uploadAvatar` mutation, which sniffs the magic
- * number server-side and derives the extension from it - the browser-supplied
+ * number server-side and derives the extension from it-the browser-supplied
  * name is never trusted for the content type. The object is served back through
  * the storage proxy by key, so the component only ever holds a key.
  */
@@ -111,7 +111,7 @@ export function AvatarUpload({
         {/*
           `role="status"` with a message, because the overlay covers the avatar
           it belongs to and a sighted officer sees a spinner where their
-          photograph was - which is the only evidence they get. A screen-reader
+          photograph was-which is the only evidence they get. A screen-reader
           user was getting nothing at all, and the icon alone is not announced.
         */}
         {uploading ? (

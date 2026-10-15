@@ -1,7 +1,7 @@
 /**
  * The route-change signal.
  *
- * App Router offers no notification when a navigation *starts* - only that the
+ * App Router offers no notification when a navigation *starts*-only that the
  * pathname changed once it finished. Something that wants to acknowledge the
  * wait (`RouteProgressBar`) therefore has to be told, rather than infer it.
  *
@@ -14,7 +14,7 @@
  * not the only way the platform navigates. The sidebar and the buttons are real
  * `<Link>`s, which a listener on the document can see; the command palette, the
  * case rows on the overview and the jump to a just-registered matter all call
- * `router.push` directly, and those raised nothing at all - so the heaviest
+ * `router.push` directly, and those raised nothing at all-so the heaviest
  * navigation in the app was the one with no indicator. Rather than teach the
  * watcher to also guess about `router.push`, every navigation now comes through
  * one helper (`useRouteNavigate`) that says so.

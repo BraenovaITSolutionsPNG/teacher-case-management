@@ -2,14 +2,14 @@
  * The sign-out signal.
  *
  * Sign-out ends in a full document load, so there is no route change to
- * observe - the document simply goes. An event is the only way to say
+ * observe-the document simply goes. An event is the only way to say
  * "this is happening now" to something that is about to be destroyed:
  * the platform's own loader covers the departure, so the officer is
  * told the platform heard them rather than watching the page quietly
  * change underneath them.
  *
  * A DOM event rather than a shared exported callback, because the two
- * sides - the hook that signs out and the loader that covers it - live
+ * sides-the hook that signs out and the loader that covers it-live
  * in different parts of the tree and neither should import the other's
  * React components. `CustomEvent` is used directly for the same reason:
  * `Event` would carry no detail, and the detail is the whole message.

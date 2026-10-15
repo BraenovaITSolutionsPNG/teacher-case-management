@@ -22,7 +22,7 @@ import type { getServerTrpc } from "@server/_core/serverTrpc";
  */
 export type ServerTrpc = Awaited<ReturnType<typeof getServerTrpc>>["trpc"];
 
-/** The identity `auth.me` returns - the signed-in officer, or nobody. */
+/** The identity `auth.me` returns-the signed-in officer, or nobody. */
 export type Session = NonNullable<
   Awaited<ReturnType<ServerTrpc["auth"]["me"]>>
 >;
@@ -31,7 +31,7 @@ export type Session = NonNullable<
  * Resolves the signed-in officer, or sends them to the sign-in page.
  *
  * Takes the caller rather than building one so a segment asks for its helpers
- * once and shares them between the guard and its prefetches - two callers over
+ * once and shares them between the guard and its prefetches-two callers over
  * one cache would work, but a segment should not have to know that.
  *
  * A signed-out officer is sent to the sign-in page with nothing said about where
@@ -42,7 +42,7 @@ export type Session = NonNullable<
  *
  * Every sign-in now lands on the overview, always. A matter is reached from the
  * register rather than restored from a URL, which is one fewer thing to reason
- * about after an expiry - and an expiry is exactly when a stale `next` is most
+ * about after an expiry-and an expiry is exactly when a stale `next` is most
  * likely to be wrong, pointing at a matter that has since been closed or one the
  * officer has since lost the capability to open. The overview is the one page
  * every role can reach.
@@ -51,7 +51,7 @@ export type Session = NonNullable<
  * `ctx.user`, resolved once by `createContext`, so it cannot fail and costs no
  * database round trip. The prefetch is separate because it is what puts the
  * identity in the dehydrated cache, and the identity is read by six different
- * screens through `trpc.auth.me.useQuery()` - every one of them would otherwise
+ * screens through `trpc.auth.me.useQuery()`-every one of them would otherwise
  * refetch it on mount even though the server was just handed it.
  */
 export async function requireSession(trpcServer: ServerTrpc): Promise<Session> {

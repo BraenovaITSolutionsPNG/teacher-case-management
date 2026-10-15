@@ -67,7 +67,7 @@ export async function provisionUser(input: ProvisionInput) {
   // the first 200 accounts and stopped, so on a deployment larger than that an
   // officer whose address was on a later page skipped the clear refusal below
   // and got Supabase's opaque "User already registered" from the create call
-  // instead - the one failure this check exists to turn into a sentence an
+  // instead-the one failure this check exists to turn into a sentence an
   // administrator can act on.
   //
   // The loop stops on a short page, which is how this API signals the end of the
@@ -127,7 +127,7 @@ export async function provisionUser(input: ProvisionInput) {
     });
   } catch (error) {
     // Compensate. An orphaned identity cannot sign in, so leaving it would be
-    // safe - but it would also occupy the email address, so the next attempt to
+    // safe-but it would also occupy the email address, so the next attempt to
     // create this officer would fail on a clash with something invisible from
     // here. Remove it and let the failure stand.
     await supabase.auth.admin.deleteUser(created.user.id).catch(() => {

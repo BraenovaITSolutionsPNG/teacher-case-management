@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
  * `motion-safe:` on the pulse, rather than relying on the stylesheet's
  * reduced-motion block alone. The class was previously bare `animate-pulse`, so
  * a person who had asked their operating system to stop motion got it on every
- * page in the platform - the most persistent piece of unwanted motion in the
+ * page in the platform-the most persistent piece of unwanted motion in the
  * product. Handling it at the point of use as well means the intent travels with
  * the component, so a skeleton rendered somewhere that has opted out of the
  * global stylesheet still behaves.

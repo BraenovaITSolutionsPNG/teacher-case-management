@@ -15,7 +15,7 @@ import {
  * The tests run the real helpers against a real `QueryClient` using tRPC's own
  * key builder, rather than against a stand-in. `trpc.x.y.queryKey()` cannot be
  * used here because it is a React hook, but the underlying proxy is not, and it
- * builds the identical key - so the keys under test are the keys the app uses.
+ * builds the identical key-so the keys under test are the keys the app uses.
  */
 
 /** A cache, a utility proxy over it, and a log of what was invalidated. */

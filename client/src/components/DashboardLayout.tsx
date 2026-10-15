@@ -53,7 +53,7 @@ import {
  * Navigation, gated on the capability the destination actually needs rather than
  * on a rank. A plain administrator has oversight rights but no system statistics,
  * so the menu hides the platform section from them instead of offering a link
- * that returns a refusal - the same rule `requireCapability` applies server-side.
+ * that returns a refusal-the same rule `requireCapability` applies server-side.
  */
 const menuItems: {
   icon: typeof LayoutDashboard;
@@ -68,7 +68,7 @@ const menuItems: {
    * the role could open it. The register and registration are the caseworker's
    * day-to-day instruments; on the Director's variant the overview is the desk
    * of matters raised to him, so the working list and the register form are not
-   * offered there. The capability gate still permits them - the reduction is
+   * offered there. The capability gate still permits them-the reduction is
    * about what the job is, not about refusing access.
    */
   hiddenFor?: readonly DashboardVariant[];
@@ -138,7 +138,7 @@ export default function DashboardLayout({
   // "first render" from "after mount". The server emitted
   // `--sidebar-width:280px` and the hydration render emitted the officer's saved
   // width, React 19 failed hydration on that style attribute and re-rendered the
-  // tree - on every page load, for every officer who had ever resized the
+  // tree-on every page load, for every officer who had ever resized the
   // sidebar. It is also an impure render, reading storage during render.
   //
   // Restoring after mount makes the first client render match the server's and
@@ -170,7 +170,7 @@ export default function DashboardLayout({
   }, []);
 
   useEffect(() => {
-    // Never before the restore has run - see `widthRestored`.
+    // Never before the restore has run-see `widthRestored`.
     if (!widthRestored) return;
     try {
       window.localStorage.setItem(SIDEBAR_WIDTH_KEY, sidebarWidth.toString());
@@ -181,7 +181,7 @@ export default function DashboardLayout({
 
   // A signed-out officer is sent to the sign-in page rather than shown a second
   // one here. This used to render its own "Sign in to continue" panel with a
-  // button that called `startLogin()` - which meant there were two different
+  // button that called `startLogin()`-which meant there were two different
   // sign-in screens, and neither could reach the username/password form: the
   // button threw whenever the identity provider was unconfigured. One sign-in
   // page, at /login, is the only place credentials are entered.
@@ -196,7 +196,7 @@ export default function DashboardLayout({
   if (loading && !signingOut) {
     // Not while signing out. `loading` folds the sign-out mutation in, and the
     // skeleton it would show is a page of grey boxes for a page the officer has
-    // just asked to leave - which is exactly what `signingOut` exists to let a
+    // just asked to leave-which is exactly what `signingOut` exists to let a
     // screen distinguish, and exactly the thing the platform's own loader,
     // already covering the viewport at this point, is there to replace.
     return <DashboardLayoutSkeleton />;
@@ -207,7 +207,7 @@ export default function DashboardLayout({
     // the moment before the route changes.
     return (
       // Announced, because this is the platform telling an officer their session
-      // has ended rather than the screen simply failing to draw - and because it
+      // has ended rather than the screen simply failing to draw-and because it
       // can sit here for as long as the redirect takes, which is exactly the
       // sort of wait that needs saying out loud.
       <div
@@ -341,7 +341,7 @@ function DashboardLayoutContent({
                *
                * `router.push` starts a navigation at the moment of the click, so
                * the officer waits for the next screen's server render before
-               * anything appears - measured on the dashboard at 3.7s, which is
+               * anything appears-measured on the dashboard at 3.7s, which is
                * most of why moving around felt slow. A `Link` lets App Router
                * fetch that payload as soon as the item is on screen, so by the
                * time it is clicked the next page has usually already arrived and
@@ -386,7 +386,7 @@ function DashboardLayoutContent({
                      * The officer's photo when they have uploaded one, and their
                      * initial when they have not. This block was the initial alone,
                      * so an officer who had set a photo on the settings screen
-                     * still saw "J" here - the two screens disagreed about who
+                     * still saw "J" here-the two screens disagreed about who
                      * they were, and the sidebar is the one present on every page.
                      *
                      * A plain img through the storage proxy rather than

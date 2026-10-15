@@ -180,7 +180,7 @@ export default function CaseRegister() {
    * province is misleading, and the filter chips already show what is applied.
    *
    * Counted by the server. They used to be counted here, in the browser, by
-   * reading a second copy of the entire register - which is the reason the
+   * reading a second copy of the entire register-which is the reason the
    * register is paged at all. They are also, now, the only place the Golden Rule
    * breach count comes from; the register surfaces it rather than leaving it to
    * the compliance report.
@@ -548,7 +548,7 @@ export default function CaseRegister() {
           {/**
            * The pager sits outside the table and outside the scroll container,
            * so it stays put while the rows scroll inside it. It is rendered
-           * whenever there is a second page to reach - on a single-page register
+           * whenever there is a second page to reach-on a single-page register
            * it would only be telling the officer something they can see.
            */}
           {rows.length > 0 && pages > 1 ? (

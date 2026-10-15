@@ -1,4 +1,4 @@
-# LEARN.md - How the TSC Provincial Matters platform works
+# LEARN.md-How the TSC Provincial Matters platform works
 
 A reading guide for anyone new to this codebase or to the office it serves: what
 the system is, how a request moves through it, what each role can do, and how a
@@ -21,26 +21,26 @@ reports on the whole caseload.
 
 It is a workflow system, not a document store. The central design commitment is
 that **the register is the truth**. Reports, returns and compliance figures are
-all counted from what is on the register at the moment they are run - never from
+all counted from what is on the register at the moment they are run-never from
 a separate tally that could disagree with it. If a matter is not on the register,
 it did not happen.
 
 ### A note on naming
 
 **Settled: Papua New Guinea.** `IDEA.md` and `README.md` originally described the
-**Kenya** Teachers Service Commission, which was wrong - everything the platform
+**Kenya** Teachers Service Commission, which was wrong-everything the platform
 presents says Papua New Guinea, and had said so all along: the national emblem on
 the sign-in screen, the wordmark's alt and title text in `OrganisationLogos.tsx`,
 the copyright line, and the `.gov.pg` addresses in the sign-in placeholders.
 
 The one place Kenya survived was `metadata.description` in `app/layout.tsx`, which
-is what appears in a browser tab, in a bookmark and in a search result - so the
+is what appears in a browser tab, in a bookmark and in a search result-so the
 site announced itself to the outside world as a Kenyan system while presenting as
 a Papuan one to everyone who signed in. That is the kind of disagreement nobody
 notices and everybody remembers.
 
 This note previously claimed `shared/validation.ts` referred to a "Papuan New
-Guinea" commission. It does not - there is no reference to either country in that
+Guinea" commission. It does not-there is no reference to either country in that
 file, so the conflict it described was smaller than it looked: three
 documentation files against the entire application.
 
@@ -64,7 +64,7 @@ documentation files against the entire application.
 ### 2.1 The rules live in `shared/`, and both sides import them
 
 This is the single most important architectural fact. `shared/` contains no
-React and no database code - only rules, expressed as pure functions:
+React and no database code-only rules, expressed as pure functions:
 
 | File                    | What it holds                                                                                   |
 | ----------------------- | ----------------------------------------------------------------------------------------------- |
@@ -85,7 +85,7 @@ that the UI cannot offer an action the server will refuse.
 The trade-off is stated in `shared/access.ts` and worth understanding: capability
 sets are written **out in full** per role and deliberately do _not_ inherit by
 array order. Promoting someone is therefore always a deliberate edit rather than a
-side effect of list position - but it also means a capability added to a senior
+side effect of list position-but it also means a capability added to a senior
 role is not automatically given to a more senior one.
 
 ### 2.2 What happens when an officer opens a page
@@ -115,7 +115,7 @@ Supabase Auth owns the credential. This application never signs a token, stores 
 password, or holds a signing key. The join is one column: `users.authUserId`.
 
 `server/_core/supabaseSession.ts` resolves the caller on **every** request, in
-this order - and the order is the whole authorization story:
+this order-and the order is the whole authorization story:
 
 1. **No session is not an error.** Public procedures must work for an anonymous
    visitor, so `null` is a valid answer and the caller decides.
@@ -124,7 +124,7 @@ this order - and the order is the whole authorization story:
    could present a token became a row in the register.
 3. **`isActive` is checked here, not in a guard.** A deactivated officer may hold
    a perfectly valid unexpired session, so the account must be refused on every
-   request - and the one place that cannot be forgotten is the place that builds
+   request-and the one place that cannot be forgotten is the place that builds
    the identity.
 
 `getUser` revalidates against Supabase rather than trusting the cookie, so
@@ -144,7 +144,7 @@ table with no policies**. That is intentional, not an oversight:
 - The app connects as the table owner, which PostgreSQL exempts from row
   security, so every screen keeps working.
 - Supabase's PostgREST is reachable with the public anon key. With RLS on and no
-  policy, anything it can authenticate as is denied - so the register (teacher
+  policy, anything it can authenticate as is denied-so the register (teacher
   names, disciplinary records) is not readable through the public API.
 
 The dependency this creates is stated in the migration and worth knowing: **the
@@ -189,26 +189,26 @@ Two of those steps deserve attention:
 
 | Capability                                            | staff | assistant | commissioner | admin | super_admin |
 | ----------------------------------------------------- | :---: | :-------: | :----------: | :---: | :---------: |
-| `matter:register` - register a new matter             |   ●   |     ●     |      ●       |   ●   |      ●      |
-| `matter:viewAll` - view the whole provincial register |   ●   |     ●     |      ●       |   ●   |      ●      |
-| `matter:update` - update a matter                     |   ●   |     ●     |      ●       |   ●   |      ●      |
-| `matter:escalate` - escalate a matter                 |   ●   |     ●     |      ●       |   ●   |      ●      |
-| `matter:refer` - refer to a National Section          |   ●   |     -     |      ●       |   ●   |      ●      |
-| `matter:decide` - record a decision                   |   -   |     -     |      ●       |   ●   |      ●      |
-| `matter:flag` - flag for the Director's attention     |   -   |     ●     |      -       |   -   |      ●      |
-| `referral:followUp` - record a section's response     |   ●   |     ●     |      -       |   -   |      ●      |
-| `brief:write` - prepare a case brief                  |   ●   |     ●     |      ●       |   ●   |      ●      |
-| `file:write` - add items to a case file               |   ●   |     ●     |      ●       |   ●   |      ●      |
-| `report:view` - the Director's reporting set          |   -   |     ●     |      ●       |   ●   |      ●      |
-| `platform:oversight` - oversight list & reassignment  |   -   |     -     |      -       |   ●   |      ●      |
-| `platform:users` - manage accounts                    |   -   |     -     |      -       |   -   |      ●      |
-| `platform:audit` - global audit trail                 |   -   |     -     |      -       |   -   |      ●      |
-| `platform:stats` - system statistics                  |   -   |     -     |      -       |   -   |      ●      |
+| `matter:register`-register a new matter             |   ●   |     ●     |      ●       |   ●   |      ●      |
+| `matter:viewAll`-view the whole provincial register |   ●   |     ●     |      ●       |   ●   |      ●      |
+| `matter:update`-update a matter                     |   ●   |     ●     |      ●       |   ●   |      ●      |
+| `matter:escalate`-escalate a matter                 |   ●   |     ●     |      ●       |   ●   |      ●      |
+| `matter:refer`-refer to a National Section          |   ●   |  -  |      ●       |   ●   |      ●      |
+| `matter:decide`-record a decision                   |-|  -  |      ●       |   ●   |      ●      |
+| `matter:flag`-flag for the Director's attention     |-|     ●     |   -    |-|      ●      |
+| `referral:followUp`-record a section's response     |   ●   |     ●     |   -    |-|      ●      |
+| `brief:write`-prepare a case brief                  |   ●   |     ●     |      ●       |   ●   |      ●      |
+| `file:write`-add items to a case file               |   ●   |     ●     |      ●       |   ●   |      ●      |
+| `report:view`-the Director's reporting set          |-|     ●     |      ●       |   ●   |      ●      |
+| `platform:oversight`-oversight list & reassignment  |-|  -  |   -    |   ●   |      ●      |
+| `platform:users`-manage accounts                    |-|  -  |   -    |-|      ●      |
+| `platform:audit`-global audit trail                 |-|  -  |   -    |-|      ●      |
+| `platform:stats`-system statistics                  |-|  -  |   -    |-|      ●      |
 
 Three asymmetries are deliberate, and each traces to a section of the manual:
 
 - **`assistant` cannot refer, and cannot decide.** §4 makes the judgement that a
-  matter is outside provincial authority - and the §5 triggers that go with it -
+  matter is outside provincial authority-and the §5 triggers that go with it -
   the Provincial Officer's act. §6 and §12C make the decision the Director's.
 - **`assistant` and `commissioner` cannot flag.** The §12B flag is the
   Professional Assistant's instrument for escalating to the Director, so no other
@@ -219,7 +219,7 @@ Three asymmetries are deliberate, and each traces to a section of the manual:
   that makes it.
 
 Navigation is gated by the same function (`DashboardLayout.tsx`), so a role never
-sees a link it cannot use. And refusals are written in plain language - an officer
+sees a link it cannot use. And refusals are written in plain language-an officer
 is told _"this action needs the Director"_, never a capability key.
 
 ---
@@ -229,7 +229,7 @@ is told _"this action needs the Director"_, never a capability key.
 ### Every officer, on every role
 
 **Sign in** at `/login` with the **email address and password** issued by the
-platform administrator. Accounts are never self-created - public signup is
+platform administrator. Accounts are never self-created-public signup is
 disabled, and an administrator vouches for each address at creation.
 
 Signing in is only the first half. A correct password is not the same as being
@@ -251,12 +251,12 @@ decision (§12B flag or status `DEC`), escalated to his rung of the §14 ladder
 (`getRecentlyClosed`, also surfaced on the register screen).
 
 **The Case register** (`/cases`) is the working list. It shows every matter in
-the province - not a personal queue - and opens unfiltered, so nobody has to guess
+the province-not a personal queue-and opens unfiltered, so nobody has to guess
 which filter is hiding something. It is searchable by **case number or teacher's
 name** (case-insensitive), and filterable by **status**, **matter type**,
 **province**, and a **past due date only** toggle. Paged 25 rows at a time. The
 figures across the top are counted by the server across the whole province,
-separately from the filtered page below - so the headline number never silently
+separately from the filtered page below-so the headline number never silently
 becomes "number of results".
 
 **A matter** (`/cases/{id}`) has five tabs: **The matter** (fields, status,
@@ -267,11 +267,11 @@ and responses), **File** (documents), and **Case brief**.
 preference. The theme is stored in _this browser only_, deliberately, so two
 officers sharing a machine in a provincial office are not fighting over it.
 
-### Provincial Matters Officer (`staff`) - the day-to-day worker
+### Provincial Matters Officer (`staff`)-the day-to-day worker
 
 1. **Register** the matter (`/cases/new`): date received, province, teacher,
    employee reference if known, class, summary, and a **due date**. The due date
-   is required - a matter with no deadline is invisible to the delay and overdue
+   is required-a matter with no deadline is invisible to the delay and overdue
    figures, which is the outcome the field exists to prevent.
 2. **Work** it: update the status as it moves, set an assigned action, add items
    to the **File** as evidence arrives, and record the section it sits with.
@@ -280,15 +280,15 @@ officers sharing a machine in a provincial office are not fighting over it.
 4. **Follow up** the referral until an outcome is received, then record what came
    back.
 
-### Professional Assistant (`staff` + monitoring) - the office around the caseload
+### Professional Assistant (`staff` + monitoring)-the office around the caseload
 
 The Assistant's distinctive surface is the **Case monitoring board**, seven lists
 in the order the manual gives them, each carrying the matters in it rather than a
-count - a number you cannot click into is no use at 8am:
+count-a number you cannot click into is no use at 8am:
 
-1. New matters - registered, not yet picked up
-2. Outstanding matters - held by the province
-3. Delayed matters - past the due date
+1. New matters-registered, not yet picked up
+2. Outstanding matters-held by the province
+3. Delayed matters-past the due date
 4. Matters with the Legal Section
 5. Referred and awaiting a National Section
 6. Flagged for the Director's attention (plus anything already at _Awaiting
@@ -296,15 +296,15 @@ count - a number you cannot click into is no use at 8am:
 7. Case briefs still to prepare
 
 Their other distinctive job is the **case brief** (§12B): preparing the short
-report an officer presents to the Director. Six fields - issue, background, action
-taken, current position, and - when the matter is flagged or already at _Awaiting
-decision_ - **what is being decided** and **the recommendation**. Those last two
+report an officer presents to the Director. Six fields-issue, background, action
+taken, current position, and-when the matter is flagged or already at _Awaiting
+decision_-**what is being decided** and **the recommendation**. Those last two
 are mandatory in exactly that situation, enforced on the server: a brief that
 reaches a decision without saying what the decision is about will be refused.
 
 They also **produce the reporting set** (§12E), described in §6 below.
 
-### Director (`commissioner`) - decides
+### Director (`commissioner`)-decides
 
 Everything an officer can do, plus:
 
@@ -312,31 +312,31 @@ Everything an officer can do, plus:
   Gated on `matter:decide`, so an officer cannot record a decision.
 - **Close the matter**, which requires all three parts of the Golden Rule's
   fourth limb (below) and is refused without them.
-- **Read the reporting set** - though in practice the Assistant prepares it.
+- **Read the reporting set**-though in practice the Assistant prepares it.
 
-### Administrator (`admin`) - oversight across the division
+### Administrator (`admin`)-oversight across the division
 
 Opens **Administration** and sees the **Oversight** tab: every matter in the
 register regardless of assigned officer, with reassignment and status override.
 Both write to the audit trail with a required reason.
 
-### Platform administrator (`super_admin`) - the platform itself
+### Platform administrator (`super_admin`)-the platform itself
 
 Everything an Administrator can do, plus the **Users**, **Audit trail** and
 **Statistics** tabs:
 
-- **Users** - create an account (which also creates the Supabase identity),
+- **Users**-create an account (which also creates the Supabase identity),
   assign or change a role, deactivate, reset a username, delete. Two guards here
   are worth knowing because they explain _why_ the screen behaves as it does:
   deleting someone who appears in the accountability trail is refused, with the
-  counts that block it and the advice to deactivate instead - deactivation closes
+  counts that block it and the advice to deactivate instead-deactivation closes
   the sign-in and keeps the record, which is what the audit trail needs. And the
   last active platform administrator cannot be deleted or demoted, because the
   platform has to remain manageable.
-- **Audit trail** - every recorded action across the platform, searchable and
+- **Audit trail**-every recorded action across the platform, searchable and
   filterable, filtered **in the database** so a search for an action from months
   ago finds it rather than paging through the newest events.
-- **Statistics** - register totals, overdue rate, and a 12-month intake chart.
+- **Statistics**-register totals, overdue rate, and a 12-month intake chart.
 
 ---
 
@@ -375,20 +375,20 @@ to 6:
 
 | Level | Meaning                                                                      |
 | ----- | ---------------------------------------------------------------------------- |
-| 0     | Officer - held by the responsible provincial matter officer                  |
-| 1     | Senior / Regional officer - referred upward within the province              |
-| 2     | Director, Provincial Matters - needs the Director's decision or intervention |
-| 3     | Relevant National Section - referred out of the province for determination   |
-| 4     | Commissioner / Management - needs management-level determination             |
-| 5     | Commission - a matter for the Commission itself                              |
-| 6     | Legal Section - where legal issues arise, in parallel with the above         |
+| 0     | Officer-held by the responsible provincial matter officer                  |
+| 1     | Senior / Regional officer-referred upward within the province              |
+| 2     | Director, Provincial Matters-needs the Director's decision or intervention |
+| 3     | Relevant National Section-referred out of the province for determination   |
+| 4     | Commissioner / Management-needs management-level determination             |
+| 5     | Commission-a matter for the Commission itself                              |
+| 6     | Legal Section-where legal issues arise, in parallel with the above         |
 
 This is a separate axis from the status. A matter can be at status `LEG` _and_ at
 level 6; a matter escalated to the Director for a decision can sit at level 2 while
 its status is still `VER`. Officers set the level through the escalation control,
 and every change is recorded in the activity history with the level named.
 
-A **referral** always lands at level 3 - or level 6 when it is to the Legal
+A **referral** always lands at level 3-or level 6 when it is to the Legal
 Section, since that runs in parallel with the rest of the ladder rather than
 instead of it.
 
@@ -416,12 +416,12 @@ The referral rows carry the escalation level the platform assigns them; see
 "Escalation is a ladder" above for what the numbers mean.
 
 A matter can also reach `ESC` (escalated) from delay rather than from a
-referral - that is what `dashboard.monitoring.overdueOnFollowUp` counts.
+referral-that is what `dashboard.monitoring.overdueOnFollowUp` counts.
 
 ### 5.3 The Golden Rule (§17)
 
 The manual states one principle. The platform enforces it as **four hard
-invariants on the server**, not as guidance in the UI - `shared/delegation.ts`,
+invariants on the server**, not as guidance in the UI-`shared/delegation.ts`,
 `checkGoldenRule`:
 
 | Part | Rule                                                | Enforced when                                                   |
@@ -437,16 +437,16 @@ which a matter is referred and nobody is obliged to chase it.
 
 Part 4 is enforced in two places, and both matter: the server refuses a status
 change to `RES`/`CLS` without the three fields, and the **File** requires four
-document classes before closure - _Original application/query_, _Decisions_,
+document classes before closure-_Original application/query_, _Decisions_,
 _Evidence of communication to the teacher_, and _Closure record_. Seven further
-classes are supported - supporting documents, correspondence in and out,
-investigation notes, relevant records, referral letters and advice received - and
+classes are supported-supporting documents, correspondence in and out,
+investigation notes, relevant records, referral letters and advice received-and
 are optional.
 
 ### 5.4 Referrals (§4, §5)
 
 A referral records: the National Section, the date, the escalation level, and -
-always - the **response deadline**. A response is then recorded separately
+always-the **response deadline**. A response is then recorded separately
 (received date and the advice or outcome), and a referral is _pending_ until that
 happens.
 
@@ -463,7 +463,7 @@ one holds, which is what makes routing a matter a judgement rather than a guess:
 | Provincial Matters                     | Provincial service delivery                  |
 
 The class of matter also implies a **default** destination, so the common case
-needs no thought - but the referral is always the officer's judgement to make,
+needs no thought-but the referral is always the officer's judgement to make,
 which is why `matter:refer` sits with `staff` and not with `assistant`.
 
 One conditional rule: an **Industrial and General** referral must state all four
@@ -512,13 +512,13 @@ Two deliberate choices worth knowing as a reader:
 | To change…                                   | Edit                                                                                             |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | A status, a role, a province, a matter class | `shared/statuses.ts`, `shared/roles.ts`, `shared/matters.ts`                                     |
-| Who can do what                              | `shared/access.ts` - the capability set, **and** the plain-language label in `CAPABILITY_LABELS` |
+| Who can do what                              | `shared/access.ts`-the capability set, **and** the plain-language label in `CAPABILITY_LABELS` |
 | A validation rule or refusal message         | `shared/validation.ts`                                                                           |
-| The Golden Rule                              | `shared/delegation.ts` - `checkGoldenRule`                                                       |
+| The Golden Rule                              | `shared/delegation.ts`-`checkGoldenRule`                                                       |
 | A workflow step                              | `server/db.ts` (`createReferral`, and the status handlers in `server/routers.ts`)                |
-| A query or a figure                          | `server/db.ts` - this is where all counting happens                                              |
+| A query or a figure                          | `server/db.ts`-this is where all counting happens                                              |
 | A screen                                     | `client/src/views/`                                                                              |
-| A new route or data fetch                    | `server/routers.ts` - every procedure states its capability, input and rule                      |
+| A new route or data fetch                    | `server/routers.ts`-every procedure states its capability, input and rule                      |
 
 ### Conventions this codebase holds to
 
@@ -538,7 +538,7 @@ Two deliberate choices worth knowing as a reader:
 `pnpm test` (Vitest), `pnpm check` (`tsc --noEmit`), `pnpm build`.
 
 Coverage is deliberately uneven, and knowing where the gaps are matters:
-`shared/` is heavily tested - pagination arithmetic, validation, the delegation
+`shared/` is heavily tested-pagination arithmetic, validation, the delegation
 rules, capability guards, cache policy. The React layer is not: there is no
 component test in the repository, because there is no DOM testing library
 installed. Screen-level bugs are therefore found by reading, which is why the
@@ -556,7 +556,7 @@ instants).
 | **Matter**           | A registered teacher complaint or query. The unit of work                         |
 | **Caseload**         | All open matters in the province                                                  |
 | **Register**         | The authoritative list of every matter. The system's source of truth              |
-| **Section**          | The internal unit holding a matter - Provincial, Legal, Appointments, Secretariat |
+| **Section**          | The internal unit holding a matter-Provincial, Legal, Appointments, Secretariat |
 | **National Section** | A national TSC unit a matter is referred out to                                   |
 | **Referral**         | A matter sent to a National Section, with a response deadline                     |
 | **Escalation level** | 6 Legal, 3 Appointments/Secretariat, 0 advisory                                   |

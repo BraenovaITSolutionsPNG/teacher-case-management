@@ -14,8 +14,8 @@
  * Two names, and they are not redundant. `NEXT_PUBLIC_SUPABASE_URL` is the one
  * the browser bundle reads (`client/src/lib/supabase.ts`), and Next inlines it
  * at *build* time. `SUPABASE_URL` is the server-side reading of the same value,
- * settable at *run* time. So the two names answer different questions - "what
- * was the browser built with" and "what does this process talk to" - and a
+ * settable at *run* time. So the two names answer different questions-"what
+ * was the browser built with" and "what does this process talk to"-and a
  * deployment can legitimately answer them from different environment variables.
  *
  * They must not answer them *differently*, though: a server on one project with
@@ -26,7 +26,7 @@
  * So the server's own name wins here and the browser's is kept separately, which
  * is what makes that disagreement detectable at all. The order matters: had the
  * browser's name been preferred, this value would always equal the browser's and
- * the check in `supabasePublicConfig` could never fire - a guard that looks
+ * the check in `supabasePublicConfig` could never fire-a guard that looks
  * present and is not worse than none, because it is read as covered.
  *
  * The trailing-slash trim is because Supabase's dashboard copies the URL with
@@ -49,7 +49,7 @@ export const ENV = {
   isProduction: process.env.NODE_ENV === "production",
 
   /**
-   * The anon key is public by design - it is meant to reach the browser, and it
+   * The anon key is public by design-it is meant to reach the browser, and it
    * is what row level security is there to constrain. The service role key is
    * the opposite: it bypasses RLS entirely, so it is never given the
    * `NEXT_PUBLIC_` prefix that would inline it into a bundle anyone can
@@ -67,7 +67,7 @@ export const ENV = {
   /**
    * The values the browser bundle was compiled with, kept so the mismatch above
    * can be detected. On the server, `process.env.NEXT_PUBLIC_*` is the literal
-   * the bundler substituted, not the current environment - which is exactly what
+   * the bundler substituted, not the current environment-which is exactly what
    * is needed here: this is the build's answer, compared against the runtime's.
    */
   publicSupabaseUrl: (process.env.NEXT_PUBLIC_SUPABASE_URL ?? "").replace(
@@ -108,7 +108,7 @@ export const ENV = {
    * A hosted bucket is the real backend and is used whenever one is reachable -
    * now Supabase Storage, and the Forge/S3 presigner where that is configured
    * instead. On a development machine none usually is, and refusing to start an
-   * upload because of it makes the platform impossible to exercise - so
+   * upload because of it makes the platform impossible to exercise-so
    * development with no credentials writes to a directory under the project
    * instead.
    *

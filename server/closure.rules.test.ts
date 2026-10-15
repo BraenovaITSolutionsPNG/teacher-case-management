@@ -6,12 +6,12 @@ import { CLOSED_STATUSES, isOpenStatus } from "../shared/statuses";
 /**
  * Two things the register could not do before, and which nothing was asserting.
  *
- *  - A matter could not be closed at all. RES and CLS are reachable from the
+ * -A matter could not be closed at all. RES and CLS are reachable from the
  *    status control, but §17 requires a recorded outcome, a date closed and a
  *    record of who communicated it, so every closure was refused. The figures
- *    that depend on closures - median days to close, closures per month, the
- *    closure rate - were therefore permanently zero rather than merely wrong.
- *  - An explicit `null` had to be distinguishable from "field not sent". The
+ *    that depend on closures-median days to close, closures per month, the
+ *    closure rate-were therefore permanently zero rather than merely wrong.
+ * -An explicit `null` had to be distinguishable from "field not sent". The
  *    write path strips `undefined`, so clearing a field is only expressible as
  *    `null`; conflating the two would let a cleared outcome satisfy a closure
  *    check on the strength of the value it used to hold.

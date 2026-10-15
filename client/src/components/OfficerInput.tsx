@@ -10,8 +10,8 @@ import { useId } from "react";
  *
  * A native `<datalist>` rather than the Radix `Select` the oversight screen
  * uses for reassignment, and the difference is deliberate. The register carries
- * the officer as a **name**, not an id - that is what the file shows and what
- * `findUserIdByName` resolves on the write - so a name with no account behind
+ * the officer as a **name**, not an id-that is what the file shows and what
+ * `findUserIdByName` resolves on the write-so a name with no account behind
  * it is a valid assignment that resolves to a null id instead of an error.
  * A strict select would make that impossible, and would offer no way to clear
  * the field back to unassigned. Picking is offered; typing is not taken away.

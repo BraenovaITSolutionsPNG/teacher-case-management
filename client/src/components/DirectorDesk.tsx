@@ -28,7 +28,7 @@ import type { LucideIcon } from "lucide-react";
  * so this screen only renders what it was sent and never re-decides what counts.
  *
  * The tab structure deliberately mirrors `CaseMonitoringBoard` so the two desks
- * read the same way - the PA and the Director are the two ends of the same
+ * read the same way-the PA and the Director are the two ends of the same
  * §12B/§12C flag-and-decide cycle, and an officer moving between them should not
  * have to relearn the list.
  */

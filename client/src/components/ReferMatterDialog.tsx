@@ -32,14 +32,14 @@ import { toast } from "sonner";
  * Three things make this form more than a destination picker, and each is
  * enforced on the server as well as here:
  *
- *  - The officer records *which* trigger applied. Free-texting the reason is
+ * -The officer records *which* trigger applied. Free-texting the reason is
  *    what the manual rules out, because "referred for advice" is not
  *    distinguishable from "referred because we could not decide it".
- *  - Any legal trigger routes the matter to the Legal Section whatever the
+ * -Any legal trigger routes the matter to the Legal Section whatever the
  *    category says, and the Director must be recorded as notified. That is why
  *    the legal notice field appears the moment a legal trigger is ticked, rather
  *    than after the officer has tried to submit without it.
- *  - An Industrial and General referral must state four things. The server
+ * -An Industrial and General referral must state four things. The server
  *    refuses one that does not, so the form shows the four as soon as that
  *    destination is chosen.
  *
@@ -144,7 +144,7 @@ export function ReferMatterDialog({
       reason: reason.trim(),
       criteria,
       // `parseDateInput` rather than `new Date(...)`, which happens to agree with it
-      // today - both read `YYYY-MM-DD` as UTC midnight, the same reading the
+      // today-both read `YYYY-MM-DD` as UTC midnight, the same reading the
       // server's `z.coerce.date()` applies. Naming it says the deadline is a
       // calendar date rather than an instant, and keeps the single place that
       // decides what a calendar date means.

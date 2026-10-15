@@ -10,13 +10,13 @@ import { useCallback } from "react";
  * The sidebar and the buttons are real links, and `RouteProgressBar` sees those
  * by listening to the document. Three navigations are not links:
  *
- *  - the command palette (⌘K), which is a list of routes rather than a list of
+ * -the command palette (⌘K), which is a list of routes rather than a list of
  *    anchors;
- *  - a case row on the overview, which is a click on a matter rather than on a
+ * -a case row on the overview, which is a click on a matter rather than on a
  *    URL;
- *  - the jump to a matter that has just been registered.
+ * -the jump to a matter that has just been registered.
  *
- * All three reach for `router.push` directly, which raises nothing - so they
+ * All three reach for `router.push` directly, which raises nothing-so they
  * navigated with no indicator at all, and they are the *heavy* ones: each opens a
  * server-rendered screen that reads a matter. The bar existed and was silent for
  * precisely the waits it was written for.

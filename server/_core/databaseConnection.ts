@@ -3,14 +3,14 @@
  * migration tooling accept.
  *
  * This exists because Supabase requires TLS, and a bare connection string
- * cannot carry a certificate authority - `postgresql://user:pass@host` has
+ * cannot carry a certificate authority-`postgresql://user:pass@host` has
  * nowhere to put a CA certificate. On top of that, Supabase assigns a port per
  * connection mode and the modes are not interchangeable: see `resolvePort`.
  *
  * Both callers need the same answer, so it is computed once here:
  *
- *  - `server/db.ts`       - the request path, via node-postgres's `PoolConfig`
- *  - `drizzle.config.ts` - `pnpm db:push`, which needs a real session for DDL
+ * -`server/db.ts`      -the request path, via node-postgres's `PoolConfig`
+ * -`drizzle.config.ts`-`pnpm db:push`, which needs a real session for DDL
  *
  * The credentials are read from the environment at call time rather than at
  * import time, so a test that moves DATABASE_URL between cases sees the change.
@@ -33,7 +33,7 @@ import { readFileSync } from "node:fs";
  * this process count is not one: a serverless deployment runs many instances of
  * it at once, and each brings its own pool. Ten connections per instance is a
  * hundred connections from ten instances, and the hosted database allows 200 in
- * total - so the setting that looks generous locally is what exhausts the server
+ * total-so the setting that looks generous locally is what exhausts the server
  * in production, as `EMAXCONN: max client connections reached, limit: 200`. A
  * small pool plus the transaction pooler in front of it is the combination that
  * scales: the pooler multiplexes many clients over a few backends, so this
@@ -43,13 +43,13 @@ import { readFileSync } from "node:fs";
  * driver defaults to. Worth being precise about what this is and is not for: it
  * was raised from three to five and page load did not measurably change
  * (2.4s and 3.4s for six parallel queries either way), so it is here to bound
- * the connection count and to leave room for a burst - not because a larger
+ * the connection count and to leave room for a burst-not because a larger
  * number makes a screen faster. The per-request cost this app actually pays is
  * revalidating the session on every call, and that is not a pool setting.
  *
  * `connectionTimeoutMillis` is the one that turns a hang into an answer. Left at
  * node-postgres's default of 0, a request that cannot get a connection waits
- * forever, and the officer's screen simply never finishes loading - with no
+ * forever, and the officer's screen simply never finishes loading-with no
  * error, no log line, and nothing to diagnose. A bounded wait fails the request
  * instead, which the query layer already retries and reports.
  */
@@ -103,8 +103,8 @@ const PEM_HEADER = "-----BEGIN CERTIFICATE";
  * one was supplied.
  *
  * `DATABASE_CA_CERT` takes either form deliberately. A hosted deployment has no
- * dependable filesystem - a file path resolved on a serverless function is not a
- * thing that exists - so the PEM itself is pasted into the environment. A
+ * dependable filesystem-a file path resolved on a serverless function is not a
+ * thing that exists-so the PEM itself is pasted into the environment. A
  * developer connecting from a laptop would rather point at the `ca.crt` that
  * Supabase's dashboard offers than paste a certificate into `.env`, and a pasted
  * PEM is unmistakable: it announces itself with the BEGIN line, where a path
@@ -119,7 +119,7 @@ function readCaCertificate(): string | undefined {
     return readFileSync(value, "utf8");
   } catch (cause) {
     throw new Error(
-      `DATABASE_CA_CERT names a file that cannot be read (${value}). Paste the PEM itself if there is no file to read - Supabase offers it under Connection settings.`,
+      `DATABASE_CA_CERT names a file that cannot be read (${value}). Paste the PEM itself if there is no file to read-Supabase offers it under Connection settings.`,
       { cause }
     );
   }
@@ -131,21 +131,21 @@ function readCaCertificate(): string | undefined {
  * Supabase refuses a connection that does not offer TLS, so a hosted deployment
  * has to end up here. The three outcomes, in the order they are decided:
  *
- *  1. `DATABASE_CA_CERT` set - TLS, and the server's certificate is verified
+ *  1. `DATABASE_CA_CERT` set-TLS, and the server's certificate is verified
  *     against that CA. This is the Supabase case, and the only one that
  *     verifies a certificate this deployment chose to trust.
- *  2. `DATABASE_SSL=require` with no CA - TLS, verified against the host's
+ *  2. `DATABASE_SSL=require` with no CA-TLS, verified against the host's
  *     trust store. Supabase's certificates chain to a public CA, so this is
  *     correct for them and needs no downloaded file.
- *  3. Neither - no TLS, returned as an explicit `false` rather than an absent
+ *  3. Neither-no TLS, returned as an explicit `false` rather than an absent
  *     key. See the note on `DatabaseCredentials["ssl"]` for why that spelling
  *     matters to drizzle-kit. This is what a local PostgreSQL speaks, and why
  *     nothing here is unconditional: switching the app to a hosted database must
  *     not break the machine it was developed on.
  *
  * `rejectUnauthorized` is never set false. A hosted database reached over an
- * unverified connection is a case-management register - teacher names, matter
- * files, disciplinary records - on a wire anyone on the path can read and
+ * unverified connection is a case-management register-teacher names, matter
+ * files, disciplinary records-on a wire anyone on the path can read and
  * rewrite, and an attacker who can redirect the connection gets to serve the
  * answers. Turning verification off is not offered as an option here; if the
  * certificate genuinely cannot be verified, the CA is the fix.
@@ -187,19 +187,19 @@ export function describeTls(): string {
  * not interchangeable. Picking the wrong one is the most common way a Supabase
  * deployment breaks in a way that looks like an application bug.
  *
- *  - 5432 direct. No pooling in front of it, so every connection is a real
+ * -5432 direct. No pooling in front of it, so every connection is a real
  *    backend. Correct for migrations, and for a single long-lived process.
- *  - 6543 transaction mode (PgBouncer). The pooler hands a connection back after
+ * -6543 transaction mode (PgBouncer). The pooler hands a connection back after
  *    each transaction, so the connection count stays flat under load. It cannot
  *    hold session state: no `SET`, no advisory locks, no multi-statement
  *    transactions. Fine for this app's queries, which are each one statement.
- *  - 6544 session mode. The pooler keeps the backend for the life of the client
+ * -6544 session mode. The pooler keeps the backend for the life of the client
  *    session. Needed for DDL, which is why migrations must not use this port
  *    together with a pooler that discards sessions mid-statement.
  *
  * The port is taken from the URL when it carries one, because Supabase hands out
  * all three and the developer chose between them. A portless URL therefore gets
- * 5432 - the direct connection - unless `DATABASE_POOL_MODE=session` asks for
+ * 5432-the direct connection-unless `DATABASE_POOL_MODE=session` asks for
  * 6544.
  *
  * This comment previously said 6543 (the transaction pooler) was the default
@@ -246,7 +246,7 @@ export function databaseCredentials(): DatabaseCredentials {
     url = new URL(databaseUrl);
   } catch (cause) {
     throw new Error(
-      "DATABASE_URL is not a URL this can read. It is written postgresql://user:password@host:port/database - Supabase puts its own port, and a URL without one means the direct connection on 5432.",
+      "DATABASE_URL is not a URL this can read. It is written postgresql://user:password@host:port/database-Supabase puts its own port, and a URL without one means the direct connection on 5432.",
       { cause }
     );
   }

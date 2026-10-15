@@ -4,8 +4,8 @@ import { isSupabaseUrl, supabaseUrlFault } from "./supabaseUrl";
 /**
  * What counts as a Supabase project URL this deployment can use.
  *
- * Its own file because the answer is shared by two runtimes - the server that
- * builds a session client and the browser that builds the sign-in client - and
+ * Its own file because the answer is shared by two runtimes-the server that
+ * builds a session client and the browser that builds the sign-in client-and
  * because the values being rejected are the ones that look correct in a
  * dashboard, which is exactly the kind of thing a test has to hold still to be
  * worth anything.
@@ -81,7 +81,7 @@ describe("supabaseUrlFault", () => {
   it("names the value it was given, quotes and all", () => {
     // The operator reads the dashboard, where the field looks correct. Quoting
     // the value back is the only part of this message that shows them the
-    // difference, so the quotes have to survive into it - escaped, because the
+    // difference, so the quotes have to survive into it-escaped, because the
     // value is escaped: `"\"https://…\""` is unambiguous where a bare
     // interpolation would be a line that looks the same in the log as one that
     // is correct.
@@ -93,7 +93,7 @@ describe("supabaseUrlFault", () => {
 
   it("shows a trailing newline rather than hiding it", () => {
     // A newline on its own is trimmed away and accepted, so it only reaches the
-    // message alongside another fault - which is the case here, and the reason
+    // message alongside another fault-which is the case here, and the reason
     // the message escapes what it prints rather than interpolating it.
     const fault = supabaseUrlFault('"https://project.supabase.co"\n', SOURCE);
 

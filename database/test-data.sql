@@ -10,7 +10,7 @@
 -- per-province reporting the platform is required to produce.
 --
 -- Why SQL and not the seed script: this is fixture data for the whole register,
--- not the first account, and it needs to be reviewable before it runs - a
+-- not the first account, and it needs to be reviewable before it runs-a
 -- hundred rows of inserts that a person has never seen land in a register of
 -- disciplinary matters is not something to execute on trust.
 --
@@ -31,7 +31,7 @@
 -- No `authUserId`. A null is not a broken account: it is an account that cannot
 -- sign in until somebody links an identity, and the admin screen shows it as
 -- unprovisioned rather than pretending otherwise. Provision these from the admin
--- screen when the people are real, not from here - this file must not create
+-- screen when the people are real, not from here-this file must not create
 -- Supabase identities, because it has no way to record the password that would
 -- be set and a fixture script holding officer credentials is its own problem.
 --
@@ -62,7 +62,7 @@ ON CONFLICT ("openId") DO NOTHING;
 -- Dates are relative to `now()`, so the reporting windows always have something
 -- recent in them: a matter received in 2019 appears in no weekly, monthly or
 -- quarterly report. Matter n is received n*9 days ago, which spreads the eleven
--- across the last three months - enough for a monthly report and for the
+-- across the last three months-enough for a monthly report and for the
 -- quarter that has just closed to both have something to count.
 DO $$
 DECLARE
@@ -71,7 +71,7 @@ BEGIN
   SELECT id INTO admin_id FROM public."users" WHERE role = 'super_admin' ORDER BY id LIMIT 1;
   IF admin_id IS NULL THEN
     RAISE EXCEPTION
-      'No super administrator found. Run pnpm db:seed first - a matter needs an accountable officer.';
+      'No super administrator found. Run pnpm db:seed first-a matter needs an accountable officer.';
   END IF;
 
   INSERT INTO public."cases" (
@@ -86,7 +86,7 @@ BEGIN
     t.ref,
     2026,
     t.province,
-    now() - (row_number() OVER (ORDER BY t.ref) * interval '9 days'),
+    now()-(row_number() OVER (ORDER BY t.ref) * interval '9 days'),
     t.teacher,
     -- Left null rather than invented. It is the teacher's own staff number, the
     -- one field in this file a made-up value would most easily be mistaken for a
@@ -96,7 +96,7 @@ BEGIN
     t.summary,
     -- Left join, and the distinction matters. An inner join against this
     -- condition keeps only the two rows that have an officer, because
-    -- `openId = NULL` never matches - so the nine unassigned matters, which are
+    -- `openId = NULL` never matches-so the nine unassigned matters, which are
     -- most of the demonstration, would silently not be inserted.
     officer.id,
     officer.name,
@@ -105,7 +105,7 @@ BEGIN
     -- An overdue matter on every urgent one, so the "overdue" filter and the
     -- escalation count on the dashboard have something to find. Relative to now,
     -- so this stays true however long after seeding the file is run.
-    CASE WHEN t.priority = 'urgent' THEN now() - interval '2 days'
+    CASE WHEN t.priority = 'urgent' THEN now()-interval '2 days'
          ELSE now() + interval '21 days' END,
     t.priority::case_priority,
     t.escalation,
@@ -119,7 +119,7 @@ BEGIN
     'R. Kivuva',
     'R. Kivuva',
     NULL,
-    now() - (row_number() OVER (ORDER BY t.ref) * interval '9 days')
+    now()-(row_number() OVER (ORDER BY t.ref) * interval '9 days')
   FROM (VALUES
     -- status, province, teacher, caseNumber, matter type, summary, action, urgency, escalation, needs a decision
     ('NEW',  'NCD',               'Grace Wambui',    'DEMO/TCH/2026/0001', 'Appointment',         'Acting appointment beyond delegated authority',    'Urgent response required on the appointment letter.',          'urgent', 0, false),
@@ -145,13 +145,13 @@ BEGIN
   -- Closure dates, for the two matters that are finished. A closed matter with no
   -- date is a register that cannot answer "how long did this take".
   UPDATE public."cases"
-     SET "dateClosed" = now() - interval '3 days'
+     SET "dateClosed" = now()-interval '3 days'
    WHERE "caseNumber" LIKE 'DEMO/%' AND status IN ('RES','CLS');
 
   -- Referral dates, matching the `referredAt` the referrals below carry.
   UPDATE public."cases"
-     SET "dateReferred"   = now() - interval '4 days',
-         "dateReferredAt" = now() - interval '4 days'
+     SET "dateReferred"   = now()-interval '4 days',
+         "dateReferredAt" = now()-interval '4 days'
    WHERE "caseNumber" LIKE 'DEMO/%' AND status IN ('REF','LEG');
 
   -- The outcome on the two that are finished, because "closed" and "resolved"
@@ -174,7 +174,7 @@ BEGIN
          "briefIssueRequiringDecision" = 'Whether to confirm the dismissal, or refer the matter back for a fresh process.',
          "briefRecommendation" = 'Refer to the Commission. The provincial office has no power to determine the appeal.',
          "briefPreparedByName" = 'R. Kivuva',
-         "briefPreparedAt" = now() - interval '2 days'
+         "briefPreparedAt" = now()-interval '2 days'
    WHERE "caseNumber" = 'DEMO/TCH/2026/0005';
 END $$;
 
@@ -198,7 +198,7 @@ BEGIN
   END IF;
 
   INSERT INTO public."caseEvents" ("caseId", "eventType", note, "actorId", "actorName", "createdAt")
-  SELECT target, e.event_type, e.note, admin_id, 'R. Kivuva', now() - (e.age || ' days')::interval
+  SELECT target, e.event_type, e.note, admin_id, 'R. Kivuva', now()-(e.age || ' days')::interval
     FROM (VALUES
       ('case_received',   'Application received from the Director of the school. Copied to the officer.',  9),
       ('status_change',   'Acknowledged and entered in the central register.',                            8),
@@ -258,8 +258,8 @@ BEGIN
       'court_proceedings,legislation',
       true,
       'R. Kivuva',
-      now() - (interval '4 days'),
-      now() - (interval '4 days'),
+      now()-(interval '4 days'),
+      now()-(interval '4 days'),
       now() + (interval '11 days'),
       admin_id,
       'R. Kivuva',
@@ -281,7 +281,7 @@ BEGIN
       'Salary arrears for two terms not remitted. Recovery advice and the correct procedure sought.',
       'industrial_dispute,statutory_entitlement',
       false,
-      now() - (interval '5 days'),
+      now()-(interval '5 days'),
       now() + (interval '12 days'),
       'Two terms of salary, totalling K12,400, remain unpaid.',
       'The employer has confirmed the arrears in writing and does not dispute the sum.',

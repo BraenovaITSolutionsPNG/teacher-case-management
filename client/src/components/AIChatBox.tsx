@@ -63,11 +63,11 @@ export type AIChatBoxProps = {
  * A ready-to-use AI chat box component that integrates with the LLM system.
  *
  * Features:
- * - Matches server-side Message interface for seamless integration
- * - Markdown rendering with Streamdown
- * - Auto-scrolls to latest message
- * - Loading states
- * - Uses global theme colors from index.css
+ *-Matches server-side Message interface for seamless integration
+ *-Markdown rendering with Streamdown
+ *-Auto-scrolls to latest message
+ *-Loading states
+ *-Uses global theme colors from index.css
  *
  * @example
  * ```tsx
@@ -139,8 +139,8 @@ export function AIChatBox({
       const scrollAreaHeight = containerHeight - inputHeight;
 
       // Reserve space for:
-      // - padding (p-4 = 32px top+bottom)
-      // - user message: 40px (item height) + 16px (margin-top from space-y-4) = 56px
+      //-padding (p-4 = 32px top+bottom)
+      //-user message: 40px (item height) + 16px (margin-top from space-y-4) = 56px
       // Note: margin-bottom is not counted because it naturally pushes the assistant message down
       const userMessageReservedHeight = 56;
       const calculatedHeight =
@@ -170,7 +170,7 @@ export function AIChatBox({
    * Follow the conversation as it grows.
    *
    * `handleSubmit` scrolls after the officer sends, which covers their own
-   * message but not the reply that arrives afterwards - so the answer they were
+   * message but not the reply that arrives afterwards-so the answer they were
    * waiting for was appended below the fold and nothing brought it into view.
    * The suggested-prompt buttons bypass `handleSubmit` entirely and did not
    * scroll at all. Keyed on the rendered messages rather than on the raw prop so
@@ -353,7 +353,7 @@ export function AIChatBox({
           className="shrink-0 h-[38px] w-[38px]"
         >
           {/* The label follows the state, because an icon-only button has no
-              accessible name of its own in either state - it was "button" to a
+              accessible name of its own in either state-it was "button" to a
               screen reader whether it was ready to send or busy. */}
           {isLoading ? (
             <>

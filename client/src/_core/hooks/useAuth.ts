@@ -24,7 +24,7 @@ export function useAuth(options?: UseAuthOptions) {
 
   const logout = useCallback(async () => {
     // Raised before the request, not after. Sign-out ends with the document
-    // being replaced, so nothing observable survives it - the only way to cover
+    // being replaced, so nothing observable survives it-the only way to cover
     // the gap is to say "this is happening" to something that is about to be
     // destroyed.
     beginSignOut();
@@ -37,7 +37,7 @@ export function useAuth(options?: UseAuthOptions) {
       ) {
         // Logged rather than raised. Raising it here propagated out of an
         // `onClick` React never awaits, so it became an unhandled rejection and
-        // nothing navigated - leaving the loader this function had just raised
+        // nothing navigated-leaving the loader this function had just raised
         // covering a page the officer could no longer act on. The navigation
         // below runs either way, so the officer is never left holding a button
         // that appears to do nothing.
@@ -52,7 +52,7 @@ export function useAuth(options?: UseAuthOptions) {
 
       // No `invalidate()` here any more. It used to refetch `auth.me` to prove the
       // session was gone, which is work whose only consumer is the document load
-      // immediately below - so all it could do was delay the thing the officer is
+      // immediately below-so all it could do was delay the thing the officer is
       // waiting for. Setting the cache to null is what makes the brief moment
       // before the document is replaced agree that they are signed out.
 

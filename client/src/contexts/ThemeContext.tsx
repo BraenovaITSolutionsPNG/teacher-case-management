@@ -5,7 +5,7 @@ type Theme = "light" | "dark";
 /**
  * The one key the theme is stored under.
  *
- * Named here because the setting is written in two places - this provider and
+ * Named here because the setting is written in two places-this provider and
  * nothing else. `Settings` used to write it directly while the provider decided
  * separately, and the two disagreed: the officer's choice was saved but never
  * read back, so a reload returned the platform to light with `localStorage`
@@ -40,7 +40,7 @@ export function ThemeProvider({
    * The stored theme is restored after mount rather than read in the `useState`
    * initializer. The initializer runs again on the browser's hydration render,
    * where `localStorage` does exist, so reading it there renders a *different*
-   * theme from the one the server rendered and fails hydration - the server has
+   * theme from the one the server rendered and fails hydration-the server has
    * no storage to read and always answers `defaultTheme`. Restoring in an effect
    * means the first client render matches the server's and the stored theme is
    * applied immediately after, which is the one-frame flash this arrangement

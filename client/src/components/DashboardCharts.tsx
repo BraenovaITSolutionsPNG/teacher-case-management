@@ -37,7 +37,7 @@ import { STATUS_VALUES, STATUS_SHORT, type CaseStatus } from "@shared/statuses";
  *
  * Recharts animates a series in over roughly 1.5 seconds. This is the first
  * screen an officer sees after signing in, and it arrives *underneath* the
- * branded screen - so those 1.5 seconds are spent behind it, still running when
+ * branded screen-so those 1.5 seconds are spent behind it, still running when
  * it dissolves. The handover then reveals a dashboard whose bars are still
  * growing, and that is what made the end of the transition look rough: the screen
  * changed and the thing behind it did not stop moving.

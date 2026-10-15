@@ -10,7 +10,7 @@
  *
  * `@supabase/auth-js` 2.117 exposes `listUsers`, `deleteUser`, `generateLink` and
  * `signOut(jwt, scope)`, and nothing for sessions. `signOut` with a service-role
- * client takes a JWT and a scope, so it can end one session - but it cannot be
+ * client takes a JWT and a scope, so it can end one session-but it cannot be
  * *given* a list to choose from, and the officer is the only one who knows which
  * device is the one in front of them. So the two endpoints below are called as they
  * are documented:
@@ -21,7 +21,7 @@
  * Both are admin endpoints and both need the service role, which is why they live
  * here and not in `supabaseAuth.ts`'s client: `createAdminClient` is already the
  * escape hatch for the two operations that cannot be done as a user, and this is
- * now a third category - self-service, not an administrator action - so the
+ * now a third category-self-service, not an administrator action-so the
  * distinction is drawn in the module rather than in the caller.
  *
  * ## The one control that matters
@@ -99,7 +99,7 @@ export function canManageSessions(): boolean {
  *
  * `currentSessionId` marks the one making the request. It is optional because the
  * caller may not be able to resolve it, and an unmarked current session is a
- * degraded list rather than an error - see the note on `AuthenticatedUser`.
+ * degraded list rather than an error-see the note on `AuthenticatedUser`.
  */
 export async function listSessions(
   userId: string,
@@ -142,7 +142,7 @@ export async function listSessions(
  *
  * The id is checked against `currentSessionId` by the caller rather than here,
  * because refusing to end your own session is a policy decision that belongs
- * beside the other capability checks - see `auth.revokeSession` in
+ * beside the other capability checks-see `auth.revokeSession` in
  * `server/routers.ts`.
  */
 export async function revokeSession(
@@ -193,7 +193,7 @@ export async function revokeOtherSessions(
  *
  * An officer deciding whether to end a session cannot compare browser strings, and
  * cannot act on them at all if they do not know what a "Mozilla/5.0" prefix is. This
- * extracts browser and platform, and says honestly when it cannot tell - an
+ * extracts browser and platform, and says honestly when it cannot tell-an
  * unrecognised agent is labelled rather than guessed at, because a wrong name on a
  * security control is worse than an unhelpful one.
  */
@@ -221,8 +221,8 @@ export function describeDevice(userAgent: unknown): string {
     [/Linux/, "Linux"],
   ]);
 
-  // A Linux agent covers far more than one platform - servers, crawlers, and
-  // browsers whose agent omits a distribution - so "Linux" alone is said as
+  // A Linux agent covers far more than one platform-servers, crawlers, and
+  // browsers whose agent omits a distribution-so "Linux" alone is said as
   // "Linux" and not dressed up as a particular distribution.
   const parts = [browser, platform].filter(Boolean) as string[];
   return parts.length ? parts.join(" on ") : "Unknown device";

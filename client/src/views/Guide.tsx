@@ -14,8 +14,8 @@ import { useRouter } from "next/navigation";
  *
  * Reachable without a session, because the sign-in screen offers it and an
  * officer who cannot yet sign in is the one who most needs it. It answers the
- * four questions that come up before a first case is filed - how do I get in,
- * what do I file, what do the status codes mean, and who can do what - and
+ * four questions that come up before a first case is filed-how do I get in,
+ * what do I file, what do the status codes mean, and who can do what-and
  * stops there. Anything an officer needs to *do* belongs in the application,
  * not in a page that can drift away from it.
  *
@@ -80,7 +80,7 @@ export default function Guide() {
         <p className="mt-2 text-slate-600">
           How the Provincial Matters platform is used, and what each part of it
           means. Nothing here is a substitute for the Provincial Matters
-          Administration Manual - this is the short version of the parts you
+          Administration Manual-this is the short version of the parts you
           touch day to day.
         </p>
 

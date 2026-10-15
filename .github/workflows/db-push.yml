@@ -8,10 +8,10 @@
 # DATABASE_URL must be the *session* pooler (aws-<region>.pooler.supabase.com on
 # 5432), and not either of the alternatives, for two separate reasons:
 #
-#   - Not the direct host (db.<ref>.supabase.co:5432). It publishes only an AAAA
+#  -Not the direct host (db.<ref>.supabase.co:5432). It publishes only an AAAA
 #     record, the hosted runner has no IPv6 route, and the connection dies with
 #     ENETUNREACH before a statement runs.
-#   - Not the transaction pooler on 6543. DDL runs in a transaction and that mode
+#  -Not the transaction pooler on 6543. DDL runs in a transaction and that mode
 #     hands the backend back between transactions, so a migration sent through it
 #     fails partway with the schema half applied.
 #
@@ -24,13 +24,13 @@ on:
   push:
     branches: [main]
     paths:
-      - drizzle/**
-      - drizzle.config.ts
-      - server/_core/databaseConnection.ts
-      - scripts/verify-schema.ts
-      - package.json
-      - pnpm-lock.yaml
-      - .github/workflows/db-push.yml
+     -drizzle/**
+     -drizzle.config.ts
+     -server/_core/databaseConnection.ts
+     -scripts/verify-schema.ts
+     -package.json
+     -pnpm-lock.yaml
+     -.github/workflows/db-push.yml
 concurrency:
   # Two migrations against one database at once is how a half-applied schema
   # happens. A push while one is running queues behind it rather than racing.
@@ -53,7 +53,7 @@ jobs:
       # fixes that: databaseConnection.ts verifies against exactly this
       # certificate, and it is passed to `migrate` and `db:verify` alike through
       # that one module. Set it to the CA from Dashboard -> Database -> SSL
-      # Configuration, as the PEM itself - a path does not exist on a runner.
+      # Configuration, as the PEM itself-a path does not exist on a runner.
       DATABASE_CA_CERT: ${{ secrets.DATABASE_CA_CERT }}
       # Only consulted when DATABASE_CA_CERT is empty, and it is the weaker of the
       # two: it verifies against the host trust store, which is correct for a
@@ -73,11 +73,11 @@ jobs:
       #
       # The test is in the shell, not in `if:`. The `secrets` context is not
       # available to a step-level `if`, and referencing it there makes the whole
-      # workflow file invalid - GitHub then rejects the run before a single step
+      # workflow file invalid-GitHub then rejects the run before a single step
       # starts, reporting "likely failed because of a workflow file issue" and
       # no log at all. DATABASE_CA_CERT is already in this job's env, so the
       # shell can read it directly and the secret is never echoed.
-      - name: Refuse to run without the CA certificate
+     -name: Refuse to run without the CA certificate
         run: |
           if [ -z "${DATABASE_CA_CERT:-}" ]; then
             echo "::error::DATABASE_CA_CERT is not set on this repository."
@@ -88,20 +88,20 @@ jobs:
             echo "is safe to store as a secret."
             exit 1
           fi
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+     -uses: actions/checkout@v4
+     -uses: pnpm/action-setup@v4
+     -uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: pnpm
-      - run: pnpm install --frozen-lockfile
+     -run: pnpm install --frozen-lockfile
       # `migrate` and not `pnpm db:push`, which is `generate` then `migrate`:
       # generate writes a new migration file, and a file generated on a runner
       # and never committed is a migration nobody reviewed. Schema changes are
       # generated and committed locally, where they can be read.
-      - run: pnpm exec drizzle-kit migrate
+     -run: pnpm exec drizzle-kit migrate
       # Turns "the job went green" into "the tables are there", which is the
       # difference between a green job and a working application. It also asserts
       # row level security is on with no policies, so a database left readable
       # through the public anon key fails the deploy instead of passing it.
-      - run: pnpm db:verify
+     -run: pnpm db:verify

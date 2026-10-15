@@ -37,7 +37,7 @@ import type { LucideIcon } from "lucide-react";
 /**
  * Inferred from the router rather than restated here. The payload has
  * literal status and matter-type unions and Date fields, and a hand-written
- * copy of it drifts the moment the server adds a status - the board would then
+ * copy of it drifts the moment the server adds a status-the board would then
  * accept a value the server can never send, and reject one it can.
  */
 type Monitoring = NonNullable<
@@ -53,8 +53,8 @@ type SlimCase = Monitoring["newMatters"][number];
  * server query always sets, so the `?? 0` fallbacks are unreachable in practice.
  */
 /**
- * `assignedOfficerName` is optional because two of the lists - the case briefs
- * and the decision list - are built from `slimCase` but do not carry it.
+ * `assignedOfficerName` is optional because two of the lists-the case briefs
+ * and the decision list-are built from `slimCase` but do not carry it.
  * The renderer treats it as absent rather than as empty, which is also how the
  * server means it: the officer is genuinely not recorded, not recorded as none.
  */
@@ -74,7 +74,7 @@ type MonitorRow = Omit<SlimCase, "assignedOfficerName"> & {
  * `monitoring` is null when the database is unreachable: the server answers the
  * dashboard rather than failing the whole screen, so the rest of the overview
  * still renders. The board says so plainly instead of showing empty lists,
- * which would read as "nothing needs attention" - the opposite of the truth.
+ * which would read as "nothing needs attention"-the opposite of the truth.
  */
 export function CaseMonitoringBoard({
   monitoring,

@@ -3,8 +3,8 @@ import { getDirectorDesk, getRecentlyClosed } from "./db";
 import type { Case } from "../drizzle/schema";
 
 /**
- * The Director's desk is a pure function of the cases passed in - no database,
- * no referrals - so the grouping rules get the same direct scrutiny as any
+ * The Director's desk is a pure function of the cases passed in-no database,
+ * no referrals-so the grouping rules get the same direct scrutiny as any
  * other predicate in `shared`. These fixtures are deliberately small: each test
  * isolates the one signal it names, and a matter is never present in two lists
  * at once unless the semantics genuinely overlap (urgent and overdue both

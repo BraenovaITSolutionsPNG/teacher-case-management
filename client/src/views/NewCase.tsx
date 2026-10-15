@@ -32,14 +32,14 @@ import { toast } from "sonner";
  * The manual's Golden Rule opens with "no teacher matter should be received
  * without being registered", so this form is deliberately short: what the
  * teacher is, what the matter is, and who is dealing with it. Everything the
- * manual only needs later - the verification, the investigation, the referral -
+ * manual only needs later-the verification, the investigation, the referral -
  * belongs on the matter itself and is captured as the case moves.
  *
  * Two fields are worth a note. The due date is not optional bookkeeping: it
  * turns a matter with no deadline into one that can sit with an officer
  * indefinitely. It was documented here as required while the validation only ran
  * `if (dueDate && …)` and the field carried no `required`, so a matter could be
- * registered with no deadline at all - and a matter with no deadline is invisible
+ * registered with no deadline at all-and a matter with no deadline is invisible
  * to every signal that depends on one: `dashboard.counts.delayMatters`, the
  * register's overdue filter and `getGoldenRuleCompliance`'s referral follow-up all
  * require a `dueDate`. It is now refused without one. The action required is
@@ -98,8 +98,8 @@ export default function NewCase() {
 
   /*
    * Both of these precede the capability check, because `user && !can(...)` is
-   * false while `user` is undefined. The form used to render - and be
-   * submittable - while the identity was still being resolved, so an officer
+   * false while `user` is undefined. The form used to render-and be
+   * submittable-while the identity was still being resolved, so an officer
    * with no capability could begin registering a matter and only be refused when
    * the answer arrived. The server refuses the write either way, so nothing
    * improper was recorded; what it cost was a form that accepted twenty fields
@@ -175,9 +175,9 @@ export default function NewCase() {
     if (Object.keys(next).length) return;
 
     create.mutate({
-      // `parseDateInput` rather than `new Date(...)`. The two agree today - a
+      // `parseDateInput` rather than `new Date(...)`. The two agree today-a
       // date-only ISO string is UTC midnight by specification, which is also what
-      // the server's `z.coerce.date()` produces - but the shared helper says
+      // the server's `z.coerce.date()` produces-but the shared helper says
       // plainly that this is a calendar date, and refuses a string that is not one
       // rather than producing an Invalid Date that reaches the server.
       dateReceived: parseDateInput(dateReceived) ?? new Date(),

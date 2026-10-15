@@ -4,7 +4,7 @@ import { Skeleton } from "./ui/skeleton";
  * The shell shown while the session is being resolved.
  *
  * Marked as a status region with `aria-busy`, because a full page of grey boxes
- * is otherwise indistinguishable from a page that rendered nothing at all - the
+ * is otherwise indistinguishable from a page that rendered nothing at all-the
  * shell has no text in it to be read, so a screen reader reported the platform as
  * empty on every load. The skeleton is doing its job visually; it just was not
  * saying anything.

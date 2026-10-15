@@ -27,7 +27,7 @@
  * deployment could reach, and the point of the check is to catch a mangled paste
  * early, not to reimplement a URL parser.
  *
- * Held at supabase-js's own bar - trim, then `http`/`https`, then parse - on
+ * Held at supabase-js's own bar-trim, then `http`/`https`, then parse-on
  * purpose. Tightening it would refuse deployments that work today, and this
  * guards against a paste going wrong, not against a hostname being unreachable.
  */
@@ -60,7 +60,7 @@ export function isSupabaseUrl(value: string | null | undefined): boolean {
  *
  * @param value the configured value, verbatim
  * @param source the names the value could have been supplied under, for the
- *   message - the two spellings are reconciled before this is called, so the
+ *   message-the two spellings are reconciled before this is called, so the
  *   operator is told both rather than whichever one happened to win
  */
 export function supabaseUrlFault(
@@ -71,7 +71,7 @@ export function supabaseUrlFault(
   return (
     `The Supabase project URL on this deployment is not a URL: ${source} is set to ` +
     `${JSON.stringify(value)}, which is not an http or https address. It must be the ` +
-    `project's own address - https://<project-ref>.supabase.co - and nothing else: no ` +
+    `project's own address-https://<project-ref>.supabase.co-and nothing else: no ` +
     `surrounding quotes, no trailing text, and no characters in front of https://.`
   );
 }

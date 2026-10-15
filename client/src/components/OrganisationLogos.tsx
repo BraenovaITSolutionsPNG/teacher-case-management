@@ -7,7 +7,7 @@ import Image from "next/image";
  * The two organisation marks, shown together at the head of the navigation.
  *
  * Order is national emblem first, then the Commission. The crest reads first
- * because it is the state and the Commission is one office within it - the
+ * because it is the state and the Commission is one office within it-the
  * reverse would put a department's mark ahead of the country's, which is the
  * order a government system is not meant to be read in.
  *
@@ -24,7 +24,7 @@ import Image from "next/image";
  *
  * The two slots that use this (the expanded header and the collapsed footer) are
  * the same pair at two sizes, so the marks are defined once here rather than
- * repeated - the placeholder boxes this replaced had drifted into describing the
+ * repeated-the placeholder boxes this replaced had drifted into describing the
  * second mark as a Department of Education logo, which it is not.
  */
 
@@ -59,7 +59,7 @@ export function OrganisationLogos({
    * a small candidate from the srcset.
    *
    * Both slots fix the *height* and letterbox horizontally, so the painted
-   * width is the height scaled by each source's aspect ratio - about 64px for
+   * width is the height scaled by each source's aspect ratio-about 64px for
    * the header and 43px for the footer, against sources of 800 and 1720px
    * wide. Without this the optimiser falls back to the intrinsic size and
    * serves a 3840px-wide emblem into a 48px box, which is the exact cost the
@@ -70,7 +70,7 @@ export function OrganisationLogos({
    * Nominal paint size, 4:3 to match both sources. `sizes` alone is not enough:
    * it governs the srcset but leaves `src` pointing at the largest candidate,
    * and `src` is what a client without srcset support actually downloads.
-   * The CSS in `markClassName` still governs layout - these only feed the
+   * The CSS in `markClassName` still governs layout-these only feed the
    * optimiser and the intrinsic aspect ratio.
    */
   width?: number;

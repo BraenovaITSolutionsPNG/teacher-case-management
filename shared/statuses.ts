@@ -51,7 +51,7 @@ export const STATUS_SHORT: Record<CaseStatus, string> = {
 /**
  * Status tags follow the industrial standard: a tinted plate with a border one
  * step stronger than the fill, so the tag keeps its edge on a white row. The
- * saturation is deliberately low - status is a label, not a highlight, and
+ * saturation is deliberately low-status is a label, not a highlight, and
  * eleven fully saturated colours at once would out-shout the data.
  */
 export const STATUS_CLASSES: Record<CaseStatus, string> = {

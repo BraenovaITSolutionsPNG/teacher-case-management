@@ -5,7 +5,7 @@ import { describe, expect, it, vi, afterEach } from "vitest";
  *
  * Its own file because `ENV` is built once at import time, so the only way to
  * test a build without Supabase is to change the environment and rebuild the
- * module graph - which means a fresh module registry, and therefore a test file
+ * module graph-which means a fresh module registry, and therefore a test file
  * of its own. Doing it alongside a file that mocks the Supabase module would
  * assert against the mock rather than against the real thing.
  */
@@ -112,7 +112,7 @@ describe("a deployment with no Supabase configuration", () => {
     // The deployment this was added for: both halves set, so every
     // "is it configured?" check in the codebase answered yes, and the first
     // sign-in attempt produced "Invalid supabaseUrl: Must be a valid HTTP or
-    // HTTPS URL" from inside the Supabase library - an error that names neither
+    // HTTPS URL" from inside the Supabase library-an error that names neither
     // the variable nor the value, and arrives via the console warning in
     // createContext that swallows it into a log line.
     vi.stubEnv("SUPABASE_URL", '"https://project.supabase.co"');

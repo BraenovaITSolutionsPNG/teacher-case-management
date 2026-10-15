@@ -61,7 +61,7 @@ import { useState, type ReactNode } from "react";
  * All five are gated on the single `report:view` capability. The manual has the
  * Professional Assistant to the Director preparing the weekly, monthly and
  * quarterly reports, so the Assistant is the lowest tier that reaches this
- * screen - the Director receives them rather than being the only one who can
+ * screen-the Director receives them rather than being the only one who can
  * produce them.
  *
  * A quarterly figure on its own is a count, not a performance report, so every
@@ -77,7 +77,7 @@ export default function Reports() {
    * On the way in, before the gate below.
    *
    * The gate reads `user && !can(...)`, which is false while `user` is still
-   * undefined - so the whole reporting set rendered while the identity was still
+   * undefined-so the whole reporting set rendered while the identity was still
    * being resolved, and all five report queries went out before anyone knew
    * whether this officer was entitled to see them. The server refuses them, so
    * nothing leaked; the cost was a screen of requests an officer with no
@@ -104,7 +104,7 @@ export default function Reports() {
   /*
    * And a failure is not a refusal. `me.isError` used to fall into the same
    * branch as an officer who lacks the capability, which reported "not open to
-   * your role" for what was a failed request - naming the officer's permissions
+   * your role" for what was a failed request-naming the officer's permissions
    * as the cause of something the platform could not answer.
    */
   if (me.isError) {
@@ -148,7 +148,7 @@ export default function Reports() {
         <PageHeader
           eyebrow="Reporting set"
           title="Reports"
-          description="The weekly brief, the monthly and quarterly reports, and the compliance view - the reports the manual has the office produce."
+          description="The weekly brief, the monthly and quarterly reports, and the compliance view-the reports the manual has the office produce."
           icon={FileBarChart}
         />
 
@@ -207,7 +207,7 @@ function PrintButton() {
  * were the manual's own section numbers, and a Director holding the printed
  * brief beside this one can no longer cite a letter from the screen. If that
  * cross-reference matters, the letters belong back in the printed output even
- * if they stay off the screen - which is a change to the print stylesheet
+ * if they stay off the screen-which is a change to the print stylesheet
  * rather than to this component.
  */
 function WeeklyBriefTab() {
@@ -517,7 +517,7 @@ function MonthlyTab() {
   // `month || undefined`, the way the quarterly tab below already reads its own
   // period picker. A native `<input type="month">` answers `""` when it is
   // cleared, and the route's validator takes a month only in the form
-  // `2026-01` - so passing the empty string through turned clearing the picker
+  // `2026-01`-so passing the empty string through turned clearing the picker
   // into "Choose a month, in the form 2026-01." rather than back to the current
   // month, which is what leaving the field blank should mean.
   const query = trpc.reports.monthly.useQuery({ month: month || undefined });
@@ -669,7 +669,7 @@ function QuarterlyTab() {
   // Not requested until the picker has an answer.
   //
   // With no quarter chosen this used to send `undefined`, and the server
-  // answered for whichever quarter it considered current - so the officer was
+  // answered for whichever quarter it considered current-so the officer was
   // shown a quarterly report under an empty `<select>` that had never named the
   // period it was about. The figures were right and the heading above them was
   // missing, which is the sort of thing that is noticed in a briefing rather
@@ -680,7 +680,7 @@ function QuarterlyTab() {
   );
 
   // The picker is what the report hangs on, so a failure to read it is a
-  // failure to produce the report - not an empty control beside a report.
+  // failure to produce the report-not an empty control beside a report.
   if (quarters.isError) {
     return (
       <ErrorState
@@ -717,7 +717,7 @@ function QuarterlyTab() {
         >
           {(quarters.data ?? []).map(item => (
             <option key={item.key} value={item.key}>
-              {item.label} - {item.range}
+              {item.label}-{item.range}
             </option>
           ))}
         </select>
@@ -1178,7 +1178,7 @@ function Breakdown({
   );
 }
 
-/** "was 14" - the comparison a quarterly headline needs to mean anything. */
+/** "was 14"-the comparison a quarterly headline needs to mean anything. */
 function was(current: number, previous: number) {
   const delta = current - previous;
   if (delta === 0) return `no change on ${previous}`;
@@ -1189,7 +1189,7 @@ function was(current: number, previous: number) {
  * Green for movement in the right direction, amber for the other.
  *
  * Amber, not red: this is called on "Received" as well as "Closed", and more
- * matters received is not a fault - a rise in intake is a fact about the
+ * matters received is not a fault-a rise in intake is a fact about the
  * province's month, not an adverse movement. Only a fall in "Closed" is a
  * shortfall, and the single tone keeps the two headlines comparable.
  */

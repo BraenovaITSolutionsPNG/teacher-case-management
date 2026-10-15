@@ -78,11 +78,11 @@ import { toast } from "sonner";
  * Two design decisions are worth stating, because both are about what the client
  * is allowed to claim:
  *
- *  - Every action is gated on the capability the *server* enforces, using
+ * -Every action is gated on the capability the *server* enforces, using
  *    `can(role, ...)`. A control the officer cannot use is shown disabled with
  *    the reason rather than hidden, because "I cannot do this" and "this does
  *    not exist" are different answers and only one of them is true.
- *  - The Golden Rule is not checked here before saving. The server runs
+ * -The Golden Rule is not checked here before saving. The server runs
  *    `checkGoldenRule` and refuses, and this screen renders the refusal as it
  *    comes back. A second implementation of the rule in the interface would be a
  *    third thing to keep in step, and it would be the one that drifts.
@@ -374,7 +374,7 @@ export default function CaseDetail() {
                   <p className="mt-2 text-xs text-slate-500">
                     Closed {formatDateOnly(matter.dateClosed)}
                     {matter.decidedByName
-                      ? ` - decided by ${matter.decidedByName}`
+                      ? `-decided by ${matter.decidedByName}`
                       : ""}
                     {matter.communicatedByName
                       ? `, communicated by ${matter.communicatedByName}`
@@ -497,7 +497,7 @@ function MatterTab({
    * so there was no moment at which a second change could not be made. Every one
    * of them stayed live while the previous write was still going: selecting a new
    * status a second time fired a second mutation, and because both carried the
-   * whole matter rather than just the field, whichever landed last won - so an
+   * whole matter rather than just the field, whichever landed last won-so an
    * officer correcting a typo could silently undo the status change they had
    * just made.
    *
@@ -700,7 +700,7 @@ function MatterTab({
               level => level.level <= MAX_ESCALATION_LEVEL
             ).map(level => (
               <option key={level.level} value={level.level}>
-                {level.level} - {level.label}
+                {level.level}-{level.label}
               </option>
             ))}
           </select>
@@ -786,7 +786,7 @@ function ClosureForm({
     // `todayInputValue` below was dead code. Every first closure therefore opened
     // with "Date closed" blank, and because `ready` requires it to be filled the
     // primary button stayed disabled and the officer was told all three fields
-    // were required - for a date the form was meant to pre-fill with the day
+    // were required-for a date the form was meant to pre-fill with the day
     // they were closing the matter.
     toDateInputValue(currentDateClosed) || todayInputValue()
   );
@@ -1010,7 +1010,7 @@ function ActivityTab({
           {/* Spinner while it writes.
 
               This button was disabled and nothing else, so pressing it made it
-              go dead with no explanation - a control that stops working and
+              go dead with no explanation-a control that stops working and
               will not say why. The spinner keeps the label as the action's name,
               which is the idiom the other five buttons on this matter already
               use; `aria-busy` is what says it out loud.
@@ -1255,7 +1255,7 @@ function ReferralCard({
           what is claimed, what the province verified, what is unresolved, and
           the decision or advice required. The National Section cannot advise on
           the province's duty without these, and they were being collected and
-          then never shown to anyone - including the officer who wrote them. */}
+          then never shown to anyone-including the officer who wrote them. */}
       {referral.statementClaim ||
       referral.statementVerified ||
       referral.statementUnresolved ||
@@ -1673,8 +1673,8 @@ function DocumentRow({
 /**
  * Turns a failed mutation into a sentence an officer can act on.
  *
- * A schema rejection arrives carrying the validator's own report - a JSON array
- * of issues, each naming a field path and a limit - and `error.message` is that
+ * A schema rejection arrives carrying the validator's own report-a JSON array
+ * of issues, each naming a field path and a limit-and `error.message` is that
  * report verbatim. Rendering it as-is put
  * `[{"origin":"string","code":"too_small",...}]` on the screen under a form the
  * officer had filled in correctly except for two boxes, which tells them
@@ -1693,7 +1693,7 @@ function briefSaveError(cause: { message: string; data?: unknown }): string {
       return messages?.length ? [`${field.label}: ${messages[0]}`] : [];
     });
     if (lines.length) {
-      return `The case brief was not saved - ${lines.join(" ")}`;
+      return `The case brief was not saved-${lines.join(" ")}`;
     }
   }
 
@@ -1704,7 +1704,7 @@ function briefSaveError(cause: { message: string; data?: unknown }): string {
       .map(issue => (issue as { message?: string }).message)
       .filter((message): message is string => Boolean(message));
     if (messages.length)
-      return `The case brief was not saved - ${messages.join(" ")}`;
+      return `The case brief was not saved-${messages.join(" ")}`;
   }
 
   if (
@@ -1912,7 +1912,7 @@ function BriefTab({
               />
               <span className="block text-xs text-slate-500">
                 {field.conditional && !needsDecision
-                  ? `${field.hint} - only needed when this matter is flagged for the Director's attention.`
+                  ? `${field.hint}-only needed when this matter is flagged for the Director's attention.`
                   : field.hint}
               </span>
               {message ? (
@@ -1947,7 +1947,7 @@ function BriefTab({
             setFieldErrors(next);
             if (Object.keys(next).length) {
               setError(
-                "The case brief was not saved - fill in every section before saving."
+                "The case brief was not saved-fill in every section before saving."
               );
               return;
             }
@@ -2055,7 +2055,7 @@ function NotAMatter({
   return (
     // `role="alert"` because this stands for both a matter that could not be
     // opened and one that is not there at all, and a screen reader was reading
-    // it as a heading like any other - which is the one moment on the platform
+    // it as a heading like any other-which is the one moment on the platform
     // where being missed is worst. It interrupts rather than announces politely,
     // which is right for a failure and generous for a dead end.
     <div

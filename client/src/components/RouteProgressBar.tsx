@@ -14,7 +14,7 @@ import { useEffect, useRef, useState } from "react";
  * to show on every navigation: the previous screen was torn down the instant
  * a navigation began, so a link that resolved in a fifth of a second still
  * cost a full-screen takeover and a blank frame on the way back in. That is
- * what made the tabs read as slow - the slow part was the loader, not the
+ * what made the tabs read as slow-the slow part was the loader, not the
  * navigation. See the note in `app/layout.tsx` for the decision to drop the
  * root `loading.tsx`.
  *
@@ -35,7 +35,7 @@ import { useEffect, useRef, useState } from "react";
  * anything.
  *
  * It hears about a navigation two ways, and both are needed. A click on a
- * `<Link>` is observable from the document, so it is read there - keyboard
+ * `<Link>` is observable from the document, so it is read there-keyboard
  * activation included, since Enter does not fire a click. A `router.push` is
  * not observable at all, so the code that does it says so through
  * `useRouteNavigate`. Missing the second one was a real gap rather than a
@@ -47,8 +47,8 @@ import { useEffect, useRef, useState } from "react";
  * this app is a bounce to the sign-in screen on an expired session, and a bar
  * drawn across the screen on the way out would be drawn over the message the
  * officer is being given. The one navigation that genuinely warrants a
- * full-screen takeover - the handover after a sign-in, which is waiting on a
- * cold server render - is drawn by the sign-in screen itself, which stays
+ * full-screen takeover-the handover after a sign-in, which is waiting on a
+ * cold server render-is drawn by the sign-in screen itself, which stays
  * mounted for exactly as long as the wait.
  */
 
@@ -68,7 +68,7 @@ function internalLinkFrom(
   if (!(anchor instanceof HTMLAnchorElement)) return null;
   if (anchor.hasAttribute("download")) return null;
   if (anchor.target && anchor.target !== "_self") return null;
-  // A plain `#section` link, and a mailto: or tel: - all of which stay put.
+  // A plain `#section` link, and a mailto: or tel:-all of which stay put.
   if (anchor.getAttribute("href")?.startsWith("#")) return null;
 
   let url: URL;
@@ -93,8 +93,8 @@ export function RouteProgressBar() {
    * `useRef` rather than `useState` for the instance, because the event
    * listeners below are registered once and must reach the same controller for
    * their whole life; recreating it on a render would strand the timers set up
-   * by the previous one. The timing itself - when to paint, when to take down,
-   * when to give up - lives in `createRouteProgress` and is tested there against
+   * by the previous one. The timing itself-when to paint, when to take down,
+   * when to give up-lives in `createRouteProgress` and is tested there against
    * a fake clock. This component decides only *when a navigation is happening*,
    * which is the half that needs a DOM to answer.
    */
@@ -111,7 +111,7 @@ export function RouteProgressBar() {
     /**
      * The half that cannot be observed. Anything navigating through
      * `useRouteNavigate` announces itself here, because a `router.push` leaves no
-     * trace a document listener could find - and the command palette, the case
+     * trace a document listener could find-and the command palette, the case
      * rows on the overview and the jump to a newly registered matter all navigate
      * that way. They are the heavy navigations in the platform, so leaving them
      * unannounced would have been the worst of both worlds: a bar on the cheap
@@ -156,7 +156,7 @@ export function RouteProgressBar() {
     }
 
     // Enter on a focused link does not fire a click, so keyboard navigation would
-    // otherwise get no bar at all - the officer using the keyboard would find the
+    // otherwise get no bar at all-the officer using the keyboard would find the
     // platform feels slower than the one using the mouse.
     function onKeyDown(event: KeyboardEvent) {
       if (event.key !== "Enter" || event.defaultPrevented) return;

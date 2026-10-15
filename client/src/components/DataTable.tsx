@@ -37,7 +37,7 @@ export function CardPanel({
    * Decorative, and the caller is expected to pass an `aria-hidden` icon: the
    * title beside it already names the panel, so a described icon is the same
    * label twice. It is a slot rather than a name because the tone is part of the
-   * meaning - an overdue panel in red and a settled one in the same grey are
+   * meaning-an overdue panel in red and a settled one in the same grey are
    * different signals, and a component that picked the colour itself could not
    * tell them apart.
    */

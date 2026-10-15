@@ -14,7 +14,7 @@ import "@/index.css";
  * loaded it, so the whole application was silently rendering in the
  * system UI font and the two never matched. `next/font` fetches it at
  * build time and self-hosts the result, so there is no third-party
- * request at runtime and no layout shift from a late swap - the
+ * request at runtime and no layout shift from a late swap-the
  * variable it exposes is what `body` now reads.
  */
 const dmSans = DM_Sans({
@@ -106,7 +106,7 @@ export const viewport: Viewport = {
  * There is deliberately no `loading.tsx` at the app root. A loading
  * boundary swaps the page the officer is on for a full-screen loader the
  * moment any navigation starts, which made every tab change read as a slow
- * load - the tabs that took a fraction of a second included. Without one,
+ * load-the tabs that took a fraction of a second included. Without one,
  * the current screen stays up until the next one's paint commits, the
  * navigation items have already prefetched the payload behind each link,
  * and each screen keeps the inline skeletons it has for data that has
@@ -118,7 +118,7 @@ export const viewport: Viewport = {
  * commit in well under the delay, because the payload is prefetched behind
  * the link, and the correct amount of feedback for a navigation that has
  * already finished is none. The one that does not is the one that needs to be
- * heard from - and it is told by an overlay rather than by a takeover, so it
+ * heard from-and it is told by an overlay rather than by a takeover, so it
  * costs nothing on the tabs that did not need it.
  *
  * The one wait a *full-screen* loader is kept for is the one after a sign-in,
@@ -135,7 +135,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <PlatformPageLoader />
           {/* Alongside it rather than instead of it: this one is for a tab
               change that is slow, that one is for a session ending. Neither
-              overlaps the other - the bar only follows a link click, and the
+              overlaps the other-the bar only follows a link click, and the
               sign-in and sign-out waits are both driven by `router` calls the
               bar deliberately ignores. */}
           <RouteProgressBar />

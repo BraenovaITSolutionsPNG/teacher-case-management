@@ -4,7 +4,7 @@
 -- dashboard (Authentication -> Users -> Add user) rather than by `pnpm db:seed`.
 --
 -- Why this exists at all: `auth.me` resolves an officer by `users.authUserId`, so
--- a Supabase user with no row here can never sign in - and creating that row is
+-- a Supabase user with no row here can never sign in-and creating that row is
 -- all that stands between them and the platform. Doing it by hand needs no
 -- service-role key: this is a plain INSERT on the application's own connection,
 -- whereas `pnpm db:seed` needs the service role because it has to create the

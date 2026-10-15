@@ -21,7 +21,7 @@ import { Suspense, useEffect, useState } from "react";
  * takeover is the most disruptive thing an interface can do, and
  * spending it on a move that takes a fraction of a second means
  * the officer's first impression of every other tab is a
- * takeover that has already gone - which is what made the tabs
+ * takeover that has already gone-which is what made the tabs
  * read as slow. What is left is a move that either happens
  * instantly or shows the real shape of the page loading into it.
  */

@@ -85,7 +85,7 @@ export function sectionForCategory(category: MatterCategory): string {
 
 // ---------------------------------------------------------------------------
 // §5 Matters that should be referred
-// "A Provincial officer should refer a matter when:" - a matter cannot be held
+// "A Provincial officer should refer a matter when:"-a matter cannot be held
 // indefinitely, so the officer records which trigger applied rather than
 // free-texting the reason.
 // ---------------------------------------------------------------------------
@@ -216,7 +216,7 @@ export function escalationLabel(level: number | null | undefined): string {
 
 // ---------------------------------------------------------------------------
 // §11 File Management
-// "Each matter should have a complete case file containing:" - the classes below
+// "Each matter should have a complete case file containing:"-the classes below
 // are the checklist a file is expected to satisfy before closure.
 // ---------------------------------------------------------------------------
 
@@ -294,7 +294,7 @@ export const DOCUMENT_CLASS_KEYS = DOCUMENT_CLASSES.map(item => item.key) as [
  * Declared here because both ends need it and they must not drift: the server
  * sniffs the bytes against this list and refuses anything else, and the client
  * needs it to narrow `File.type` before sending. A file's declared type is only
- * a claim - the server checks the bytes - but sending a type the schema would
+ * a claim-the server checks the bytes-but sending a type the schema would
  * reject is a wasted round trip.
  *
  * The list is deliberately short. These are the formats an office actually
@@ -316,7 +316,7 @@ export type CasefileMimeType = (typeof CASEFILE_MIME_TYPES)[number];
 
 /**
  * 10MB. Must stay under what the database accepts in one packet once the bytes
- * are base64-encoded into JSON, which inflates them by a third - see
+ * are base64-encoded into JSON, which inflates them by a third-see
  * DOCUMENT_MAX_BYTES in server/routers.ts and the note there about
  * max_allowed_packet.
  */
@@ -377,7 +377,7 @@ export const CASE_BRIEF_CONDITIONAL_KEYS = CASE_BRIEF_FIELDS.filter(
 /**
  * The shortest a brief section may be, in characters.
  *
- * Four is not a claim about how long a case report ought to be - it is the
+ * Four is not a claim about how long a case report ought to be-it is the
  * floor below which the section is blank rather than brief. It lives here, next
  * to the field list, because the server's schema and the brief form's own
  * validation both enforce it: when they were written separately they drifted,
@@ -412,7 +412,7 @@ export function caseBriefFieldError(
  * Whether a matter is asking the Director for something.
  *
  * The §12B flag is the officer's instrument for saying so, but it is not the
- * only signal: a matter sitting at DEC - "Awaiting decision" - is asking by its
+ * only signal: a matter sitting at DEC-"Awaiting decision"-is asking by its
  * status whatever the flag says. The Director's own queue is built from both
  * (`decisionRequired || status === "DEC"`), so the brief has to be judged on the
  * same pair, or a matter can appear in that queue with a brief that never says
@@ -518,7 +518,7 @@ export function checkGoldenRule(input: GoldenRuleInput): GoldenRuleViolation[] {
   const hasText = (value: string | null | undefined, min: number) =>
     typeof value === "string" && value.trim().length >= min;
 
-  // "no registered matter should remain without an assigned action" - a matter
+  // "no registered matter should remain without an assigned action"-a matter
   // must not progress past intake without the officer stating what is to be done.
   const needsAction = !["NEW", "CLS", "RES"].includes(input.nextStatus);
   if (needsAction && !hasText(input.actionRequired, MIN_ACTION_LENGTH)) {

@@ -11,15 +11,15 @@ import { z } from "zod";
  *
  * The wording rules, so the same mistake is always phrased the same way:
  *
- * - Missing is not the same as wrong. An empty field is "X is required"; a field
+ *-Missing is not the same as wrong. An empty field is "X is required"; a field
  *   with three characters in it is told how many it wants. Collapsing the two
  *   teaches officers to type the minimum rather than to answer the question.
- * - The label is the label on the form, not the key on the wire, because the
+ *-The label is the label on the form, not the key on the wire, because the
  *   person reading the message is looking at the form.
- * - A limit is stated as a limit. "500 characters or fewer" rather than "invalid
+ *-A limit is stated as a limit. "500 characters or fewer" rather than "invalid
  *   input", so a note that is too long says which way to shorten it.
  *
- * Nothing here decides *whether* a value is acceptable - only how a refusal is
+ * Nothing here decides *whether* a value is acceptable-only how a refusal is
  * phrased. The rules themselves still live with the procedure that owns them.
  */
 
@@ -36,7 +36,7 @@ function tooLong(label: string, max: number) {
 /**
  * A field the form will not submit without.
  *
- * `min` is the floor below which the entry is blank rather than short - usually
+ * `min` is the floor below which the entry is blank rather than short-usually
  * 2 for a name, 8 for something meant to be a sentence. It is not a claim about
  * how long the answer ought to be.
  */
@@ -74,8 +74,8 @@ export function optionalText(label: string, { max }: Bounds = {}) {
  * A date the officer typed, from a date input or an ISO string.
  *
  * The message does not name the field. Every date on a matter is unambiguous
- * from the control the officer is looking at - a date input either shows a date
- * or does not - and the alternative, "Enter date received as a date", reads
+ * from the control the officer is looking at-a date input either shows a date
+ * or does not-and the alternative, "Enter date received as a date", reads
  * worse than the message it replaces.
  */
 export function dateField() {
@@ -87,7 +87,7 @@ export function dateField() {
  *
  * Reaching this with a zero or a negative number means the interface and the
  * database disagree about which matter was selected, which is a bug rather than
- * a mistake an officer made - so the message says so instead of telling them to
+ * a mistake an officer made-so the message says so instead of telling them to
  * pick another one.
  */
 export function recordId(label = "matter") {

@@ -32,14 +32,14 @@ import { useEffect, useRef, useState } from "react";
  * The sign-in screen.
  *
  * One way in: an email address and a password, checked by Supabase. The
- * credential goes from the browser to Supabase and no further - this deployment
+ * credential goes from the browser to Supabase and no further-this deployment
  * never sees an officer's password, which is the whole reason the identity layer
  * moved off this application. The session Supabase returns is written to an
  * httpOnly cookie, so nothing in the interface holds a token either.
  *
  * There is no way to create an account from here, and no way to sign up for one.
  * Officers are registered by the platform administrator on the admin screen,
- * which is also where a role is assigned - the manual makes the office that
+ * which is also where a role is assigned-the manual makes the office that
  * receives an application identifiable (§15), so an account cannot be
  * self-issued at the front door. Public signup is switched off on the Supabase
  * project for the same reason, so this form is the only door and it is a door
@@ -47,7 +47,7 @@ import { useEffect, useRef, useState } from "react";
  *
  * On presentation: the screen is one field of colour with a card laid across
  * the seam between the two halves. The brand panel runs to a diagonal edge, so
- * the card sits on the boundary rather than inside either side - the form reads
+ * the card sits on the boundary rather than inside either side-the form reads
  * as the door into the office, and the office is visible on both sides of it.
  * The panel carries the marks, the wordmark and the promise; everything
  * actionable is on the card. The rings on the right and the marks in them are
@@ -55,8 +55,8 @@ import { useEffect, useRef, useState } from "react";
  * described.
  *
  * The palette is this screen's own, declared once below and published to the
- * subtree as custom properties, so every colour on the page - the panel wash,
- * the accent, the greys, the four rings - is one edit rather than thirty. It is
+ * subtree as custom properties, so every colour on the page-the panel wash,
+ * the accent, the greys, the four rings-is one edit rather than thirty. It is
  * deliberately not the application's: the rest of the platform is teal, and the
  * sign-in screen is the one surface a first-time officer ever sees, so it is
  * given a colour of its own instead of inheriting whatever the theme tokens
@@ -75,7 +75,7 @@ import { useEffect, useRef, useState } from "react";
  *
  * So nothing is reloaded. The session cookie was written before the navigation
  * was attempted, which means the only question worth asking is whether it is
- * still good - and `auth.me` answers it without leaving the page. A session that
+ * still good-and `auth.me` answers it without leaving the page. A session that
  * verifies sends the redirect effect above on its way; one that does not brings
  * the button back with the officer's address still in it.
  */
@@ -86,38 +86,38 @@ const REMEMBER_KEY = "tsc-remembered-email";
 /**
  * The office this platform belongs to, as it is credited on screen.
  *
- * One constant because it appears twice - beside the card on a wide screen, and
- * under it on a narrow one - and the two are the same statement about the same
+ * One constant because it appears twice-beside the card on a wide screen, and
+ * under it on a narrow one-and the two are the same statement about the same
  * body. A sign-in screen that credits the Commission in one layout and the
  * country in the other is a sign-in screen nobody trusts with a password.
  */
-const COPYRIGHT = "© PNG - Teachers Service Commission 2026";
+const COPYRIGHT = "© PNG-Teachers Service Commission 2026";
 
 /**
  * Blue, on one hue ramp so nothing on the screen is fighting anything else.
  *
  * Four steps of blue carry the whole composition, each with a job:
  *
- * - `action` is the only interactive colour. Everything you can press is this
+ *-`action` is the only interactive colour. Everything you can press is this
  *   exact blue, which is what lets a form on a large colour field still be
  *   scanned in one pass.
- * - `emphasis` is a step deeper, for the two words in the promise that carry
+ *-`emphasis` is a step deeper, for the two words in the promise that carry
  *   the argument. Darker than the button on purpose: a highlight that out-shouts
  *   the call to action is a highlight in the wrong place.
- * - `wordmark` is deeper again. It is the one piece of type on the panel big
+ *-`wordmark` is deeper again. It is the one piece of type on the panel big
  *   enough to carry a colour on its own.
- * - The panel is the same hue at a few per cent, laid as a vertical wash so the
+ *-The panel is the same hue at a few per cent, laid as a vertical wash so the
  *   foot of the screen sits fractionally cooler than its head.
  *
  * The greys are blue-biased rather than neutral. A true neutral grey next to a
- * blue panel reads as a different material - a photograph pasted onto a poster
- * - so the ink, the muted text and every hairline are the same hue at low
+ * blue panel reads as a different material-a photograph pasted onto a poster
+ *-so the ink, the muted text and every hairline are the same hue at low
  * saturation.
  *
  * `muted` and `faint` are darker than a straight swap of the previous violet
  * steps would have given, and deliberately so. The violet they replace measured
  * 3.98:1 for `muted` on the panel and 2.67:1 for `faint` on the card, both under
- * the 4.5:1 that body text needs - the panel copy and the field placeholders
+ * the 4.5:1 that body text needs-the panel copy and the field placeholders
  * were the two least legible things on the screen and read as a styling choice
  * rather than a fault. Every pairing below is now at or above 4.5:1, and
  * `faint` clears 3:1, which is the bar for the placeholder it is used for.
@@ -201,7 +201,7 @@ function BrandPanel({ compact = false }: { compact?: boolean }) {
  * It replaced a set of concentric rings, which held the right quarter of the
  * screen without saying anything. The picture says what the platform is: an
  * office, a boardroom, a case workflow on a wall. It is decoration, so it is
- * `aria-hidden` and carries no alt text - the words beside it already name the
+ * `aria-hidden` and carries no alt text-the words beside it already name the
  * office, and a description of a stock illustration is noise to a screen reader
  * and to anyone who can see it.
  *
@@ -225,9 +225,9 @@ function Illustration() {
         // `fill` sizes the image from its parent and emits no width/height at
         // all, which is what put a "lazy-loaded images should have explicit
         // dimensions" finding on this page: nothing in the markup declared a
-        // ratio for the artwork. It never actually shifted here - the wrapper
+        // ratio for the artwork. It never actually shifted here-the wrapper
         // above is `absolute inset-y-0 w-[54%]`, so the box was fixed by CSS
-        // before the file was requested - but a finding that says the markup
+        // before the file was requested-but a finding that says the markup
         // does not know how big this is, on the first screen an officer sees,
         // is worth closing rather than explaining.
         //
@@ -258,7 +258,7 @@ function LoginForm() {
   // Null unless the server refused a session the browser holds: an identity
   // with no register row, or an account that has been deactivated. Null for an
   // ordinary anonymous visitor, which is why this is a second query rather than
-  // a variant of `auth.me` - most people reaching this screen have no session,
+  // a variant of `auth.me`-most people reaching this screen have no session,
   // and the answer they need is the form.
   //
   // Not gated. It used to be `enabled: !isAuthenticated && !loading`, which was
@@ -283,7 +283,7 @@ function LoginForm() {
   // mounts there is normally no session to find and this effect does nothing.
   // It stays because the session can change under a page that is already open -
   // signing in on a second tab, or an administrator signing the officer out
-  // mid-session - and there is nothing server-side that would notice. It is a
+  // mid-session-and there is nothing server-side that would notice. It is a
   // client redirect rather than a server one only because the segment has
   // already rendered by the time it would matter.
   useEffect(() => {
@@ -383,8 +383,8 @@ function LoginForm() {
 
       // The session is now in the cookie, and the navigation to the platform is
       // a *client-side* one. A hard load was the older behaviour, chosen so the
-      // server would resolve the session on the first paint - which the landing
-      // screen still does, being a Server Component - but it bought that at the
+      // server would resolve the session on the first paint-which the landing
+      // screen still does, being a Server Component-but it bought that at the
       // cost of tearing the whole document down, and a push keeps this screen
       // mounted until the platform's first paint commits.
       //
@@ -400,14 +400,14 @@ function LoginForm() {
       // So there is now exactly one, and it is the one they already pressed: the
       // button stays disabled with its spinner turning for the whole wait, until
       // this screen unmounts because the overview has committed. The form stays
-      // on screen throughout, which is worth more than the takeover was - they
+      // on screen throughout, which is worth more than the takeover was-they
       // can still see the address they signed in with.
       navigatedRef.current = true;
       setAwaitingPlatform(true);
       router.push(LANDING_PATH);
     } catch (error) {
       // Logged before it is replaced by a generic sentence, because this branch
-      // fires on anything thrown - including exceptions raised *after* Supabase
+      // fires on anything thrown-including exceptions raised *after* Supabase
       // accepted the password, when the session cookie is being written. "The
       // sign-in service could not be reached" sends the reader to check their
       // network, and the network is usually fine: an extension blocking
@@ -431,17 +431,17 @@ function LoginForm() {
   // one is running.
   //
   // This was `loading || isAuthenticated`, and it was the reason the sign-in
-  // felt slow: every anonymous visitor - which is nearly everyone who opens
-  // this screen - had the whole form replaced by a full-screen branded loader
+  // felt slow: every anonymous visitor-which is nearly everyone who opens
+  // this screen-had the whole form replaced by a full-screen branded loader
   // for the duration of the `auth.me` request, before a single keystroke was
   // possible. The form was made to wait on a question that cannot change the
   // answer for a person with no session, which is nearly all of them.
   //
   // It is now `isAuthenticated` alone, and the ordering that question implies
   // has been inverted twice over. The server already answered it before this
-  // screen mounted - `app/login/page.tsx` reads the session cookie, redirects a
+  // screen mounted-`app/login/page.tsx` reads the session cookie, redirects a
   // signed-in officer away, and ships this screen with the answer already in
-  // the hydrated cache - so the common case renders the form immediately with
+  // the hydrated cache-so the common case renders the form immediately with
   // nothing fetched and nothing waited on. What is left of this branch is the
   // rare officer who signs in on a second tab while this page is open, and for
   // them the loader still covers the redirect.
@@ -460,7 +460,7 @@ function LoginForm() {
   // refusal above is the one place that knows, and it is written per fault; a
   // fixed second paragraph asserting a cause is how the previous wording came
   // to tell a platform with no database that the officer's record was the
-  // problem - an account the operator would then go and create, for an officer
+  // problem-an account the operator would then go and create, for an officer
   // who already had one.
   if (refusal) {
     return (
@@ -480,7 +480,7 @@ function LoginForm() {
             {refusal}
           </p>
           <p className="mt-4 text-[13px] leading-6 text-[var(--login-muted)]">
-            Your password was accepted - Supabase confirmed who you are. What
+            Your password was accepted-Supabase confirmed who you are. What
             happens next is not yours to fix: an administrator has to.
           </p>
           {/*
@@ -495,11 +495,11 @@ function LoginForm() {
            *
            * The browser's then runs, because the server can only delete the
            * cookies it can see, and Supabase's client is the only party that
-           * knows every name it may have written - including a chunk index added
+           * knows every name it may have written-including a chunk index added
            * by a library update. It is also the only party that clears
            * client-side storage. It is second, and wrapped, so that its throwing -
            * or the client's own build fault making `getSupabaseBrowserClient`
-           * throw outright - cannot stop the half that works.
+           * throw outright-cannot stop the half that works.
            *
            * The navigation is in a `finally` for the same reason. If the request
            * fails there is nothing to clear and no way forward from this screen,
@@ -555,13 +555,13 @@ function LoginForm() {
           </h2>
           <p className="mt-4 text-[0.9375rem] leading-6 text-[var(--login-muted)]">
             This deployment was built without sign-in configured. Tell the
-            platform administrator - nothing is wrong with your account.
+            platform administrator-nothing is wrong with your account.
           </p>
           {/*
            * Which of the two it was, and what the value was. The paragraph
            * above is all an officer can be told, because it is the whole of what
            * the officer knows; it is not enough for whoever has to fix it, and
-           * this page is the only evidence the build left - `/login` is
+           * this page is the only evidence the build left-`/login` is
            * prerendered, so nothing at runtime will ever report back that the
            * bundle was compiled without these.
            *
@@ -589,7 +589,7 @@ function LoginForm() {
     >
       {/* The panel. On a wide screen it is a full-height field of colour cut off
           by a diagonal, so the card below lands on the seam; below `lg` it
-          becomes a band behind the compact brand block. Purely a backdrop - the
+          becomes a band behind the compact brand block. Purely a backdrop-the
           marks and the wordmark sit on top of it, so it carries no information
           of its own and is not announced. */}
       <div
@@ -604,15 +604,15 @@ function LoginForm() {
       <Illustration />
 
       {/* Two columns on a wide screen, one on a narrow one. The brand block
-          leads on a phone - the officer knows what they opened before they are
-          asked to type - and sits beside the card on a desktop.
+          leads on a phone-the officer knows what they opened before they are
+          asked to type-and sits beside the card on a desktop.
 
           The row is deliberately not centred. The composition is left-weighted:
           the panel, the wordmark and the card all sit in the left three quarters
           and the right quarter is left empty for the rings, so a centred
           container would push the whole thing away from the edge it is composed
           against. The brand column is capped rather than fluid for the same
-          reason - a promise set in a column that stretches with the window
+          reason-a promise set in a column that stretches with the window
           stops being a line of type and starts being a paragraph. */}
       <div className="relative flex min-h-screen w-full max-w-[76rem] flex-col px-6 py-12 sm:px-10 lg:flex-row lg:items-center lg:gap-12 lg:px-16 lg:py-16 xl:gap-16">
         <div className="flex flex-1 flex-col lg:max-w-[34rem] lg:self-stretch">
@@ -627,7 +627,7 @@ function LoginForm() {
 
           {/* The copyright sits on the panel rather than in a footer strip, so
               it stays attached to the office it names when the card changes
-              height - and at the foot of the panel, not floating at the end of
+              height-and at the foot of the panel, not floating at the end of
               whatever the brand block happens to measure. */}
           <p className="hidden pt-16 text-[0.9375rem] text-[var(--login-muted)] lg:block">
             {COPYRIGHT}
@@ -736,7 +736,7 @@ function LoginForm() {
                   <p className="mt-3 rounded-lg bg-[var(--login-note-surface)] px-3.5 py-3 text-[0.9375rem] leading-6 text-[var(--login-muted)]">
                     Passwords are reset by the platform administrator, who can
                     issue you a reset link. Ask them, then set a new password
-                    through it - they never need to know your current one.
+                    through it-they never need to know your current one.
                   </p>
                 ) : null}
 
@@ -826,7 +826,7 @@ function LoginForm() {
  * need: the screen read a `next` parameter out of the query string, and
  * `useSearchParams` suspends during prerender, so the half that read it had to be
  * behind a boundary to keep the page static-buildable. Every sign-in lands on the
- * overview now - see `LANDING_PATH` - so there is nothing in the query string to
+ * overview now-see `LANDING_PATH`-so there is nothing in the query string to
  * read and the whole screen prerenders as one piece.
  */
 export default function Login() {

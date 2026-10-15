@@ -19,7 +19,7 @@ export const dynamic = "force-dynamic";
  * Session-guarded, because the key alone is not a secret. Nothing checked who
  * was asking: an officer who copied a document's address out of the case file
  * handed it to anybody who asked, and the 60-second lifetime on the signed URL
- * bounded the *URL* rather than the route that mints one - so the same request
+ * bounded the *URL* rather than the route that mints one-so the same request
  * could be repeated forever and a fresh 60 seconds minted each time. These are
  * case files: teacher names and disciplinary records, on the same footing as the
  * register that the row-level-security migration in `drizzle/` exists to keep
@@ -74,7 +74,7 @@ export async function GET(
       return new Response("Not found", { status: 404 });
     }
     // The type comes from the extension the uploader chose, which the server
-    // derived from the sniffed magic number - so a stored object is always
+    // derived from the sniffed magic number-so a stored object is always
     // labelled with a type its bytes actually support.
     return new Response(new Uint8Array(bytes), {
       headers: {
@@ -93,7 +93,7 @@ export async function GET(
  * Taken from the extension rather than a stored column, because the uploader
  * derived the extension from the file's magic number, so the extension is
  * already a checked claim about the bytes. An unknown extension gets
- * application/octet-stream, which downloads rather than renders - the safe
+ * application/octet-stream, which downloads rather than renders-the safe
  * default for a type we cannot vouch for.
  */
 function contentTypeForKey(key: string): string {

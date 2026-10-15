@@ -120,7 +120,7 @@ describe("auth.logout", () => {
   it("deletes the Supabase session cookies the request actually carried", async () => {
     // The cookie that holds the session is Supabase's, named for the project and
     // split across `.0`, `.1` chunks when the session is large. Clearing
-    // `app_session_id` - which nothing has set since the move to Supabase - while
+    // `app_session_id`-which nothing has set since the move to Supabase-while
     // leaving these in place is what made Sign out a no-op: the officer was
     // returned to the refusal screen they pressed it on, every time.
     //

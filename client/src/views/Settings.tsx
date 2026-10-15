@@ -31,7 +31,7 @@ import { toast } from "sonner";
  * that lets an officer edit their own name, email or role, and that is
  * deliberate rather than unfinished. The manual requires every office that handles a
  * matter to stay identifiable, and a name an officer can quietly change would
- * break the accountability trail - a matter registered by "J. Otieno" and later
+ * break the accountability trail-a matter registered by "J. Otieno" and later
  * attributed to someone else is not an identifiable trail. Roles are provisioned
  * by the platform administrator for the same reason.
  *
@@ -101,8 +101,8 @@ export default function Settings() {
             cards stretched to 1600px would put a 200-character line of prose
             across the screen, which is the width nobody reads. Instead the
             officer's own account sits on the left at a comfortable measure and
-            the reference tables - which are genuinely wide, and are lists of
-            short parallel facts rather than sentences - take the wider right
+            the reference tables-which are genuinely wide, and are lists of
+            short parallel facts rather than sentences-take the wider right
             column and set two abreast. Below `xl` this collapses to the one
             column it always was. */}
         <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
@@ -254,7 +254,7 @@ export default function Settings() {
  * this one.
  *
  * `Sign out` above ends whichever session the officer is using, which leaves them
- * stuck if they are *also* signed in somewhere else - a laptop lent to a colleague,
+ * stuck if they are *also* signed in somewhere else-a laptop lent to a colleague,
  * a phone left in a drawer, a session on a machine they no longer have. An officer
  * who suspects that has no way to deal with it, because nothing in the platform
  * lists their sessions and nothing ends one but their own.
@@ -311,7 +311,7 @@ function DevicesPanel() {
   // Before the capability branch, and separately from it. `!data?.available`
   // catches a failed request as well as an absent capability, which had this
   // screen telling an officer their *deployment* cannot manage devices because
-  // one request did not come back - a claim about the platform's
+  // one request did not come back-a claim about the platform's
   // configuration, offered with no way to retry and no way to tell it apart
   // from a real one.
   if (sessions.isError) {
@@ -394,7 +394,7 @@ function DevicesPanel() {
       {/*
        * Two steps, deliberately. This ends sessions on machines the officer is
        * not looking at, which is not something to do on a single click that
-       * looks like saving a preference - and the failure mode if it were is
+       * looks like saving a preference-and the failure mode if it were is
        * somebody else being signed out of the platform mid-task with no way to
        * tell why.
        */}
@@ -480,7 +480,7 @@ function DeviceRow({
 function AppearancePanel() {
   // Read from the provider rather than keeping a second copy. The panel used to
   // hold its own `useState("light")`, set the document class itself and write
-  // `localStorage` - while the provider, which owns that class, ignored the
+  // `localStorage`-while the provider, which owns that class, ignored the
   // stored value and reset to light on every mount. The officer's choice looked
   // like it took, and did not survive a reload.
   const { theme, setThemeValue } = useTheme();

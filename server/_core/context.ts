@@ -39,7 +39,7 @@ export type TrpcResponse = {
  * null whenever there was no session or the session was good.
  *
  * It exists for the officer whose sign-in is refused. `auth.me` answers null
- * either way, so without this the sign-in screen shows its form again - to
+ * either way, so without this the sign-in screen shows its form again-to
  * somebody who has just typed a correct password into it, and who will conclude
  * the password is wrong. The two causes need opposite responses: a deactivated
  * officer needs an administrator, and an unlinked identity needs one too, but

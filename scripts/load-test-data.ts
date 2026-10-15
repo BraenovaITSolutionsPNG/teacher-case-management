@@ -16,7 +16,7 @@ import {
  *
  * A thin wrapper around psql, and the reason for it is `.env`. The README's
  * one-liner is `psql "$DATABASE_URL" ...`, which only works if DATABASE_URL is
- * exported in the shell - and it is not, because it lives in a file that
+ * exported in the shell-and it is not, because it lives in a file that
  * dotenv reads and nothing parses. So the documented command fails on a machine
  * set up correctly, which is worse than having no command at all: it looks like
  * the script is broken rather than like the invocation is.
@@ -40,7 +40,7 @@ async function main() {
   // The SQL file ends with a RAISE NOTICE reporting what it loaded, and it is
   // the only confirmation that the load did what it claims. pg discards notices
   // unless a handler is attached, so without this the script prints its
-  // connection line and then nothing - which reads as though it did not run.
+  // connection line and then nothing-which reads as though it did not run.
   client.on("notice", notice => {
     if (notice.message) console.log(notice.message.trim());
   });

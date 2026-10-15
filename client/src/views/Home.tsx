@@ -80,12 +80,12 @@ export default function Home() {
   const router = useRouter();
   // Opening a matter from the monitoring board is a click on a matter rather
   // than on a URL, so it goes through the navigating helper to announce the
-  // wait - this is one of the heavier renders in the platform, and it used to
+  // wait-this is one of the heavier renders in the platform, and it used to
   // arrive with nothing said while it did.
   const navigate = useRouteNavigate();
   // No `redirectOnUnauthenticated` here. That option force-launches the login
   // flow, which in development signs the visitor in as the dev owner without
-  // them asking - so a signed-out officer landing here was silently given a
+  // them asking-so a signed-out officer landing here was silently given a
   // session instead of being sent to the sign-in page. The redirect below is
   // the one behaviour, and it is the same one every other screen now uses.
   const { user, loading: authLoading, isAuthenticated } = useAuth();
@@ -123,7 +123,7 @@ export default function Home() {
       <DashboardLayout>
         <PageShell className="space-y-5">
           {/* The shape of the overview, so the page does not resize when it
-              arrives. Wrapped rather than bare so the wait is announced - see
+              arrives. Wrapped rather than bare so the wait is announced-see
               `LoadingState`. */}
           <LoadingState label="The dashboard">
             <Skeleton className="h-8 w-64" />

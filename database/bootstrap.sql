@@ -44,7 +44,7 @@ GRANT USAGE, CREATE ON SCHEMA public TO tsc;
 -- Note on timezones: the app stores and reads every timestamp through
 -- node-postgres/drizzle and does its own date arithmetic in JS. A `timestamp`
 -- column (without time zone) carries no zone of its own, so the values it holds
--- are exactly the instants the app wrote - unlike MySQL's `timestamp`, which
+-- are exactly the instants the app wrote-unlike MySQL's `timestamp`, which
 -- converted on the server's zone. Keep this in mind when reading a value out of
 -- the database by hand: it is UTC as written, and `SELECT now()` is in the
 -- server's zone.

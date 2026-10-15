@@ -4,7 +4,7 @@ import { listQuarters, quarterRange } from "./db";
 /**
  * §12E quarter arithmetic. The report is only as trustworthy as its period
  * boundaries, and a boundary that leaks by a day moves matters between quarters
- * silently rather than throwing - so the ranges are pinned directly.
+ * silently rather than throwing-so the ranges are pinned directly.
  */
 describe("quarter periods", () => {
   it("covers three whole calendar months", () => {

@@ -8,8 +8,8 @@
  * hidden for a navigation that finishes in 200ms" is a question that can only be
  * answered by driving a real browser. Here it is a function and a fake clock.
  *
- * The component keeps the DOM and nothing else - listening for link clicks,
- * subscribing to the route-change signal, painting a two-pixel line - and defers
+ * The component keeps the DOM and nothing else-listening for link clicks,
+ * subscribing to the route-change signal, painting a two-pixel line-and defers
  * every question about *when* to this file.
  */
 
@@ -19,7 +19,7 @@ export const SHOW_DELAY_MS = 150;
 /**
  * How long the bar is held once it appears, so a navigation that crosses the
  * delay and then finishes does not produce a bar that flashes for a single
- * frame - which reads as a glitch rather than as progress.
+ * frame-which reads as a glitch rather than as progress.
  */
 export const MIN_VISIBLE_MS = 450;
 
@@ -48,7 +48,7 @@ const realTimers: ProgressTimers = {
 
 export type RouteProgress = {
   /**
-   * A navigation has started. Nothing is painted yet - the delay decides whether
+   * A navigation has started. Nothing is painted yet-the delay decides whether
    * the bar is ever needed at all, and that is the entire point of it.
    */
   begin: () => void;
@@ -111,7 +111,7 @@ export function createRouteProgress(
     giveUpHandle = timers.setTimeout(() => {
       giveUpHandle = null;
       pending = false;
-      // Nothing to hide if it never appeared - the same silence as a quick
+      // Nothing to hide if it never appeared-the same silence as a quick
       // navigation, and the reason this is conditional rather than unconditional.
       if (shownAt !== null) hide();
     }, GIVE_UP_MS);

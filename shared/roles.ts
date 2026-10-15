@@ -7,8 +7,8 @@
  * Manual.
  *
  * There is no teacher tier: the manual routes every matter through the
- * Provincial Matters office - §4 has the officer receiving the application, §6
- * has the Commission deciding - so a teacher never acts in this system.
+ * Provincial Matters office-§4 has the officer receiving the application, §6
+ * has the Commission deciding-so a teacher never acts in this system.
  *
  * The tiers the manual actually names are the Provincial Matters Officer (§4)
  * and the Professional Assistant to the Director (§12), with the Director above

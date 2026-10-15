@@ -11,13 +11,13 @@
  * Three clients, because there are three distinct jobs and confusing them is
  * how a service key leaks into a browser bundle:
  *
- *  - `createServerClient` - reads the session cookie out of the request. The
+ * -`createServerClient`-reads the session cookie out of the request. The
  *    user's own privileges only: it is RLS-scoped and safe anywhere.
- *  - `createAdminClient` - the service role. Bypasses RLS entirely. Server
+ * -`createAdminClient`-the service role. Bypasses RLS entirely. Server
  *    only, never returned to the browser, and only for the two operations that
  *    cannot be done as a user: creating an account, and reading a password
  *    reset link.
- *  - `createBrowserClient` - the anon key, for the sign-in form.
+ * -`createBrowserClient`-the anon key, for the sign-in form.
  */
 
 import { cookies } from "next/headers";
@@ -36,8 +36,8 @@ import { ENV } from "./env";
  * than substituted, and the caller decides what to do about it.
  *
  * "Given Supabase" means present *and* usable, and the two are not the same
- * thing. A URL that is set to something supabase-js will reject - a pasted
- * export with its quotes still attached, an unfilled placeholder - is present,
+ * thing. A URL that is set to something supabase-js will reject-a pasted
+ * export with its quotes still attached, an unfilled placeholder-is present,
  * passes a truthiness check, and makes every deployment-looks-fine query in the
  * codebase answer yes right up until an officer tries to sign in. Answering no
  * here instead is what gets it reported as the misconfiguration it is.
@@ -63,7 +63,7 @@ export function isSupabaseAdminConfigured(): boolean {
  * compiled with whatever `NEXT_PUBLIC_SUPABASE_*` held at build time, and this
  * function is reading the server's answer. If the two disagree the browser is
  * signing in against a different Supabase project from the one this process
- * looks the officer up in - and every symptom points the wrong way: a correct
+ * looks the officer up in-and every symptom points the wrong way: a correct
  * password refused, a session that resolves to no row, an error about
  * credentials on an account that plainly exists. So it is refused here, by name,
  * instead.
@@ -82,7 +82,7 @@ export function supabasePublicConfig(): { url: string; anonKey: string } {
   }
   if (!isSupabaseConfigured()) {
     throw new Error(
-      "Supabase is not configured on this deployment. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY (or SUPABASE_URL and SUPABASE_ANON_KEY) - without them there is nowhere to sign in against."
+      "Supabase is not configured on this deployment. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY (or SUPABASE_URL and SUPABASE_ANON_KEY)-without them there is nowhere to sign in against."
     );
   }
   const { publicSupabaseUrl, publicSupabaseAnonKey } = ENV;
@@ -150,7 +150,7 @@ export async function createServerClient() {
  *
  * Two callers, both of which are administrator actions in `server/routers.ts`:
  * creating an account, and asking Supabase for a password-reset link. Reading
- * a password never happens here - Supabase does not disclose hashes, and cannot
+ * a password never happens here-Supabase does not disclose hashes, and cannot
  * be made to.
  */
 export function createAdminClient() {

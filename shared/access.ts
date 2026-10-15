@@ -26,7 +26,7 @@ export const CAPABILITIES = [
   /** Refer a matter to a National Section, with the §5 triggers. */
   "matter:refer",
   /**
-   * §12B "matters requiring the Director's attention" - flag a matter so it is
+   * §12B "matters requiring the Director's attention"-flag a matter so it is
    * surfaced for a decision, and clear the flag once it has been dealt with.
    * Distinct from matter:update because the Director is the one who acts on it,
    * and because the flag is the PA's main instrument for monitoring.
@@ -59,7 +59,7 @@ export const CAPABILITIES = [
 export type Capability = (typeof CAPABILITIES)[number];
 
 /**
- * What each tier can do. Higher tiers do not "inherit" by array order - the
+ * What each tier can do. Higher tiers do not "inherit" by array order-the
  * sets are written out in full, so adding a capability to a tier is always a
  * deliberate edit rather than a side effect of where a role sits in the list.
  */
@@ -73,7 +73,7 @@ const ROLE_CAPABILITIES: Record<Role, readonly Capability[]> = {
     "matter:refer",
     // §4, under Referral: "Follow up until an outcome is received." §12D gives
     // the Professional Assistant the same duty from the monitoring side, so both
-    // roles hold it - dropping it here would have locked officers out of
+    // roles hold it-dropping it here would have locked officers out of
     // closing out their own referrals.
     "referral:followUp",
     "brief:write",
@@ -85,8 +85,8 @@ const ROLE_CAPABILITIES: Record<Role, readonly Capability[]> = {
    * brief, follows up National Sections, and produces the reporting set.
    *
    * Deliberately without matter:refer and matter:decide. §4 makes the judgement
-   * that a matter is outside provincial authority - and the §5 triggers that go
-   * with it - the Provincial Officer's act, and §6/§12C make the decision the
+   * that a matter is outside provincial authority-and the §5 triggers that go
+   * with it-the Provincial Officer's act, and §6/§12C make the decision the
    * Director's. Everything else in the office is shared.
    */
   assistant: [
@@ -173,7 +173,7 @@ const CAPABILITY_LABELS: Record<Capability, { action: string; minimum: Role }> =
       action: "read the Director's reporting set",
       // §12E has the Professional Assistant preparing the weekly, monthly and
       // quarterly reports, so the Assistant is the lowest tier that reaches
-      // this - not the Director, who receives them.
+      // this-not the Director, who receives them.
       minimum: "assistant",
     },
     "platform:oversight": {
@@ -218,8 +218,8 @@ export function refusalFor(  role: Role | null | undefined,
 /**
  * Whether any of the listed capabilities is held.
  *
- * An empty list means "no capability is required" - the item is open to every
- * signed-in user - so it is true. Returning false for it would make an ungated
+ * An empty list means "no capability is required"-the item is open to every
+ * signed-in user-so it is true. Returning false for it would make an ungated
  * item unreachable, which is the opposite of what an empty list means here.
  */
 export function canAny(
