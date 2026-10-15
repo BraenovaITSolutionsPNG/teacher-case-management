@@ -25,8 +25,8 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "TSC Case Management",
-    template: "%s | TSC Case Management",
+    default: "Teacher Case Management",
+    template: "%s | Teacher Case Management",
   },
   description:
     "Provincial matters administration platform for the Papua New Guinea Teachers Service Commission. Manage case registers, referrals, escalations, reporting, and director briefings in one secure government system.",
@@ -63,14 +63,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_PG",
     url: "/",
-    title: "TSC Case Management",
+    title: "Teacher Case Management",
     description:
       "Provincial matters administration platform for the Papua New Guinea Teachers Service Commission. Manage case registers, referrals, escalations, reporting, and director briefings.",
-    siteName: "TSC Case Management",
+    siteName: "Teacher Case Management",
   },
   twitter: {
     card: "summary_large_image",
-    title: "TSC Case Management",
+    title: "Teacher Case Management",
     description:
       "Provincial matters administration for the Papua New Guinea Teachers Service Commission.",
   },

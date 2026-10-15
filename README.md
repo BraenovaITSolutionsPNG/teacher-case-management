@@ -1,4 +1,4 @@
-# TSC Case Management
+# Teacher Case Management
 
 A case management platform for the Papua New Guinea Teachers Service Commission's
 Provincial Matters office, implementing the TSC Provincial Matters Administration

@@ -1,4 +1,4 @@
--- PostgreSQL bootstrap for the TSC Case Management platform.
+-- PostgreSQL bootstrap for the Teacher Case Management platform.
 --
 -- Creates the application role and grants it the schema. Safe to re-run: every
 -- statement is IF NOT EXISTS / idempotent.
