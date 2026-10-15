@@ -8,6 +8,7 @@ import {
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
+import { CosmicButton } from "@/components/ui/cosmic-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -771,9 +772,9 @@ function LoginForm() {
                   </div>
                 ) : null}
 
-                <Button
+                <CosmicButton
                   type="submit"
-                  className="mt-12 h-11 w-full rounded-lg bg-[var(--login-action)] text-[0.9375rem] font-medium text-white hover:bg-[var(--login-action-hover)] focus-visible:ring-[var(--login-action-ring-soft)]"
+                  className="mt-12"
                   disabled={busy}
                 >
                   {/* The arrow follows the words, so the pair reads as a
@@ -791,7 +792,7 @@ function LoginForm() {
                       <ArrowRight className="ml-2.5 h-4 w-4" />
                     </>
                   )}
-                </Button>
+                </CosmicButton>
               </form>
             </div>
 
