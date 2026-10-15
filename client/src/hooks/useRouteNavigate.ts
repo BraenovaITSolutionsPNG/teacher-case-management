@@ -16,7 +16,7 @@ import { useCallback } from "react";
  *    URL;
  *  - the jump to a matter that has just been registered.
  *
- * All three reach for `router.push` directly, which raises nothing — so they
+ * All three reach for `router.push` directly, which raises nothing - so they
  * navigated with no indicator at all, and they are the *heavy* ones: each opens a
  * server-rendered screen that reads a matter. The bar existed and was silent for
  * precisely the waits it was written for.

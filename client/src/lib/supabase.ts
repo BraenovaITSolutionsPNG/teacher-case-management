@@ -6,12 +6,12 @@ import { isSupabaseUrl, supabaseUrlFault } from "@shared/supabaseUrl";
  *
  * It is signed in as the officer, with the anon key, and it can read nothing
  * that row level security does not already permit. The service role key is never
- * imported here — a client bundle is public, and a key that bypasses RLS has no
+ * imported here - a client bundle is public, and a key that bypasses RLS has no
  * business in one.
  *
  * Sign-in happens through this client so the session cookies are written by
  * @supabase/ssr, which is what the server reads back on the next request. The
- * alternative — posting the password to our own route — is what the app used to
+ * alternative - posting the password to our own route - is what the app used to
  * do, and it meant this deployment held a copy of every officer's password.
  *
  * Reads go through `process.env` rather than a bare identifier because Next
@@ -44,7 +44,7 @@ export const isSupabaseConfigured = Boolean(
  * Why this build has no sign-in, in words, or `null` when it does.
  *
  * `isSupabaseConfigured` is a boolean, and a boolean on the sign-in screen
- * leaves the operator with "tell the platform administrator" and nothing else —
+ * leaves the operator with "tell the platform administrator" and nothing else -
  * which is what a build-time fault usually needs, because the fault is a
  * misconfiguration only the operator can fix and there is no other place it will
  * surface. `/login` is prerendered, so this is decided once, when the bundle was
@@ -56,8 +56,8 @@ export const isSupabaseConfigured = Boolean(
  * fact about the deployment and is not derived from anything anybody submitted.
  *
  * Safe to render, then, with one exception kept below: the anon key is reported
- * as present or absent and its value is never printed. The URL needs printing —
- * a mangled one cannot be recognised as mangled without seeing it — and that is
+ * as present or absent and its value is never printed. The URL needs printing -
+ * a mangled one cannot be recognised as mangled without seeing it - and that is
  * no disclosure, since the value is already in this bundle for anyone who opens
  * the developer tools to look. The key is printed for nobody.
  */

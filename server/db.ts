@@ -34,7 +34,7 @@ let _flavourChecked = false;
  * This used to distinguish MariaDB from MySQL 8, which mattered because a schema
  * written for one and applied to the other fails in ways that surface much later
  * and read as something else entirely. PostgreSQL has no equivalent fork to
- * guess at — there is one dialect — so the version is reported rather than
+ * guess at - there is one dialect - so the version is reported rather than
  * classified. The TLS line is the same idea from the other end, because
  * "encrypted" and "not encrypted" are otherwise the same silence.
  */
@@ -48,7 +48,7 @@ async function logServerFlavour(db: NonNullable<ReturnType<typeof drizzle>>) {
     const rows = (result as unknown as { rows: { version?: string }[] }).rows;
     const version = rows?.[0]?.version ?? "unknown";
     console.log(
-      `[Database] Connected to PostgreSQL ${version} — ${describeTls()}`
+      `[Database] Connected to PostgreSQL ${version} - ${describeTls()}`
     );
   } catch (error) {
     console.warn("[Database] Could not determine server version:", error);
@@ -59,7 +59,7 @@ async function logServerFlavour(db: NonNullable<ReturnType<typeof drizzle>>) {
  * Said once, loudly, and about the thing that is actually wrong.
  *
  * `getDb` used to return null in silence when DATABASE_URL was unset, and every
- * caller treats null as "nothing found" — so a deployment with no database
+ * caller treats null as "nothing found" - so a deployment with no database
  * answered every sign-in attempt with "that username and password do not match
  * an account", and answered it for as long as the deployment existed. The
  * message was true of the credentials and useless about the cause.
@@ -70,7 +70,7 @@ export async function getDb() {
   if (!_db && !process.env.DATABASE_URL && !reportedMissingUrl) {
     reportedMissingUrl = true;
     console.error(
-      "[Database] DATABASE_URL is not set, so there is no database to read or write. Every screen that reads a matter and every sign-in will fail until it is. Set it on the deployment — not only locally."
+      "[Database] DATABASE_URL is not set, so there is no database to read or write. Every screen that reads a matter and every sign-in will fail until it is. Set it on the deployment - not only locally."
     );
   }
   if (!_db && process.env.DATABASE_URL) {
@@ -150,8 +150,8 @@ export type CaseListFilters = {
  * register would show "page 1 of 3" above one page of results.
  *
  * `overdueOnly` was previously applied in JavaScript after the rows came back,
- * which cannot be counted or paged at all. It is a straightforward predicate —
- * a due date in the past, on a matter that has not been finished — so it is
+ * which cannot be counted or paged at all. It is a straightforward predicate -
+ * a due date in the past, on a matter that has not been finished - so it is
  * stated here against the same `CLOSED_STATUSES` the rest of the app uses, and
  * the server now does the work rather than shipping the province to do it.
  */
@@ -207,8 +207,8 @@ function caseConditions(filters: CaseListFilters) {
  * account, and §15 requires the Director to see who received, processed,
  * referred, decided and communicated on every matter.
  *
- * This is the unpaginated read, kept for the aggregations — the dashboard, the
- * weekly brief, the quarterly and compliance reports — which need every row to
+ * This is the unpaginated read, kept for the aggregations - the dashboard, the
+ * weekly brief, the quarterly and compliance reports - which need every row to
  * count over. The register itself uses `listCasesPage`.
  */
 export async function listCases(filters: CaseListFilters = {}) {
@@ -555,7 +555,7 @@ export async function deleteCaseDocument(input: {
     caseId: input.caseId,
     eventType: "document",
     note: `Case file: removed ${existing.title} (${existing.documentClass})${
-      existing.fileName ? ` — ${existing.fileName}` : ""
+      existing.fileName ? ` - ${existing.fileName}` : ""
     }`,
     actorId: input.actorId,
     actorName: input.actorName,
@@ -889,27 +889,27 @@ export function getRecentlyClosed(allCases: Case[], limit = 20) {
 }
 
 /**
- * §6 / §12C / §13F — the Director's desk: the matters that are for the Director
+ * §6 / §12C / §13F - the Director's desk: the matters that are for the Director
  * or have been raised to him. The overview a Director lands on leads with this
  * rather than the monitoring lists that belong to the officer and the PA, so
  * his screen is his inbox, not the whole province's.
  *
- * A pure function of the cases passed in — no referrals, no database — because
+ * A pure function of the cases passed in - no referrals, no database - because
  * none of the four lists needs a join, and a pure function is one that can be
  * unit-tested without a connection. It is read from the same `allCases` as the
  * rest of the dashboard, so the counts on the desk agree with the figures
  * beside them.
  *
  * What counts as "for the Director":
- *   awaitingDecision  — flagged §12B, or already sitting at DEC. The same pair
+ *   awaitingDecision  - flagged §12B, or already sitting at DEC. The same pair
  *     `briefNeedsDecision` states and the weekly brief's §F reads.
- *   raisedToDirector  — the §14 ladder at level 2 or higher. Level 2 is
- *     "Director, Provincial Matters — requires the Director's decision or
+ *   raisedToDirector  - the §14 ladder at level 2 or higher. Level 2 is
+ *     "Director, Provincial Matters - requires the Director's decision or
  *     intervention". Levels 3-6 have left the province but still sit on his
  *     watch, so they are listed with their rung rather than hidden.
- *   urgent            — priority "urgent", or promoted to ESC; the same pair the
+ *   urgent            - priority "urgent", or promoted to ESC; the same pair the
  *     weekly brief's §A surfaces.
- *   overdue           — still open and past its due date.
+ *   overdue           - still open and past its due date.
  */
 export function getDirectorDesk(allCases: Case[]) {
   const open = allCases.filter(item => isOpenStatus(item.status));
@@ -1087,7 +1087,7 @@ function median(values: number[]) {
  * The row is spread whole onto the way out, and that is safe only because the
  * stored credential is gone: Supabase holds it and never discloses it, so
  * `passwordHash` is no longer a column (migration `0001_supabase_auth.sql`).
- * There is therefore nothing secret to strip here — the comment this replaces
+ * There is therefore nothing secret to strip here - the comment this replaces
  * described a `select *` that would have shipped password hashes, which was
  * true of the code before Supabase and is not true of the code now. Should a
  * credential column ever be added back, this is the place that has to project
@@ -1216,7 +1216,7 @@ const NO_REFERENCES: UserReferenceCounts = {
  * per table instead of five per officer.
  *
  * `listUsers` used to call `getUserReferences` once per row, and each of those
- * issued five queries of its own — so the administration screen asked the
+ * issued five queries of its own - so the administration screen asked the
  * database thirty-one questions to draw one table, and asked all thirty at once
  * because the per-row work was a `Promise.all`. That is what exhausted the
  * server's connections: the failure is `EMAXCONN`, PostgreSQL refusing the
@@ -1226,7 +1226,7 @@ const NO_REFERENCES: UserReferenceCounts = {
  *
  * Grouping by officer collapses the same work into five queries that each
  * return one row per officer that has references, and an officer with none
- * simply has no entry — which is why the caller falls back to `NO_REFERENCES`
+ * simply has no entry - which is why the caller falls back to `NO_REFERENCES`
  * rather than expecting a zero row.
  *
  * `count()` rather than counting fetched rows in JavaScript, which is what
@@ -1370,7 +1370,7 @@ export async function getAuthUserIdForUser(id: number): Promise<string | null> {
  *
  * Case-insensitive, because an address is not case-sensitive and Supabase will
  * happily treat `A@x.com` and `a@x.com` as one identity while this lookup would
- * otherwise return two different rows — which is how a register ends up
+ * otherwise return two different rows - which is how a register ends up
  * describing one officer twice.
  */
 export async function getUserByEmail(email: string) {
@@ -1389,7 +1389,7 @@ export async function getUserByEmail(email: string) {
  *
  * Normalised to lower case on the way in, which is what `usernameTaken` compares
  * against, so the same account cannot be reachable under two spellings of one
- * name. This is not the display name — `setUserDisplayName` below is — and it is
+ * name. This is not the display name - `setUserDisplayName` below is - and it is
  * not a credential: it labels the account on the register and nothing signs in
  * with it.
  */
@@ -1552,7 +1552,7 @@ export async function listAuditLog(filters: AuditFilters = {}) {
   if (search) {
     // The note, the reference, the teacher and the officer who acted: the four
     // things the box on the audit screen says it searches. `ilike` because this
-    // box has always been case-insensitive — see the register search above.
+    // box has always been case-insensitive - see the register search above.
     const term = `%${search}%`;
     conditions.push(
       or(
@@ -1668,15 +1668,15 @@ export async function listOfficers() {
  * the 1st** and ends at midnight on the 1st of the next month. Getting that
  * wrong is invisible in the code and obvious in the figures: the version this
  * replaces used `setDate(1)` without clearing the time of day, which made every
- * window `[1st at the current time, 1st of next month at the current time)` — so
+ * window `[1st at the current time, 1st of next month at the current time)` - so
  * every matter received or closed in the hours of the 1st before "now" fell into
  * the *previous* month's bar, under the previous month's label. At 14:33 that is
  * the first fourteen and a half hours of every month. This deployment runs
  * UTC+10, so it was not theoretical.
  *
  * Local midnight rather than UTC, because every other month and quarter window in
- * this file is built from local components — `getMonthlyIntake`,
- * `getMonthlyReport` and `quarterRange` all are — and a matter received at 00:30
+ * this file is built from local components - `getMonthlyIntake`,
+ * `getMonthlyReport` and `quarterRange` all are - and a matter received at 00:30
  * on the 1st local has to land in the month the officer would name.
  *
  * Exported so the arithmetic can be asserted without a database: the loop that

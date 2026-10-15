@@ -52,7 +52,7 @@ export function getSessionCookieOptions(
  * Supabase's session cookie names, as they appear on a request.
  *
  * `sb-<project-ref>-auth-token`, and `sb-<project-ref>-auth-token.<n>` for each
- * chunk when the session is too large for one cookie — the browser sends what it
+ * chunk when the session is too large for one cookie - the browser sends what it
  * was given and the server deletes what it can see, so a sign-out that deletes
  * only the base name deletes a cookie that was never sent and leaves the session
  * resolving.

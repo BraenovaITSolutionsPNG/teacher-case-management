@@ -5,7 +5,7 @@
 -- `users` and nothing else, so the platform's schema survives and the next
 -- administrator can sign in and recreate the officers.
 --
--- Read the consequences before running it. This is not reversible — there is no
+-- Read the consequences before running it. This is not reversible - there is no
 -- backup of a Supabase project in this repository.
 --
 --   1. Every account stops existing, including any super administrator. The
@@ -15,15 +15,15 @@
 --      does.
 --
 --   2. Matters are NOT deleted, and they name the officers who registered them.
---      `cases.createdById` is not a foreign key — the schema has no constraints
---      between these tables — so the delete succeeds and leaves that column
+--      `cases.createdById` is not a foreign key - the schema has no constraints
+--      between these tables - so the delete succeeds and leaves that column
 --      pointing at rows that no longer exist. A matter would then be attributed
 --      to an officer the register cannot resolve: `getUserById` returns nothing
 --      where the accountability trail expects somebody.
 --
 --      That is why the script counts referencing matters first and refuses when
 --      there are any. If you want a genuinely empty register, delete the matters
---      too — the second block below does both, in the order that keeps every
+--      too - the second block below does both, in the order that keeps every
 --      reference valid while it runs.
 --
 -- Run in the Supabase SQL Editor. Nothing happens until `confirm` is set to
@@ -35,7 +35,7 @@ DECLARE
   confirm        boolean := false;
   account_count  integer;
   -- Matters naming an officer, counted across every column that does. Not
-  -- "matters already orphaned" — deleting every account orphans every matter
+  -- "matters already orphaned" - deleting every account orphans every matter
   -- that names one, so the question is whether any matter names an officer at
   -- all, before the delete rather than after it.
   matters        integer;
@@ -77,7 +77,7 @@ END $$;
 
 
 -- ===========================================================================
--- Second block: a genuinely empty register — matters and accounts both.
+-- Second block: a genuinely empty register - matters and accounts both.
 -- ===========================================================================
 -- Nothing above this line runs unless you paste it separately.
 --

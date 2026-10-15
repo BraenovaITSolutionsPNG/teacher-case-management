@@ -13,7 +13,7 @@ import type { Role } from "../shared/roles";
  *
  * The page sizes live in `shared/pagination` and the screens send those exact
  * constants, so every paged route has to accept them. Nothing in the type system
- * ties the bound a route declares to the size the screen that reads it sends —
+ * ties the bound a route declares to the size the screen that reads it sends -
  * both are just numbers, and a mismatch is invisible until the screen is opened.
  *
  * That is not hypothetical: `admin.audit.list` bounded `limit` with

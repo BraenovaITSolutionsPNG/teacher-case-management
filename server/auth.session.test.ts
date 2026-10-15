@@ -5,7 +5,7 @@ import { describe, expect, it, vi, beforeEach } from "vitest";
  *
  * Three refusals and one silence, and the refusals are the point: each names a
  * fault with a different fix, so reporting one as another costs an afternoon.
- * The database case is the one this file exists for — `getUserByAuthUserId`
+ * The database case is the one this file exists for - `getUserByAuthUserId`
  * answers `undefined` for a missing database and for a missing row alike, and an
  * unreachable database that presents as "this account has not been set up" sends
  * the operator off to create an account that already exists.
@@ -48,7 +48,7 @@ const ACCESS_TOKEN = [
 const serverClient = {
   auth: {
     // The session is read first and off the cookie this process already has, so
-    // a null session is the honest answer for an anonymous scenario — and it is
+    // a null session is the honest answer for an anonymous scenario - and it is
     // what lets an anonymous request skip verification of every kind.
     getSession: vi.fn(),
     // `getUser` is declared so the assertion that it is *never* called has
@@ -126,7 +126,7 @@ describe("a platform that cannot reach its database", () => {
   it("is not told to an officer who has not signed in yet", async () => {
     // The sign-in screen's fixed sentence under the refusal says the password
     // was accepted. That is assertable only about somebody who presented a
-    // session — a visitor who has not typed anything has accepted nothing, and
+    // session - a visitor who has not typed anything has accepted nothing, and
     // sending them away from a form that will work the moment the platform can
     // reach its database is the one outcome the refusal must not cause.
     scenario({ database: false, signedIn: false });
@@ -171,7 +171,7 @@ describe("a session that resolves", () => {
 
   it("refuses a deactivated officer, and does not record them as here", async () => {
     // A deactivated officer may hold an unexpired session, so the account has to
-    // be refused on every request — and the audit column must not claim they
+    // be refused on every request - and the audit column must not claim they
     // were working.
     scenario({
       database: true,
@@ -239,7 +239,7 @@ describe("verifying the token", () => {
       },
     });
 
-    // An expired or forged token — which a stale tab produces routinely — is not
+    // An expired or forged token - which a stale tab produces routinely - is not
     // a hard error, it is "not signed in yet". The honest answer is null, and no
     // network call is made to confirm a verdict we already have.
     expect(await authenticateSupabaseRequest()).toBeNull();
@@ -253,7 +253,7 @@ describe("verifying the token", () => {
     // carrying only the name would pass a test while proving nothing.
     // The one failure mode that must not be read as a verdict. `getClaims`
     // verifies against a key set it has to fetch on a cold start, so the first
-    // request after a deploy depends on that call — and a blip there would
+    // request after a deploy depends on that call - and a blip there would
     // otherwise present as every officer signed out at once.
     scenario({
       database: true,

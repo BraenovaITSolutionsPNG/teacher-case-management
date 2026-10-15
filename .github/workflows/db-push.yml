@@ -53,7 +53,7 @@ jobs:
       # fixes that: databaseConnection.ts verifies against exactly this
       # certificate, and it is passed to `migrate` and `db:verify` alike through
       # that one module. Set it to the CA from Dashboard -> Database -> SSL
-      # Configuration, as the PEM itself — a path does not exist on a runner.
+      # Configuration, as the PEM itself - a path does not exist on a runner.
       DATABASE_CA_CERT: ${{ secrets.DATABASE_CA_CERT }}
       # Only consulted when DATABASE_CA_CERT is empty, and it is the weaker of the
       # two: it verifies against the host trust store, which is correct for a
@@ -73,7 +73,7 @@ jobs:
       #
       # The test is in the shell, not in `if:`. The `secrets` context is not
       # available to a step-level `if`, and referencing it there makes the whole
-      # workflow file invalid — GitHub then rejects the run before a single step
+      # workflow file invalid - GitHub then rejects the run before a single step
       # starts, reporting "likely failed because of a workflow file issue" and
       # no log at all. DATABASE_CA_CERT is already in this job's env, so the
       # shell can read it directly and the secret is never echoed.

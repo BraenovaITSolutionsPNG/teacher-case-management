@@ -111,14 +111,14 @@ const roleEnum = z.enum(ROLE_VALUES);
  *
  * The message is the same sentence the brief form shows against the offending
  * box, so a rejection and a client-side warning read identically. Without it
- * the officer gets the schema's default — "Too small: expected string to have
- * >=4 characters" — which names neither the section nor what to do about it.
+ * the officer gets the schema's default - "Too small: expected string to have
+ * >=4 characters" - which names neither the section nor what to do about it.
  *
  * The message is chosen per failure rather than fixed, because "this section is
  * required" and "write at least four characters" are different instructions for
  * two different mistakes. A single fixed message would say the second to an
  * officer who had left the box empty, and the form's own check would say the
- * first to the same officer — the same mistake worded two ways depending on
+ * first to the same officer - the same mistake worded two ways depending on
  * which side happened to catch it.
  */
 function briefSection(key: string) {
@@ -131,7 +131,7 @@ function briefSection(key: string) {
     .trim()
     .min(CASE_BRIEF_MIN_LENGTH, {
       // `error` rather than the deprecated `message`, because only `error` takes
-      // a function — and the function is the point: it is what lets the message
+      // a function - and the function is the point: it is what lets the message
       // depend on whether the officer left the box empty or wrote too little.
       error: issue =>
         caseBriefFieldError(
@@ -151,7 +151,7 @@ function briefSection(key: string) {
  * pursuing is not made to carry two invented sections, and the moment it is
  * flagged the same two sections become mandatory again.
  *
- * The key is not used here — the length floor for these two is applied in the
+ * The key is not used here - the length floor for these two is applied in the
  * refinement below, once the flag in the same payload is known.
  */
 function conditionalBriefSection() {
@@ -408,7 +408,7 @@ export const appRouter = router({
      * want the officer or nothing. This one is read only by the sign-in screen,
      * and only when `me` is null.
      *
-     * It is for the officer who signed in correctly and was then refused —
+     * It is for the officer who signed in correctly and was then refused -
      * an identity with no register row, or an account that has been deactivated.
      * Without it they are handed a sign-in form that will not accept them, which
      * reads as a wrong password: the one conclusion the evidence does not
@@ -467,8 +467,8 @@ export const appRouter = router({
 
         const extension = AVATAR_EXTENSIONS[actual];
         // The key the officer is replacing, read before it is overwritten.
-        // Every write gets its own key — `storagePut` appends a random suffix,
-        // not a content hash — so a second image is a second object rather than a
+        // Every write gets its own key - `storagePut` appends a random suffix,
+        // not a content hash - so a second image is a second object rather than a
         // replacement of the first, and nothing downstream removes it, which
         // meant every changed profile picture left the old one in the bucket
         // forever. Four avatars and no way back is a slow leak nobody would
@@ -521,7 +521,7 @@ export const appRouter = router({
     removeAvatar: protectedProcedure.mutation(async ({ ctx }) => {
       // The object goes with the column. Clearing the reference alone would
       // leave the file in the bucket with nothing pointing at it, and this is
-      // the only place an officer can ask for their image to be taken down —
+      // the only place an officer can ask for their image to be taken down -
       // "remove my photo" has to mean the photo is gone, not that the app
       // stopped showing it. A storage failure is logged rather than raised, for
       // the same reason the replace above swallows it: the column is the record
@@ -554,11 +554,11 @@ export const appRouter = router({
      *    name. This is the part that cannot be delegated. `@supabase/ssr` only
      *    writes a deletion for a session it found in its own store, and inside a
      *    tRPC procedure running on a route handler that store is the one
-     *    `next/headers` handed over — so the call can succeed and put nothing on
+     *    `next/headers` handed over - so the call can succeed and put nothing on
      *    the wire at all. Observed: a sign-out answered 200 with a single
      *    Set-Cookie, for `app_session_id`, which nothing in this app has set
      *    since the move to Supabase. The session cookie went untouched, and
-     *    `auth.me` resolved the same session again on the next request — an
+     *    `auth.me` resolved the same session again on the next request - an
      *    officer pressing Sign out returned to the screen they pressed it on,
      *    with no way off it.
      *
@@ -606,7 +606,7 @@ export const appRouter = router({
      * officer who is also signed in on a shared or borrowed machine no way out of
      * that one. This is the other half: it is a `protectedProcedure` rather than an
      * administrator one, because managing your own sessions is not an
-     * administrative act — and the user id comes from `ctx`, never from the
+     * administrative act - and the user id comes from `ctx`, never from the
      * client, so there is no input here that could ask about anybody else.
      */
     sessions: protectedProcedure.query(async ({ ctx }) => {
@@ -960,8 +960,8 @@ export const appRouter = router({
             decisionRequired: z.boolean().default(false),
           })
           // Only the flag is checked here, because only the flag arrives in the
-          // payload. The other half of `briefNeedsDecision` — a matter sitting at
-          // DEC — depends on the stored status and is enforced in the resolver,
+          // payload. The other half of `briefNeedsDecision` - a matter sitting at
+          // DEC - depends on the stored status and is enforced in the resolver,
           // which reads it rather than believing a value the client sent.
           .superRefine((brief, ctx) => {
             if (!brief.decisionRequired) return;
@@ -989,7 +989,7 @@ export const appRouter = router({
           });
         }
         // A matter at DEC is asking the Director for a decision whether or not
-        // the flag was set — the status says so — and the Director's queue is
+        // the flag was set - the status says so - and the Director's queue is
         // built from `decisionRequired || status === "DEC"`. Enforcing the same
         // pair here is what stops a matter appearing in that queue with a brief
         // that never says what is being decided. The status is read from the
@@ -1035,7 +1035,7 @@ export const appRouter = router({
         await addCaseEvent({
           caseId: id,
           eventType: "case_brief",
-          note: `Case brief prepared for the Director${brief.decisionRequired ? " — decision required" : ""}`,
+          note: `Case brief prepared for the Director${brief.decisionRequired ? " - decision required" : ""}`,
           actorId: ctx.user.id,
           actorName: nameOf(ctx.user),
         });
@@ -1365,7 +1365,7 @@ export const appRouter = router({
     /**
      * The Commission decides; the Director records what was decided (§6, §12D).
      *
-     * Moves the matter to "Awaiting decision" — DEC records that a decision is
+     * Moves the matter to "Awaiting decision" - DEC records that a decision is
      * outstanding, and the matter is closed later through `update` with the
      * outcome, date and communication the Golden Rule requires. It is written to
      * the activity trail like every other change to a matter: a decision that
@@ -1651,7 +1651,7 @@ export const appRouter = router({
             ].filter(Boolean);
             throw new TRPCError({
               code: "BAD_REQUEST",
-              message: `This person appears in the accountability trail (${parts.join(", ")}), so deleting them would break the accountability trail. Deactivate the account instead — it closes the sign-in and keeps the record.`,
+              message: `This person appears in the accountability trail (${parts.join(", ")}), so deleting them would break the accountability trail. Deactivate the account instead - it closes the sign-in and keeps the record.`,
             });
           }
           // The Supabase identity is cleared before the row goes, so a failure
@@ -1946,7 +1946,7 @@ export const appRouter = router({
           await addCaseEvent({
             caseId: input.id,
             eventType: "oversight_status",
-            note: `Oversight status change from ${before?.status || "—"} to ${input.status}: ${input.note}`,
+            note: `Oversight status change from ${before?.status || "-"} to ${input.status}: ${input.note}`,
             actorId: ctx.user.id,
             actorName: nameOf(ctx.user),
           });

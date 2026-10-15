@@ -19,7 +19,7 @@ export const dynamic = "force-dynamic";
  * Session-guarded, because the key alone is not a secret. Nothing checked who
  * was asking: an officer who copied a document's address out of the case file
  * handed it to anybody who asked, and the 60-second lifetime on the signed URL
- * bounded the *URL* rather than the route that mints one — so the same request
+ * bounded the *URL* rather than the route that mints one - so the same request
  * could be repeated forever and a fresh 60 seconds minted each time. These are
  * case files: teacher names and disciplinary records, on the same footing as the
  * register that the row-level-security migration in `drizzle/` exists to keep

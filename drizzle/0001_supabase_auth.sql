@@ -5,7 +5,7 @@
 --   1. Add "authUserId" as a nullable, unique column. Nullable so this can be
 --      applied before the Supabase identities exist, and so a row can be
 --      created and its identity set up afterwards. A null is never a sign-inable
---      state — the request path looks an officer up *by* this column, so a null
+--      state - the request path looks an officer up *by* this column, so a null
 --      row is simply unreachable.
 --
 --   2. Drop "passwordHash". The scrypt hashes that were here cannot be
@@ -29,18 +29,18 @@ ALTER TABLE "users" DROP COLUMN "passwordHash";--> statement-breakpoint
 -- thing an anonymous visitor lacked, so the tables were safe by virtue of the
 -- app never exposing a database path to a browser. After it, the anon key is
 -- aimed straight at this database, and anything it can reach is readable by
--- anyone who has the key — no sign-in required.
+-- anyone who has the key - no sign-in required.
 --
 -- So RLS goes on every table, and no policy is created. That is the intended
 -- shape, not an oversight:
 --
 --   - The application never talks to the database as `anon` or `authenticated`.
---     It reads and writes over one privileged connection as the table owner —
---     `postgres` on Supabase, `tsc` locally — and PostgreSQL exempts the owner
+--     It reads and writes over one privileged connection as the table owner -
+--     `postgres` on Supabase, `tsc` locally - and PostgreSQL exempts the owner
 --     from row security, so every existing screen keeps working unchanged.
 --   - PostgREST is reachable with the anon key, and with RLS on and no policy
---     every role it can authenticate as is denied. The register — teacher
---     names, matter files, disciplinary records — is not readable through the
+--     every role it can authenticate as is denied. The register - teacher
+--     names, matter files, disciplinary records - is not readable through the
 --     public API. Verified against this schema: a non-owner role holding an
 --     explicit SELECT grant reads 0 rows from "cases", while the owner reads
 --     every row.

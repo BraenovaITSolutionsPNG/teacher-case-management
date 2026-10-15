@@ -134,7 +134,7 @@ describe("director-gated actions", () => {
     for (const role of ["admin", "super_admin"] as const) {
       const caller = appRouter.createCaller(createContext(role));
       // No database in unit tests, so this fails on the query rather than the
-      // permission check — which is exactly what we want to prove.
+      // permission check - which is exactly what we want to prove.
       await expect(
         caller.caseManagement.commissionerUpdate({
           id: 1,
@@ -246,8 +246,8 @@ describe("credentials live in Supabase, not here", () => {
     // The previous arrangement kept scrypt here: localAuth.ts hashed an
     // officer's password, compared it, and the users table stored the result.
     // All of it is deleted. Checked by absence of the file rather than by
-    // behaviour, so a partial reintroduction — a helper that hashes and is
-    // never called — is caught rather than sitting in the tree unused.
+    // behaviour, so a partial reintroduction - a helper that hashes and is
+    // never called - is caught rather than sitting in the tree unused.
     expect(
       existsSync(new URL("./_core/localAuth.ts", import.meta.url))
     ).toBe(false);
@@ -289,7 +289,7 @@ describe("the request identity carries no credential", () => {
     };
     expect("passwordHash" in identity).toBe(false);
     // The Supabase uuid is present instead: it is how the next request finds
-    // this row, and it is not a secret — the same value is in a cookie the
+    // this row, and it is not a secret - the same value is in a cookie the
     // browser holds.
     expect(identity.authUserId).toMatch(
       /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
@@ -323,7 +323,7 @@ describe("the request identity carries no credential", () => {
 describe("account administration", () => {
   it("creates the account with no password, leaving the officer to set one", async () => {
     // The route calls into Supabase, so this asserts only that the input shape
-    // an administrator must supply is accepted up to that point — a missing
+    // an administrator must supply is accepted up to that point - a missing
     // password is no longer an error, because a link is better than a credential
     // an administrator has to invent and hand over.
     const caller = appRouter.createCaller(createContext("super_admin"));

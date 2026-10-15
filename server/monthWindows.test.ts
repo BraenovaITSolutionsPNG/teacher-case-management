@@ -10,7 +10,7 @@ import { monthWindows } from "./db";
  * day but left the time of day in place: every bar became
  * `[1st at the current time, 1st of next month at the current time)`. A matter
  * received at 09:00 on 1 October was therefore counted in the September bar, under
- * the September label — for the first half of every month, on a deployment that
+ * the September label - for the first half of every month, on a deployment that
  * runs UTC+10.
  *
  * The tests state the invariant directly: a window is the calendar month, so
@@ -27,7 +27,7 @@ describe("month windows", () => {
   };
 
   it("starts each month at midnight on the 1st, not at the current time of day", () => {
-    // 14:33 on the 5th — the case that failed.
+    // 14:33 on the 5th - the case that failed.
     const [, current] = monthWindows(new Date(2026, 9, 5, 14, 33, 21), 2);
     expect(current.key).toBe("2026-10");
     expect(current.start.getHours()).toBe(0);

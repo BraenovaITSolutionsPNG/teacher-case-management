@@ -144,7 +144,7 @@ export function ReferMatterDialog({
       reason: reason.trim(),
       criteria,
       // `parseDateInput` rather than `new Date(...)`, which happens to agree with it
-      // today — both read `YYYY-MM-DD` as UTC midnight, the same reading the
+      // today - both read `YYYY-MM-DD` as UTC midnight, the same reading the
       // server's `z.coerce.date()` applies. Naming it says the deadline is a
       // calendar date rather than an instant, and keeps the single place that
       // decides what a calendar date means.

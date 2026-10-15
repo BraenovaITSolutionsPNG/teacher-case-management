@@ -233,8 +233,8 @@
 
    Three motions, all keyframes rather than a library: a ring that draws itself,
    an arc that sweeps it, and a stack of case-file lines that fill in sequence.
-   Together they read as a matter being taken in and worked — which is what the
-   officer is actually waiting for — instead of a generic spinner.
+   Together they read as a matter being taken in and worked - which is what the
+   officer is actually waiting for - instead of a generic spinner.
 
    Every one of them collapses under `prefers-reduced-motion`, which is the
    difference between a loader that respects the setting and one that does not:
@@ -315,7 +315,7 @@
      moving for someone who had asked their operating system to stop it. Every
      page in this platform draws one while its data arrives, so this was the most
      persistent piece of unwanted motion in the product and it sat outside the
-     loader's reduced-motion rule entirely — not because it was exempt, but
+     loader's reduced-motion rule entirely - not because it was exempt, but
      because it is a Tailwind utility rather than one of the hand-written
      keyframes above, so it was never in the list.
 
@@ -327,8 +327,8 @@
   }
 
   /* Everything the interface animates on entry. Tailwind's `animate-in` and
-     `animate-out` are used by fifteen components — dialogs, sheets, tooltips,
-     menus — and each one is a short fade or slide that a reduced-motion setting
+     `animate-out` are used by fifteen components - dialogs, sheets, tooltips,
+     menus - and each one is a short fade or slide that a reduced-motion setting
      is asking not to see. */
   .animate-in,
   .animate-out {
@@ -336,7 +336,7 @@
     transition-duration: 1ms !important;
   }
 
-  /* Frozen, the spinner would read as a stopped loading state — which is the
+  /* Frozen, the spinner would read as a stopped loading state - which is the
      opposite of what it means. Each element is given a static "in progress"
      pose instead, so the screen still says the work is under way. */
   .animate-loader-ring {
@@ -349,7 +349,7 @@
 
   /* The route-change bar needs this one more than the others. The rule above
      stops its sweep, which leaves it parked at the transform its animation
-     starts from — `translateX(-100%)`, entirely off the left edge — so a
+     starts from - `translateX(-100%)`, entirely off the left edge - so a
      reduced-motion officer would be given a bar that is invisible and nothing
      in its place. It is given a static pose instead, and since the sweep is
      what makes the bar indeterminate, the static pose is the full width of the

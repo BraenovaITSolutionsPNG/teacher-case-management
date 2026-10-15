@@ -89,7 +89,7 @@ import Link from "next/link";
  * The four platform tabs, each carrying the capability the server enforces on
  * the procedures behind it. The strip is built from this list rather than
  * hard-coded, so a tier that holds one of these capabilities sees exactly the
- * tab it is entitled to — the Administrator tier holds platform:oversight and
+ * tab it is entitled to - the Administrator tier holds platform:oversight and
  * reaches the Oversight tab, which a hard-coded super-administrator check had
  * made unreachable.
  */
@@ -133,7 +133,7 @@ const statusLabel = (value: string) =>
 const roleLabel = (value: string) => ROLE_LABELS[value as Role] ?? value;
 
 function formatDateTime(value?: Date | string | null) {
-  if (!value) return "—";
+  if (!value) return "-";
   return new Date(value).toLocaleString("en-AU", {
     day: "2-digit",
     month: "short",
@@ -275,7 +275,7 @@ function UsersTab({ currentUserId }: { currentUserId: number }) {
                 required
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                placeholder="Email (required — this is the sign-in)"
+                placeholder="Email (required - this is the sign-in)"
                 className="h-9"
               />
               <Select value={role} onValueChange={v => setRole(v as Role)}>
@@ -411,7 +411,7 @@ function UsersTab({ currentUserId }: { currentUserId: number }) {
                           <DenseCell>
                             <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                               <span className="font-semibold text-slate-800">
-                                {user.name || "—"}
+                                {user.name || "-"}
                               </span>
                               {isSelf ? (
                                 <Badge className="border-slate-200 bg-slate-100 text-slate-600">
@@ -431,8 +431,8 @@ function UsersTab({ currentUserId }: { currentUserId: number }) {
                           <DenseCell>
                             {/* Editable in place. A username can only be set at
                                 creation otherwise, so an account whose name
-                                changed — or one that has to be renamed because
-                                the sign-in name collided — could not be fixed
+                                changed - or one that has to be renamed because
+                                the sign-in name collided - could not be fixed
                                 at all, and Settings told the officer to ask the
                                 administrator for something the administrator
                                 had no control for. */}
@@ -500,13 +500,13 @@ function UsersTab({ currentUserId }: { currentUserId: number }) {
                                 }}
                               >
                                 {user.isProvisioned
-                                  ? "set — change it"
-                                  : "not set — set one"}
+                                  ? "set - change it"
+                                  : "not set - set one"}
                               </button>
                             )}
                           </DenseCell>
                           <DenseCell className="text-slate-600">
-                            {user.email || "—"}
+                            {user.email || "-"}
                           </DenseCell>
                           <DenseCell>
                             <Select
@@ -592,7 +592,7 @@ function UsersTab({ currentUserId }: { currentUserId: number }) {
                                   isSelf
                                     ? "You cannot delete your own account"
                                     : user.references.total > 0
-                                      ? "This person is in the accountability trail — deactivate them instead"
+                                      ? "This person is in the accountability trail - deactivate them instead"
                                       : "Delete this account"
                                 }
                                 className={cn(
@@ -606,7 +606,7 @@ function UsersTab({ currentUserId }: { currentUserId: number }) {
                                   if (deleteMutation.isPending) return;
                                   if (user.references.total > 0) {
                                     toast.error(
-                                      `${user.name ?? "This person"} appears in the accountability trail. Deactivate the account instead — it closes the sign-in and keeps the record.`,
+                                      `${user.name ?? "This person"} appears in the accountability trail. Deactivate the account instead - it closes the sign-in and keeps the record.`,
                                       { duration: 9000 }
                                     );
                                     return;
@@ -834,7 +834,7 @@ function AuditTab() {
 
               `(types.data ?? []).map(...)` renders an empty menu for a request
               that failed, which is indistinguishable from a filter that has
-              nothing to offer — and a filter that silently narrows the audit
+              nothing to offer - and a filter that silently narrows the audit
               trail is worse than one that admits it cannot be read.
             */}
             <Select
@@ -858,7 +858,7 @@ function AuditTab() {
           {types.isError ? (
             <p role="alert" className="mt-2 text-xs text-rose-700">
               The event types could not be read, so this filter is unavailable.
-              The trail itself is unaffected — clear the filter to see every
+              The trail itself is unaffected - clear the filter to see every
               entry.
             </p>
           ) : null}
@@ -876,7 +876,7 @@ function AuditTab() {
       ) : audit.isError ? (
         // Not the empty state below. "No audit entries match the current
         // filters" is a claim about the audit trail, and a request that failed
-        // makes no claim at all — an audit trail that answers "nothing here"
+        // makes no claim at all - an audit trail that answers "nothing here"
         // when it could not be read is worse than one that admits it.
         <ErrorState
           title="The audit trail could not be read"
@@ -986,7 +986,7 @@ function OversightTab() {
   // Two different lists, and conflating them emptied the table: the dropdown
   // labelled "All provinces" was populated from the officer list and sent as the
   // `province` filter, so every officer name matched nothing and "All provinces"
-  // — the value "all" — was truthy, filtering on the literal string "all".
+  // - the value "all" - was truthy, filtering on the literal string "all".
   // Provinces come from the provinces procedure; officers are only for the
   // reassignment picker.
   const provinces = trpc.admin.provinces.useQuery();
@@ -1005,7 +1005,7 @@ function OversightTab() {
   // Both of these change the matter itself, not just the oversight view, so they
   // dirty the same reads a change made from the matter file does. Overriding a
   // status here previously left the register and the dashboard showing the old
-  // one — the officer's next page load disagreed with what they had just done.
+  // one - the officer's next page load disagreed with what they had just done.
   const reassign = trpc.admin.cases.reassign.useMutation({
     onSuccess: updated => {
       void invalidateMatterWrites(utils, updated?.id);
@@ -1028,7 +1028,7 @@ function OversightTab() {
   // The statuses an override may move a matter *to*. Closing statuses are
   // excluded: the Golden Rule refuses to close a matter without a recorded
   // outcome, a date closed and a record of who communicated it, and the
-  // override select has no way to collect those three — so offering RES and CLS
+  // override select has no way to collect those three - so offering RES and CLS
   // here only ever produced a refusal. Reopening a matter that was closed in
   // error still works, because the row's own current status is always in the
   // list and the statuses it can move to are all open.
@@ -1061,7 +1061,7 @@ function OversightTab() {
             placeholder="Case reference or teacher"
             className="h-8 w-52 text-[13px]"
           />
-          {/* Held while loading, refused on failure — the same reason as the
+          {/* Held while loading, refused on failure - the same reason as the
               event-type filter above: an empty menu from a failed request reads
               as "every province", which is the one reading that must never be
               wrong by accident. */}
@@ -1105,7 +1105,7 @@ function OversightTab() {
       ) : cases.isError ? (
         // The worst of the three, because this list decides what a Director is
         // asked to act on. A failed read used to fall through to an empty table
-        // with headers and no rows, which says the province has no matters —
+        // with headers and no rows, which says the province has no matters -
         // the one conclusion that must never be reached by accident.
         <ErrorState
           title="The oversight list could not be read"
@@ -1182,7 +1182,7 @@ function OversightTab() {
                         // Controlled, like the status picker beside it. Without
                         // a value this ran uncontrolled, so it sat on its
                         // "Reassign" placeholder even when the row's Officer
-                        // column showed an officer — and after a reassignment
+                        // column showed an officer - and after a reassignment
                         // refetched, or a change made in another tab, it kept
                         // showing the stale name with no way to read the current
                         // one. Empty string is what shows the placeholder, which
@@ -1240,7 +1240,7 @@ function OversightTab() {
                         <SelectContent>
                           {/* The row's own status is always present, so a matter
                               that is already resolved or closed shows its status
-                              here rather than an empty control — and the
+                              here rather than an empty control - and the
                               override can still reopen it. */}
                           {[item.status, ...openStatuses]
                             .filter(

@@ -174,7 +174,7 @@ describe("§12B what counts as asking the Director for a decision", () => {
 
   it("is a matter already sitting at Awaiting decision", () => {
     // The status says the matter is waiting on the Director whatever the flag
-    // says, and the Director's queue is built from both — so a brief judged on
+    // says, and the Director's queue is built from both - so a brief judged on
     // the flag alone would let a DEC matter reach that queue saying nothing
     // about what is being decided.
     expect(briefNeedsDecision(false, "DEC")).toBe(true);

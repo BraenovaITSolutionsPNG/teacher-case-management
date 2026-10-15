@@ -170,7 +170,7 @@ export function AIChatBox({
    * Follow the conversation as it grows.
    *
    * `handleSubmit` scrolls after the officer sends, which covers their own
-   * message but not the reply that arrives afterwards — so the answer they were
+   * message but not the reply that arrives afterwards - so the answer they were
    * waiting for was appended below the fold and nothing brought it into view.
    * The suggested-prompt buttons bypass `handleSubmit` entirely and did not
    * scroll at all. Keyed on the rendered messages rather than on the raw prop so
@@ -353,7 +353,7 @@ export function AIChatBox({
           className="shrink-0 h-[38px] w-[38px]"
         >
           {/* The label follows the state, because an icon-only button has no
-              accessible name of its own in either state — it was "button" to a
+              accessible name of its own in either state - it was "button" to a
               screen reader whether it was ready to send or busy. */}
           {isLoading ? (
             <>

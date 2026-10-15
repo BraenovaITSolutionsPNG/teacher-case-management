@@ -11,7 +11,7 @@ import type { ComponentProps, ReactNode } from "react";
  * and `TabsTrigger`, not lookalikes: the trigger has to be the real one or the
  * click never reaches the `Tabs` that owns the selection, and the panel below
  * never changes. They used to be a `<div role="tablist">` and a plain
- * `<button>`, which rendered convincingly and did nothing — the `value` landed
+ * `<button>`, which rendered convincingly and did nothing - the `value` landed
  * on the button as an inert HTML attribute, and the `data-[state=active]:`
  * classes below had no `data-state` to match.
  *

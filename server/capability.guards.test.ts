@@ -8,7 +8,7 @@ import type { TrpcContext } from "./_core/context";
  * The capability model is only a boundary if the general procedures respect the
  * capabilities of the specific ones. `caseManagement.update` accepts fields that
  * `matter:flag`, `matter:escalate` and `matter:decide` govern, and each of those
- * has a dedicated procedure of its own — so the question these tests ask is
+ * has a dedicated procedure of its own - so the question these tests ask is
  * whether the dedicated procedures are reachable or merely decorative.
  *
  * No database is involved: every refusal here depends only on the caller's role
@@ -62,7 +62,7 @@ describe("matter:flag cannot be set through the general update", () => {
   it("lets the tiers that hold matter:flag past the guard", async () => {
     // The guard must not refuse the roles it is written for. An assistant is the
     // tier §12B names, so it gets past the capability check and fails later, on
-    // the database — which is the proof that the guard itself let it through.
+    // the database - which is the proof that the guard itself let it through.
     const caller = appRouter.createCaller(contextFor("assistant"));
     await expect(
       caller.caseManagement.update({ id: 1, decisionRequired: true })
@@ -128,7 +128,7 @@ describe("platform:oversight reaches the data its own screen needs", () => {
     expect(can("admin", "platform:stats")).toBe(false);
 
     const caller = appRouter.createCaller(contextFor("admin"));
-    // It resolves — to an empty list, because there is no database here. What
+    // It resolves - to an empty list, because there is no database here. What
     // matters is that it resolves at all: before the gate was corrected this
     // refused with FORBIDDEN, and the tier that holds oversight rights could not
     // reach the picker on its own screen.
@@ -158,7 +158,7 @@ describe("officerNames reaches the register form it fills", () => {
     expect(can("staff", "platform:oversight")).toBe(false);
 
     const caller = appRouter.createCaller(contextFor("staff"));
-    // Resolves — to an empty list, because there is no database here. What
+    // Resolves - to an empty list, because there is no database here. What
     // matters is that it resolves at all, and that a tier without any platform
     // capability is not refused the picker on the very form it fills.
     await expect(caller.caseManagement.officerNames()).resolves.toBeDefined();

@@ -27,7 +27,7 @@ function Avatar({
  * classes already give it a CSS aspect ratio, but a lazy-loaded image with no
  * attributes is still allocated a 0x0 box until it finishes loading, which shows
  * up as a layout shift; the attributes are what a caller can rely on and what an
- * audit can see. Pass a different pair to match a larger or non-square avatar —
+ * audit can see. Pass a different pair to match a larger or non-square avatar -
  * `aspect-square` is overridden in that case by the caller's own className.
  */
 function AvatarImage({

@@ -9,7 +9,7 @@ import { getServerTrpc } from "@server/_core/serverTrpc";
  * the dashboard draws, and hands the answer to the screen as a dehydrated cache,
  * so `Home` mounts with its numbers already in the cache instead of rendering a
  * skeleton and then fetching. The screen itself stays a client component reading
- * through the same tRPC query hooks — this segment changes when the data is
+ * through the same tRPC query hooks - this segment changes when the data is
  * fetched, not what the screen reads.
  *
  * `HydrateClient` is deliberately wrapped around the screen here rather than

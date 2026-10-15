@@ -7,7 +7,7 @@ import { can } from "@shared/access";
  * Route segment for /Reports.
  *
  * A Server Component. The reporting set is the most expensive screen in the
- * office — each tab aggregates the whole register — so it is the one that gains
+ * office - each tab aggregates the whole register - so it is the one that gains
  * most from arriving complete.
  */
 
@@ -25,7 +25,7 @@ export default async function Page() {
   //
   // `reports.quarters` is the exception, and it is not one of the five reports.
   // It is the list the Quarterly tab's picker is built from, and the quarterly
-  // report itself is not requested until the picker has an answer to send — so
+  // report itself is not requested until the picker has an answer to send - so
   // without this, opening Quarterly always arrived at an empty dropdown and a
   // two-step fetch. The list is small and every tab benefits from it being
   // present.

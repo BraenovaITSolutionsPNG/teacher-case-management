@@ -16,7 +16,7 @@ interface State {
  *
  * Only in development. A production stack carries absolute paths on the server,
  * the names of internal modules, and whatever was in the values being rendered
- * when it threw — none of which belongs in front of an officer, and all of
+ * when it threw - none of which belongs in front of an officer, and all of
  * which is free to hand an outsider a map of the deployment. The trace is still
  * logged; what is withheld is the officer's copy of it.
  */
@@ -101,7 +101,7 @@ class ErrorBoundary extends Component<Props, State> {
    * Logged, not only rendered.
    *
    * `app/error.tsx` logs its failures, and this boundary catches everything
-   * above that file — the providers and the root layout — so it was the one
+   * above that file - the providers and the root layout - so it was the one
    * place a crash could vanish entirely: the officer saw a card, and nothing
    * anywhere recorded what had thrown or where. In a platform whose whole
    * purpose is an accountability trail, a failure that leaves no trace is the

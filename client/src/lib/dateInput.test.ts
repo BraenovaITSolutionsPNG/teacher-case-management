@@ -20,13 +20,13 @@ import {
  * 2026-10-05T00:00:00Z.
  *
  * Read that back with *local* getters and the answer is the 4th for every browser
- * west of UTC — the officer types the 5th on a due date and is shown the 4th on
+ * west of UTC - the officer types the 5th on a due date and is shown the 4th on
  * the register, on the case file, and in the field itself. It is invisible on a
  * machine in UTC or east of it, which is why it survived: this deployment is
  * UTC+10.
  *
  * The tests below pin the timezone rather than trusting the machine. A test that
- * only passes east of UTC is not a test of this behaviour — which is exactly how
+ * only passes east of UTC is not a test of this behaviour - which is exactly how
  * the bug survived, since this deployment is UTC+10.
  */
 
@@ -63,8 +63,8 @@ describe("the off-by-one-day this design exists to prevent", () => {
 
   it("is real: local getters read a stored calendar date as the day before", () => {
     process.env.TZ = WEST;
-    // The premise. If this ever stopped holding — because the storage format
-    // changed to local midnight — the UTC getters below would be the wrong
+    // The premise. If this ever stopped holding - because the storage format
+    // changed to local midnight - the UTC getters below would be the wrong
     // choice and this file's premise would need revisiting, so it is asserted
     // rather than assumed.
     expect(localParts(STORED)).toBe("2026-10-04");
@@ -138,9 +138,9 @@ describe("reading a stored calendar date back", () => {
     expect(toDateInputValue(undefined)).toBe("");
     expect(toDateInputValue("")).toBe("");
     expect(toDateInputValue("not a date")).toBe("");
-    expect(formatDateOnly(null)).toBe("—");
-    expect(formatDateOnly(undefined)).toBe("—");
-    expect(formatDateOnly("not a date")).toBe("—");
+    expect(formatDateOnly(null)).toBe("-");
+    expect(formatDateOnly(undefined)).toBe("-");
+    expect(formatDateOnly("not a date")).toBe("-");
   });
 
   it("pads the day only when asked", () => {
@@ -189,7 +189,7 @@ describe("today", () => {
   it("is the calendar date where the browser is, not where UTC is", () => {
     // "Today" is a fact about the officer's desk. The stored value it becomes is
     // still UTC midnight, so this is the one function here that reads local date
-    // parts — and it is the reason the two kinds of getter coexist.
+    // parts - and it is the reason the two kinds of getter coexist.
     expect(todayInputValue()).toBe(localParts(new Date().toISOString()));
     expect(todayInputValue()).toMatch(/^\d{4}-\d{2}-\d{2}$/);
   });
@@ -217,6 +217,6 @@ describe("instants stay local", () => {
 
   it("carries a time as well as a day, so it is not mistaken for a calendar date", () => {
     expect(formatInstant(STORED)).not.toBe(formatDateOnly(STORED));
-    expect(formatInstant(null)).toBe("—");
+    expect(formatInstant(null)).toBe("-");
   });
 });

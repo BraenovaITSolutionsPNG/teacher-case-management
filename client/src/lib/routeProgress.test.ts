@@ -62,8 +62,8 @@ describe("a navigation that finishes quickly", () => {
     // Stated rather than left ambiguous: the delay timer fires at exactly
     // `SHOW_DELAY_MS` and `end()` arriving at the same instant does not beat it,
     // so a navigation that takes the full delay does get a bar. That is the
-    // intended reading — the delay is the point at which silence stops being the
-    // better answer — and it is asserted here so a change to the tie is a
+    // intended reading - the delay is the point at which silence stops being the
+    // better answer - and it is asserted here so a change to the tie is a
     // deliberate one rather than a surprise.
     expect(states).toEqual([true, false]);
   });

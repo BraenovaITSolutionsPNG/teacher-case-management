@@ -5,7 +5,7 @@
  * from the server, so they are the easiest part of pagination to get subtly
  * wrong and the hardest to notice: a register showing "page 4 of 2" is a bug
  * that only appears once someone has navigated to the end, and clamping a page
- * after a filter narrows the results is the case that actually happens — an
+ * after a filter narrows the results is the case that actually happens - an
  * officer on page 3 who types a search should land on page 1, not on an empty
  * table.
  *
@@ -86,8 +86,8 @@ export function offsetFor(page: number, pageSize: number): number {
 /**
  * The 1-based page an offset lands on, for reading a page out of a URL.
  *
- * Present because page numbers travel in links — a matter's file links back to
- * the page of the register it was found on — and going the other way is the
+ * Present because page numbers travel in links - a matter's file links back to
+ * the page of the register it was found on - and going the other way is the
  * direction that is easy to get wrong by one.
  */
 export function pageForOffset(offset: number, pageSize: number): number {

@@ -1,8 +1,8 @@
 """
 Convert a MySQL `INSERT INTO ... VALUES` dump into PostgreSQL INSERTs.
 
-The MySQL dumps in database/ are the only copy of this platform's data — 781+
-accounts, the case register, its timeline and its referrals — and PostgreSQL
+The MySQL dumps in database/ are the only copy of this platform's data - 781+
+accounts, the case register, its timeline and its referrals - and PostgreSQL
 cannot read them. This rewrites the row data into SQL the target database accepts.
 
 Three things differ between the two that a search-and-replace would get wrong,
@@ -246,7 +246,7 @@ def convert(dump_path: Path) -> str:
             if len(values) != len(columns):
                 raise SystemExit(
                     f"{table}: row has {len(values)} values but the table has "
-                    f"{len(columns)} columns — the dump and the schema disagree, "
+                    f"{len(columns)} columns - the dump and the schema disagree, "
                     f"so this row cannot be converted safely. Row: {row[:120]}"
                 )
             converted = [

@@ -17,7 +17,7 @@ import { trpc } from "@/lib/trpc";
  * invalidate through an `onChanged` prop wired up at the call site. The effect of
  * a mutation is therefore not written anywhere near it, and cannot be found by
  * reading the mutation. Reading the mutation and concluding it invalidates
- * nothing gets the analysis wrong — which is exactly what happened while this
+ * nothing gets the analysis wrong - which is exactly what happened while this
  * file was being written, on the four mutations that turn out to be fine.
  *
  * A quiet wrong number is the worst thing this app can show, so the mapping is
@@ -25,7 +25,7 @@ import { trpc } from "@/lib/trpc";
  * writes.
  *
  * These helpers list the reads a write *might* affect, including the ones a
- * particular mutation cannot have touched — registering a matter and recording a
+ * particular mutation cannot have touched - registering a matter and recording a
  * Commissioner's decision both dirty the audit trail, and neither appends an
  * event. That is on purpose, and worth being explicit about because the instinct
  * is to be exact:
@@ -53,14 +53,14 @@ type TrpcUtils = ReturnType<typeof trpc.useUtils>;
  * `id` is the matter that was written, and is left off by the one write that has
  * no matter yet: registering a new one, where the server decides the reference.
  * The register and the dashboard are aggregates over the whole province, so they
- * are dirtied on every matter write regardless — one matter's status, assigned
+ * are dirtied on every matter write regardless - one matter's status, assigned
  * officer or due date moves both.
  *
  * The audit trail is in the list because it reads `caseEvents`, and almost every
  * write here appends one: the status change, the Director's flag, the brief, a
  * note, a referral, a referral response, a document filed or withdrawn. The two
  * that do not are registering a matter and recording a Commissioner's decision,
- * and they are covered anyway — see the note on over-invalidating below.
+ * and they are covered anyway - see the note on over-invalidating below.
  *
  * The invalidations are issued together rather than awaited one after another.
  * They are cache flags, not requests: React Query refetches only the ones that

@@ -32,14 +32,14 @@ Project Settings → API:
 
 | Value              | Where it goes                                           | Secret?                     |
 | ------------------ | ------------------------------------------------------- | --------------------------- |
-| Project URL        | `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_URL`           | No — it is in every browser |
-| `anon` public key  | `NEXT_PUBLIC_SUPABASE_ANON_KEY` and `SUPABASE_ANON_KEY` | No — it is in every browser |
+| Project URL        | `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_URL`           | No - it is in every browser |
+| `anon` public key  | `NEXT_PUBLIC_SUPABASE_ANON_KEY` and `SUPABASE_ANON_KEY` | No - it is in every browser |
 | `service_role` key | `SUPABASE_SERVICE_ROLE_KEY`                             | **Yes**                     |
 
 Connection settings → URI, for `DATABASE_URL` and the two GitHub secrets below.
 
 > The `service_role` key bypasses row level security entirely. It must never be
-> given a `NEXT_PUBLIC_` prefix — that inlines it into the browser bundle, which
+> given a `NEXT_PUBLIC_` prefix - that inlines it into the browser bundle, which
 > anyone can download. It is used for exactly three things, all administrator
 > actions: creating an account, generating a password-reset link, and setting a
 > password directly.
@@ -59,7 +59,7 @@ Connection settings → URI, for `DATABASE_URL` and the two GitHub secrets below
 | `pnpm db:push`         | Generate a migration from the schema, then apply it  |
 | `pnpm db:migrate`      | Apply migrations only (no generation)                |
 | `pnpm db:seed`         | Create the first administrator                       |
-| `pnpm admin:bootstrap` | Same, over HTTPS — no database port or certificate   |
+| `pnpm admin:bootstrap` | Same, over HTTPS - no database port or certificate   |
 | `pnpm db:verify`       | Assert the schema landed and is safe                 |
 | `pnpm db:testdata`     | Load the demonstration register                      |
 | `pnpm db:load`         | Import the pre-PostgreSQL MySQL data (one time only) |
@@ -88,7 +88,7 @@ the backend back between transactions.
 
 **In production**, push to `main`. `.github/workflows/db-push.yml` applies
 `drizzle/` to the deployed database and then runs `pnpm db:verify`. It uses
-`drizzle-kit migrate`, never `generate` — a migration generated on a runner and
+`drizzle-kit migrate`, never `generate` - a migration generated on a runner and
 never committed is a migration nobody reviewed.
 
 It needs two repository secrets:
@@ -98,12 +98,12 @@ gh secret set DATABASE_URL -R <owner>/<repo>
 gh secret set DATABASE_CA_CERT -R <owner>/<repo>
 ```
 
-- `DATABASE_URL` — the **session pooler** string
+- `DATABASE_URL` - the **session pooler** string
   (`aws-0-<region>.pooler.supabase.com:5432`). Not the direct host: it publishes
   only an AAAA record and a hosted runner has no IPv6 route, so the connection
   dies with `ENETUNREACH` before a statement runs. Not the transaction pooler,
   for the reason above.
-- `DATABASE_CA_CERT` — the server root certificate from Dashboard → Database →
+- `DATABASE_CA_CERT` - the server root certificate from Dashboard → Database →
   SSL Configuration, labelled `prod-ca-2021.crt` and downloaded from that page.
   Supabase's own CA, not a public one, so the runner's trust store cannot verify
   the pooler's certificate and the connection fails with
@@ -119,12 +119,12 @@ DATABASE_URL=<the 5432 string> pnpm db:push
 
 If it fails with `Network is unreachable` while HTTPS to supabase.com works, that
 is an egress firewall on outbound Postgres ports, not a bad credential. Use the
-workflow below — it runs elsewhere, where the port is open.
+workflow below - it runs elsewhere, where the port is open.
 
 ### Applying the schema without a connection (Supabase SQL Editor)
 
-If neither route is available — no CA certificate to hand, a network that blocks
-Postgres, or a machine with no IPv6 route to the direct host — the dashboard's SQL
+If neither route is available - no CA certificate to hand, a network that blocks
+Postgres, or a machine with no IPv6 route to the direct host - the dashboard's SQL
 Editor needs no connection string, no certificate and no secret:
 
 ```bash
@@ -142,15 +142,15 @@ stating. The SQL Editor applies DDL as whoever is signed into the dashboard and
 records nothing, so a database built this way has no rows in
 `drizzle.__drizzle_migrations` and `drizzle-kit migrate` will later try to
 re-apply everything from `0000`. Every statement is either guarded or fails on
-"already exists", so that is noisy rather than harmful — but the CI route is
+"already exists", so that is noisy rather than harmful - but the CI route is
 preferred wherever it works, because it leaves a record of what it applied.
 
 ### There is no local database
 
 The app reads Supabase, and it reads it over TCP. There is no offline route:
 no bundled database server, no local one to start. Where the network blocks
-outbound Postgres, the sign-in screen says so in as many words — "The platform
-cannot reach its database" — rather than showing a form that will never be
+outbound Postgres, the sign-in screen says so in as many words - "The platform
+cannot reach its database" - rather than showing a form that will never be
 accepted. That message is the honest answer, and the only fix is a network that
 permits the pooler, or a deployment somewhere that has egress.
 
@@ -158,18 +158,18 @@ permits the pooler, or a deployment somewhere that has egress.
 
 Not just that the tables exist. It fails the deploy when:
 
-- `users` or `cases` is missing — the schema was never applied here
-- `users.passwordHash` still exists — a migration predating the move to Supabase
+- `users` or `cases` is missing - the schema was never applied here
+- `users.passwordHash` still exists - a migration predating the move to Supabase
   was applied to a database that has moved on, and a copy of every officer's old
   password is sitting in a readable table
-- `users.authUserId` is missing — no account can be linked to a Supabase identity,
+- `users.authUserId` is missing - no account can be linked to a Supabase identity,
   so every officer is refused at the front door
 - row level security is **off** on any table
 
 That last one matters more than it looks. The anon key is a public value that is
 in every browser by design; with RLS off, it is a way to read the entire case
 register without signing in at all. Migration `0001_supabase_auth.sql` turns RLS
-on for every table and deliberately creates **no policies** — every read goes
+on for every table and deliberately creates **no policies** - every read goes
 through the server as the table owner, and every role PostgREST can authenticate
 as is denied.
 
@@ -187,14 +187,14 @@ its own: it does not mint, verify or refresh a JWT, and there is no
 session cookie it writes is what the server reads back on each request.
 
 `users.authUserId` is the join to `auth.users`, and it is the only thing the
-request path looks an officer up by. A null is never a sign-inable state — it is
+request path looks an officer up by. A null is never a sign-inable state - it is
 an account that cannot sign in until an administrator provisions it, which the
 admin screen reports as unprovisioned rather than as broken. `openId` is kept
 because the audit log and the case register reference officers by it.
 
 **There is no public signup.** Supabase's own email signup is left switched off,
 and a valid Supabase session with no matching row is refused rather than
-auto-provisioned — because otherwise anyone who found the URL became a row in the
+auto-provisioned - because otherwise anyone who found the URL became a row in the
 register. Accounts are created by an administrator, which is what makes the
 register's contents attributable.
 
@@ -211,8 +211,8 @@ SEED_ADMIN_EMAIL=you@example.org \
 pnpm db:seed
 ```
 
-If the database port is unreachable — a laptop that cannot route to Supabase's
-IPv6-only host, or a network that firewalls 5432 — use `pnpm admin:bootstrap`
+If the database port is unreachable - a laptop that cannot route to Supabase's
+IPv6-only host, or a network that firewalls 5432 - use `pnpm admin:bootstrap`
 instead. It creates the identity through Supabase's Auth admin API and writes the
 register row through PostgREST, both over HTTPS, so it needs no connection string
 and no CA certificate:
@@ -236,7 +236,7 @@ where Supabase sends one, and in production the seed refuses to run at the
 
 From the admin screen, signed in as the administrator. That path creates the
 Supabase identity first and the register row second, and removes the identity
-again if the row fails — so a failed creation never leaves an account occupying
+again if the row fails - so a failed creation never leaves an account occupying
 the address that cannot sign in.
 
 Passwords are optional. Left out, the officer sets their own via a reset link,
@@ -263,13 +263,13 @@ weekly brief and the monthly and quarterly reports all have something to count.
 Plus officers across the tiers, a worked event timeline, both kinds of referral,
 and case-file entries.
 
-Additive and idempotent — re-running adds nothing. It is a reviewable SQL file
+Additive and idempotent - re-running adds nothing. It is a reviewable SQL file
 (`database/test-data.sql`) rather than a script because a hundred rows of inserts
 that a person has never seen land in a register of disciplinary matters is not
 something to execute on trust. It invents every name in it, and it creates no
 Supabase identities: those are for the admin screen.
 
-Run `pnpm db:seed` first — a matter needs an accountable officer, and the file
+Run `pnpm db:seed` first - a matter needs an accountable officer, and the file
 refuses to write a register whose every row is unattributable.
 
 ---
@@ -284,25 +284,25 @@ Set these as project environment variables:
 | --------------------------------- | --------------------------------------------------------- |
 | `DATABASE_URL`                    | Session pooler, port 6543                                 |
 | `DATABASE_SSL`                    | `require`                                                 |
-| `NEXT_PUBLIC_SUPABASE_URL`        | **Build time** — inlined into the bundle                  |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY`   | **Build time** — inlined into the bundle                  |
+| `NEXT_PUBLIC_SUPABASE_URL`        | **Build time** - inlined into the bundle                  |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY`   | **Build time** - inlined into the bundle                  |
 | `SUPABASE_URL`                    | Runtime                                                   |
 | `SUPABASE_ANON_KEY`               | Runtime                                                   |
-| `SUPABASE_SERVICE_ROLE_KEY`       | Runtime, never public. **Required** — it creates accounts |
+| `SUPABASE_SERVICE_ROLE_KEY`       | Runtime, never public. **Required** - it creates accounts |
 | `BUILT_IN_FORGE_API_URL` / `_KEY` | Required in production; uploads fail loudly without them  |
 | `NEXT_PUBLIC_APP_ID`              | Any string identifying the deployment                     |
 
 Leave Supabase's own email signup **switched off** (Authentication → Sign In /
 Providers → Email). The platform has no public sign-up: a Supabase identity with
 no register row is refused, so an account exists only once an administrator
-creates it. That is what keeps the register's contents attributable — and it is
+creates it. That is what keeps the register's contents attributable - and it is
 why the service role is needed on the deployment, since every account is created
 through Supabase's admin API.
 
 The two `NEXT_PUBLIC_` pairs and their `SUPABASE_` counterparts must name the
 **same** Supabase project. If the browser was built for one project and the
 server reads another, sign-in fails with "invalid login credentials" for a
-password that is correct — and nothing in the symptom points at the build. The
+password that is correct - and nothing in the symptom points at the build. The
 server checks for that disagreement at startup and refuses to serve rather than
 let it out.
 
@@ -312,13 +312,13 @@ the `NEXT_PUBLIC_` pair is enough; the server falls back to it.
 > **`/login` is statically prerendered.** The sign-in page is baked at build time
 > with the Supabase values inlined, and it reports "not configured" as a
 > build-time fact. Adding `NEXT_PUBLIC_SUPABASE_*` to the environment
-> _after_ a build changes nothing until the next deploy — the page that decides
+> _after_ a build changes nothing until the next deploy - the page that decides
 > whether a sign-in form exists was compiled without it. If sign-in is
 > unavailable in production, redeploy rather than restarting.
 
 The service role key never reaches the browser bundle: only the project URL and
 the anon key are inlined into `.next/static`, which is the whole reason it has no
-`NEXT_PUBLIC_` prefix. Worth knowing what to check if that ever changes —
+`NEXT_PUBLIC_` prefix. Worth knowing what to check if that ever changes -
 `grep -r <service-role-key> .next/` should find nothing.
 
 `.vercelignore` is read **instead of** `.gitignore`, so it restates every
@@ -337,14 +337,14 @@ client/src/lib/       Browser Supabase client, tRPC and query clients
 server/               tRPC routers, db access, and the auth modules
 server/_core/         Env, database connection, Supabase clients, providers
 server/auth/          Administrator-side account operations
-shared/               Rules shared by server and client — the source of truth
+shared/               Rules shared by server and client - the source of truth
 drizzle/              Schema, generated migrations, and their snapshots
 database/             Bootstrap, test data, and the MySQL import path
 scripts/              Schema verification, MySQL→PostgreSQL conversion
 ```
 
-`shared/` holds the TSC rules as data and functions — roles, capabilities,
-statuses, the 11-stage workflow, the §12C brief headings, the closure checklist —
+`shared/` holds the TSC rules as data and functions - roles, capabilities,
+statuses, the 11-stage workflow, the §12C brief headings, the closure checklist -
 and both ends import them. That is why a rule change does not need making twice,
 and why the manual's requirements are testable without a database.
 
@@ -357,7 +357,7 @@ configuration guards, pagination arithmetic, and the query cache policy.
 ## Troubleshooting
 
 **"Network is unreachable" connecting to Supabase, while HTTPS works.**
-An egress firewall on outbound Postgres ports — common on office and campus
+An egress firewall on outbound Postgres ports - common on office and campus
 networks. Supabase Auth is on 443, so sign-in succeeds and the account check
 that follows cannot happen; that combination is the signature of this. There is
 no local database to fall back on. The fix is a network that permits the pooler,
@@ -368,7 +368,7 @@ or running the app from a host with egress.
 Database → SSL Configuration (the server root certificate, `prod-ca-2021.crt`).
 
 **Sign-in works, then every officer is refused.**
-The session resolved no `users` row: either `authUserId` is null (unprovisioned —
+The session resolved no `users` row: either `authUserId` is null (unprovisioned -
 the admin screen will say so) or the browser and server are pointed at different
 Supabase projects (the server refuses to start on that, so check the log first).
 

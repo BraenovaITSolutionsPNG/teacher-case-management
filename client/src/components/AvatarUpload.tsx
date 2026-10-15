@@ -111,7 +111,7 @@ export function AvatarUpload({
         {/*
           `role="status"` with a message, because the overlay covers the avatar
           it belongs to and a sighted officer sees a spinner where their
-          photograph was — which is the only evidence they get. A screen-reader
+          photograph was - which is the only evidence they get. A screen-reader
           user was getting nothing at all, and the icon alone is not announced.
         */}
         {uploading ? (

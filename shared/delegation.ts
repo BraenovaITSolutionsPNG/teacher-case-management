@@ -377,7 +377,7 @@ export const CASE_BRIEF_CONDITIONAL_KEYS = CASE_BRIEF_FIELDS.filter(
 /**
  * The shortest a brief section may be, in characters.
  *
- * Four is not a claim about how long a case report ought to be — it is the
+ * Four is not a claim about how long a case report ought to be - it is the
  * floor below which the section is blank rather than brief. It lives here, next
  * to the field list, because the server's schema and the brief form's own
  * validation both enforce it: when they were written separately they drifted,
@@ -412,7 +412,7 @@ export function caseBriefFieldError(
  * Whether a matter is asking the Director for something.
  *
  * The §12B flag is the officer's instrument for saying so, but it is not the
- * only signal: a matter sitting at DEC — "Awaiting decision" — is asking by its
+ * only signal: a matter sitting at DEC - "Awaiting decision" - is asking by its
  * status whatever the flag says. The Director's own queue is built from both
  * (`decisionRequired || status === "DEC"`), so the brief has to be judged on the
  * same pair, or a matter can appear in that queue with a brief that never says

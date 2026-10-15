@@ -18,7 +18,7 @@ import { createClient } from "@supabase/supabase-js";
  *   Supabase Auth admin API  -> creates the identity
  *   PostgREST                -> writes the register row
  *
- * Both accept the service-role key, which bypasses row level security — the
+ * Both accept the service-role key, which bypasses row level security - the
  * same privilege `pnpm db:seed` needs, used here only because this is a
  * bootstrap run by someone who already holds it. The end state is identical to
  * what the seed produces, so `db:seed` can still be used afterwards and will
@@ -46,7 +46,7 @@ async function main() {
   if (!url) fail("SUPABASE_URL is not set.");
   if (!serviceKey) {
     fail(
-      "SUPABASE_SERVICE_ROLE_KEY is not set. Creating an identity needs it — Supabase exposes no other way to create a user."
+      "SUPABASE_SERVICE_ROLE_KEY is not set. Creating an identity needs it - Supabase exposes no other way to create a user."
     );
   }
   if (!email) {
@@ -124,8 +124,8 @@ async function main() {
   );
 
   if (insertError) {
-    // A failure here leaves an identity that cannot sign in — safe, because the
-    // session lookup is by `authUserId` and there is no row to find — but it
+    // A failure here leaves an identity that cannot sign in - safe, because the
+    // session lookup is by `authUserId` and there is no row to find - but it
     // occupies the address, so say so rather than leaving it to be rediscovered.
     fail(
       `The register row could not be written: ${insertError.message}. The Supabase identity exists but cannot sign in yet; re-run this script and it will write the row.`

@@ -10,7 +10,7 @@
 -- per-province reporting the platform is required to produce.
 --
 -- Why SQL and not the seed script: this is fixture data for the whole register,
--- not the first account, and it needs to be reviewable before it runs — a
+-- not the first account, and it needs to be reviewable before it runs - a
 -- hundred rows of inserts that a person has never seen land in a register of
 -- disciplinary matters is not something to execute on trust.
 --
@@ -31,7 +31,7 @@
 -- No `authUserId`. A null is not a broken account: it is an account that cannot
 -- sign in until somebody links an identity, and the admin screen shows it as
 -- unprovisioned rather than pretending otherwise. Provision these from the admin
--- screen when the people are real, not from here — this file must not create
+-- screen when the people are real, not from here - this file must not create
 -- Supabase identities, because it has no way to record the password that would
 -- be set and a fixture script holding officer credentials is its own problem.
 --
@@ -62,7 +62,7 @@ ON CONFLICT ("openId") DO NOTHING;
 -- Dates are relative to `now()`, so the reporting windows always have something
 -- recent in them: a matter received in 2019 appears in no weekly, monthly or
 -- quarterly report. Matter n is received n*9 days ago, which spreads the eleven
--- across the last three months — enough for a monthly report and for the
+-- across the last three months - enough for a monthly report and for the
 -- quarter that has just closed to both have something to count.
 DO $$
 DECLARE
@@ -71,7 +71,7 @@ BEGIN
   SELECT id INTO admin_id FROM public."users" WHERE role = 'super_admin' ORDER BY id LIMIT 1;
   IF admin_id IS NULL THEN
     RAISE EXCEPTION
-      'No super administrator found. Run pnpm db:seed first — a matter needs an accountable officer.';
+      'No super administrator found. Run pnpm db:seed first - a matter needs an accountable officer.';
   END IF;
 
   INSERT INTO public."cases" (
@@ -96,7 +96,7 @@ BEGIN
     t.summary,
     -- Left join, and the distinction matters. An inner join against this
     -- condition keeps only the two rows that have an officer, because
-    -- `openId = NULL` never matches — so the nine unassigned matters, which are
+    -- `openId = NULL` never matches - so the nine unassigned matters, which are
     -- most of the demonstration, would silently not be inserted.
     officer.id,
     officer.name,

@@ -1,7 +1,7 @@
 // Object storage for case files and avatars.
 //
 // Two backends. Development writes to a directory under the project, so nothing
-// is needed to work on the app offline. A deployment presigns and PUTs — either
+// is needed to work on the app offline. A deployment presigns and PUTs - either
 // through Supabase Storage, which is the project's own provider and needs no
 // third party, or through the Forge/S3 presigner where that is configured
 // instead. See `storagePut`. Downloads are served from /files/{key}, which
@@ -88,7 +88,7 @@ function supabaseStorage() {
     objects: `${ENV.supabaseUrl}/storage/v1/object/${ENV.storageBucket}`,
     /**
      * Signing, which is a *different* path shape: `sign` comes before the
-     * bucket, not after. Getting that order wrong does not fail loudly — it
+     * bucket, not after. Getting that order wrong does not fail loudly - it
      * resolves to a path that looks like an object named `sign/...`, and the
      * API rejects it as an unsupported mime type, which reads as a bucket policy
      * problem and is not one.
@@ -127,9 +127,9 @@ async function storageFailure(
  * What this does *not* do is follow symlinks: `path.resolve` is purely lexical
  * and there is no `fs.realpath` here, so a symlink planted inside the root would
  * be traversed. This comment previously claimed the resolved path was re-checked
- * for exactly that, and it was not. It is not reachable from the application —
+ * for exactly that, and it was not. It is not reachable from the application -
  * keys are derived on the server (`avatars/{id}.{ext}`,
- * `cases/{id}/{n}-{timestamp}.{ext}`) and the route is session-guarded — so the
+ * `cases/{id}/{n}-{timestamp}.{ext}`) and the route is session-guarded - so the
  * gap is recorded rather than closed. `localPathForKey` also rejects a key
  * beginning with two dots, so a file genuinely named `..hidden.png` is refused;
  * no server-derived key can look like one.
@@ -167,7 +167,7 @@ function normalizeKey(relKey: string): string {
 /**
  * Makes every write land on its own object.
  *
- * The suffix is **random**, not a content hash — several comments elsewhere in
+ * The suffix is **random**, not a content hash - several comments elsewhere in
  * this codebase described it as one, and it was not, which made two of them
  * describe a guarantee that did not exist. What the code actually guarantees is
  * narrower and still sufficient: no write can overwrite an earlier one, so
@@ -216,7 +216,7 @@ export async function storagePut(
     //
     // `x-upsert` so re-uploading the same logical key replaces it rather
     // than failing. It cannot currently fire for a real upload, because
-    // `appendHashSuffix` gives every write a fresh key — see the note there. The
+    // `appendHashSuffix` gives every write a fresh key - see the note there. The
     // flag is kept so that if the suffix ever became content-derived, the
     // identical-bytes case would replace rather than collide.
     const body =

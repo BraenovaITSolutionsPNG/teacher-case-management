@@ -18,7 +18,7 @@ export async function readStoredObject(key: string): Promise<Buffer | null> {
  * how a signed read is obtained. This function used to carry a second copy of
  * that logic, written against the Forge presigner alone, and the two halves
  * drifted: uploads went through the bucket while every download answered "Storage
- * proxy not configured" with a 500 — a profile image that saved and then would
+ * proxy not configured" with a 500 - a profile image that saved and then would
  * not display, and no error anywhere near the cause. The duplication is the
  * defect, so it is gone rather than extended: one implementation, reached from
  * both ends, and a backend added to it once.

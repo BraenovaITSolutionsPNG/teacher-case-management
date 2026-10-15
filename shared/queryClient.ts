@@ -10,7 +10,7 @@ import superjson from "superjson";
  * into the page and the client hydrates it back out. A default that lives in one
  * of them and not the other would mean the hydrated cache silently disagrees
  * with the one it was written from, which shows up as data that is fetched
- * twice or not at all — so this lives in `shared/`, next to the other rules both
+ * twice or not at all - so this lives in `shared/`, next to the other rules both
  * sides already import.
  */
 
@@ -48,7 +48,7 @@ export const QUERY_GC_TIME_MS = 5 * 60_000;
  * Everything else a procedure can answer with is a decision, not a fault: an
  * officer without the capability gets `FORBIDDEN`, a bad case reference gets
  * `NOT_FOUND`, a validation that failed gets `BAD_REQUEST`. Repeating those
- * requests cannot change the answer, and on this app they are expensive — the
+ * requests cannot change the answer, and on this app they are expensive - the
  * register and the reporting set each read the whole province. A list of
  * unretryable codes would go stale the moment the app grew a procedure, so the
  * rule is the inverse: retry the codes that mean "the request never got
@@ -76,7 +76,7 @@ export const MAX_QUERY_RETRIES = 2;
  *
  * Reading only the client shape would be the worse of the two mistakes, and a
  * quiet one: a refusal on the server would look like a failure with no code, fall
- * through to the network-failure branch, and be sent again — three times over —
+ * through to the network-failure branch, and be sent again - three times over -
  * for a request that was never going to be granted. That is the exact cost this
  * policy exists to remove, reintroduced on the half of the app that prefetches.
  *
@@ -108,7 +108,7 @@ export function trpcErrorCode(error: unknown): string | null {
  *    above are transient. This is what stops an expired session turning into
  *    four requests per screen on the way to the sign-in page, which is what
  *    happens under the default "retry three times" behaviour.
- *  - An error carrying no tRPC code never reached a procedure at all — a dropped
+ *  - An error carrying no tRPC code never reached a procedure at all - a dropped
  *    connection, a proxy that was restarting. Those are exactly what a retry is
  *    for, and they are the failures worth paying a second request for.
  *
@@ -116,7 +116,7 @@ export function trpcErrorCode(error: unknown): string | null {
  * "not a tRPC failure", so anything that fails without carrying a code is
  * treated as a transport problem and repeated. That is the right default for the
  * errors fetch actually throws, and the wrong one for a refusal that failed to
- * announce itself — which is why `trpcErrorCode` has to recognise both shapes.
+ * announce itself - which is why `trpcErrorCode` has to recognise both shapes.
  */
 export function shouldRetryQuery(failureCount: number, error: unknown): boolean {
   if (failureCount >= MAX_QUERY_RETRIES) return false;
@@ -147,7 +147,7 @@ export function makeQueryClient() {
         // usual advice. `staleTime` already bounds it: returning to a tab inside
         // thirty seconds refetches nothing, so the repeated tab-switching that
         // makes focus refetching expensive elsewhere cannot happen here. What it
-        // still buys is the case an officer spends an hour on — they switch to
+        // still buys is the case an officer spends an hour on - they switch to
         // check the manual, come back, and the matter's status is re-read
         // before they act on it. In an app whose rules are about not acting on a
         // stale register, that is the behaviour wanted.

@@ -17,7 +17,7 @@ import { ErrorCard } from "@/components/ErrorBoundary";
  *
  * The `html`/`body` tags are required rather than decorative. This boundary
  * replaces the root layout's output, so it has to supply the document
- * structure itself — and it cannot use `ThemeProvider`, which lives inside the
+ * structure itself - and it cannot use `ThemeProvider`, which lives inside the
  * providers that may be what failed. Hence the inline colours: the card must be
  * legible whether the platform is in light or dark mode, without depending on
  * anything that might be the thing that broke.

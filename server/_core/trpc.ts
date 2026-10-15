@@ -9,8 +9,8 @@ import type { TrpcContext } from "./context";
  * The shape of a rejected input, as this API reports it.
  *
  * tRPC hands a validation failure the validator's own error object as the cause
- * and puts that object's `message` — for Zod, a JSON document listing every
- * issue with its origin, code, limit and path — into the error message. That
+ * and puts that object's `message` - for Zod, a JSON document listing every
+ * issue with its origin, code, limit and path - into the error message. That
  * string is what every client sees in a toast. It is a debugging artefact, not
  * a sentence, and it names fields by their wire path rather than by the label
  * on the form.
@@ -46,10 +46,10 @@ function inputIssues(error: TRPCError): InputIssue[] {
  * server log, where it is useful. In development it is passed through, because
  * the person looking at it is the developer who wants the stack.
  *
- * A **refusal** — a capability guard, a rule the manual imposes — is already
+ * A **refusal** - a capability guard, a rule the manual imposes - is already
  * written for a person and is never rewritten.
  *
- * The grouped report is published as `zodError` — the key tRPC's own
+ * The grouped report is published as `zodError` - the key tRPC's own
  * documentation uses, and the one the forms read. Its shape is
  * `{ formErrors, fieldErrors }` whichever validator produced the issues, so
  * nothing here is specific to the version of Zod in use.
@@ -72,7 +72,7 @@ export function formatInputError({
     return {
       ...shape,
       message:
-        "Something went wrong on the server. Nothing was changed — try again, and tell the platform administrator if it keeps happening.",
+        "Something went wrong on the server. Nothing was changed - try again, and tell the platform administrator if it keeps happening.",
       data: { ...shape.data, stack: undefined },
     };
   }

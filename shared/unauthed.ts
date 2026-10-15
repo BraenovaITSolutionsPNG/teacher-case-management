@@ -7,7 +7,7 @@ import { UNAUTHED_ERR_MSG } from "./const";
  * it, because the whole mechanism rests on an exact string comparison across a
  * process boundary and had nothing asserting it. Both sides import
  * `UNAUTHED_ERR_MSG` from `./const`, so they cannot drift by editing one of
- * them — but they can drift in the ways this function exists to rule out:
+ * them - but they can drift in the ways this function exists to rule out:
  *
  *  - the server changing the wording of its refusal, which would leave an
  *    expired officer stranded on a half-broken screen with no sign-in prompt;

@@ -5,7 +5,7 @@ import { describe, expect, it, vi, afterEach } from "vitest";
  *
  * Its own file because the values are read at module scope, so a test that wants
  * a build without them has to change the environment and import the module afresh
- * — the same constraint that gives `server/supabase.config.test.ts` its own
+ * - the same constraint that gives `server/supabase.config.test.ts` its own
  * module registry.
  *
  * The anon key is the thing under test from the other direction. The project URL
@@ -65,7 +65,7 @@ describe("a build with no Supabase configuration at all", () => {
 describe("a build with a mangled project URL", () => {
   it("prints the value, so the stray character is visible", async () => {
     // The deployment this was written for. The value looks correct in the
-    // dashboard and is wrong here, and there is no other place it appears — the
+    // dashboard and is wrong here, and there is no other place it appears - the
     // bundle reports only that it is not configured, which is true and useless.
     const { supabaseBuildFault } = await buildWith(
       '"https://project.supabase.co"',

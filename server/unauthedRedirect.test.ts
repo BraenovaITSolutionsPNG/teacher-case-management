@@ -17,7 +17,7 @@ import { isUnauthenticatedError } from "@shared/unauthed";
  * and is never asked to sign in again", with nothing failing and nothing in a
  * log.
  *
- * So both halves are asserted here — that the server throws precisely the agreed
+ * So both halves are asserted here - that the server throws precisely the agreed
  * text, and that the predicate recognises that text and refuses the lookalikes
  * it must not fire on.
  */

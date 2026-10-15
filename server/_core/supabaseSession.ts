@@ -10,8 +10,8 @@ import { isAuthRetryableFetchError } from "@supabase/auth-js";
  *  - No `passwordHash`. The field is gone from the database schema entirely:
  *    Supabase holds the credential and never discloses it, so there is nothing
  *    to omit. This used to read `Omit<User, "passwordHash">`, which was a no-op
- *    from the moment the column was dropped — the type it named no longer had the
- *    key — and described an omission it was not performing. The note is kept
+ *    from the moment the column was dropped - the type it named no longer had the
+ *    key - and described an omission it was not performing. The note is kept
  *    because the omission it was guarding against is real if a credential column
  *    is ever added back, and `User` would then have to be projected instead of
  *    spread.
@@ -30,7 +30,7 @@ export type AuthenticatedUser = User & {
    *
    * Needed to tell one signed-in device from another: the user id is identical on
    * all of them, so "everything except this one" has nothing to exclude without
-   * it. Null is a real answer rather than an omission — a deployment whose tokens
+   * it. Null is a real answer rather than an omission - a deployment whose tokens
    * carry no `session_id` still signs in, and the device list degrades to "all of
    * yours" rather than breaking.
    */
@@ -65,7 +65,7 @@ const LAST_SIGNED_IN_RESOLUTION_MS = 5 * 60_000;
  *     on every request, and the one place that cannot be forgotten is the one
  *     that builds the identity.
  *
- * The signature on the cookie is verified rather than trusted — see the
+ * The signature on the cookie is verified rather than trusted - see the
  * verification call below for why that is `getClaims` and not a decode, and for
  * the one thing it gives up. A refreshed access token is written back through the
  * cookie adapter as a side effect, so the session survives without this app
@@ -74,23 +74,23 @@ const LAST_SIGNED_IN_RESOLUTION_MS = 5 * 60_000;
  * The session is resolved *before* the database is asked whether it is there, and
  * that ordering is the whole of the fourth case. A platform that cannot reach its
  * database has no opinion about anybody's account, and `getUserByAuthUserId`
- * answers `undefined` for a missing database and for a missing row alike — so
+ * answers `undefined` for a missing database and for a missing row alike - so
  * without the check an unreachable database presents as "this account has not
  * been set up", which sends the operator to create an account that already exists
  * while the officer is told the account is the problem. The two faults have
  * opposite fixes and neither symptom points at the right one.
  *
  * It also decides who the refusal is written for. The check used to come first,
- * which meant a deployment with no database refused *every* request — including
- * the anonymous ones — and so told an officer who had not yet signed in that their
+ * which meant a deployment with no database refused *every* request - including
+ * the anonymous ones - and so told an officer who had not yet signed in that their
  * password had been accepted. That sentence is only assertable about somebody who
  * presented a session, so the session is resolved before anything is claimed about
  * it: an anonymous visitor on a broken platform gets the form, and the officer
  * who has proved who they are gets the refusal, which is now true of every
  * refusal the sign-in screen can show.
  *
- * Cheaper as well as more honest. Anonymous traffic — every screen an
- * unauthenticated visitor loads — used to open a database connection and run
+ * Cheaper as well as more honest. Anonymous traffic - every screen an
+ * unauthenticated visitor loads - used to open a database connection and run
  * `SELECT version()` before it discovered there was nobody to identify. It now
  * costs one Supabase call and no database connection at all.
  */
@@ -101,20 +101,20 @@ export async function authenticateSupabaseRequest(): Promise<AuthenticatedUser |
 
   const supabase = await createServerClient();
 
-  // The token first, then the claim it carries — in that order, and the order
+  // The token first, then the claim it carries - in that order, and the order
   // is the point rather than a detail.
   //
   // `getSession` reads the cookie this process already has rather than the
   // network, so it is free, and it is what tells us whether there is a token at
   // all. Returning here on its answer means an anonymous request costs one
-  // cookie read and no verification of any kind — which is every screen an
+  // cookie read and no verification of any kind - which is every screen an
   // unauthenticated visitor loads, including the sign-in form itself.
   //
   // Then `getClaims` rather than `getUser`, which is what this used to call.
   // Supabase's own guidance is to prefer it: `getUser` "always sends a request
   // to the Auth server for each JWT", whereas `getClaims` verifies the
   // signature against the project's JSON Web Key Set, which is fetched once and
-  // cached, so the verification is local. It is not a decode — the signature is
+  // cached, so the verification is local. It is not a decode - the signature is
   // checked with WebCrypto and `exp` is still enforced, since `allowExpired` is
   // never passed. This is the dominant remaining latency on a signed-in page
   // load: it ran once for the Server Component's render and again for every
@@ -122,8 +122,8 @@ export async function authenticateSupabaseRequest(): Promise<AuthenticatedUser |
   //
   // It is never slower, which is what makes this safe to do without a flag. If
   // the project signs with a symmetric secret (HS256) rather than an asymmetric
-  // key, `getClaims` cannot verify locally — it has no public key and this
-  // application deliberately does not hold the secret — so it falls back to
+  // key, `getClaims` cannot verify locally - it has no public key and this
+  // application deliberately does not hold the secret - so it falls back to
   // asking Supabase, and the old behaviour is what happens anyway.
   //
   // What does change, and it is one thing: a *revoked* session. Revoking a
@@ -157,7 +157,7 @@ export async function authenticateSupabaseRequest(): Promise<AuthenticatedUser |
   // not the database is there.
   if (!(await getDb())) {
     throw new Error(
-      "The platform cannot reach its database, so your account could not be checked. Nothing is wrong with your account — try again shortly, and tell the platform administrator if it continues."
+      "The platform cannot reach its database, so your account could not be checked. Nothing is wrong with your account - try again shortly, and tell the platform administrator if it continues."
     );
   }
 
@@ -186,7 +186,7 @@ export async function authenticateSupabaseRequest(): Promise<AuthenticatedUser |
   // every request from one officer contends for that row's lock, so a page that
   // loads in parallel turns into a queue of transactions each waiting on the
   // one before it. On a deployment whose database allows 200 connections, that
-  // queue is what exhausted them — `EMAXCONN: max client connections reached` —
+  // queue is what exhausted them - `EMAXCONN: max client connections reached` -
   // and it surfaced as screens that never finished loading rather than as
   // anything that named a limit. Throttling turns a page of parallel requests
   // into one write and some reads, which is what it should have been.
@@ -217,15 +217,15 @@ export async function authenticateSupabaseRequest(): Promise<AuthenticatedUser |
  * not be treated the same way.
  *
  * `getClaims` verifies the signature locally against the project's key set, but
- * the first time a process needs a key it has to fetch it — so a cold start, or
+ * the first time a process needs a key it has to fetch it - so a cold start, or
  * any instance whose cached copy has expired, depends on that network call. A
  * transient failure there is not a bad token, and treating it as one is the
  * difference between a brief blip and the entire platform deciding that every
  * officer is signed out at the same moment. So a retryable fetch failure falls
  * back to asking Supabase, which is slower and always worked.
  *
- * Everything else is taken at face value. An expired token — the ordinary case,
- * and the one a stale tab produces — is a genuine "not signed in yet" and is
+ * Everything else is taken at face value. An expired token - the ordinary case,
+ * and the one a stale tab produces - is a genuine "not signed in yet" and is
  * answered as one rather than as a hard error.
  *
  * Note that `getClaims` already falls back to `getUser` on its own when the
@@ -240,7 +240,7 @@ async function resolveSubject(
     await supabase.auth.getClaims(accessToken);
 
   if (claimError || !claimData) {
-    // Not a verdict on the token — the answer could not be fetched. Ask Supabase
+    // Not a verdict on the token - the answer could not be fetched. Ask Supabase
     // instead, which is the slower question but can actually be reached.
     if (claimError && isAuthRetryableFetchError(claimError)) {
       const { data: userData, error: userError } =
@@ -266,13 +266,13 @@ async function resolveSubject(
  * GoTrue puts a `session_id` claim in every access token, and that claim is the
  * only thing that distinguishes one signed-in device from another: the officer's
  * user id is the same on all of them. So this is what lets "sign out my other
- * devices" know which sessions to leave alone — and getting it wrong in the
+ * devices" know which sessions to leave alone - and getting it wrong in the
  * permissive direction would sign the officer out of the device they are sitting
  * at, which is why an unreadable token yields null rather than a guess.
  *
  * The token's *signature* is not checked here and does not need to be: it was
- * verified a few lines above — against Supabase's JWKS, or against Supabase
- * itself if this project signs symmetrically — and this only reads a claim out
+ * verified a few lines above - against Supabase's JWKS, or against Supabase
+ * itself if this project signs symmetrically - and this only reads a claim out
  * of already-trusted bytes to name a session. Verifying it again would need
  * `JWT_SECRET`, which this application deliberately does not hold.
  */

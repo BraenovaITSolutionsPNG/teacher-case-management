@@ -13,7 +13,7 @@ import {
 // The `updatedAt` columns above use `$onUpdateFn` where MySQL had
 // `onUpdateNow()`. The two are not the same mechanism and the difference
 // matters: MySQL applied `ON UPDATE CURRENT_TIMESTAMP` in the database, so it
-// fired for any UPDATE that reached the table — including one written by hand in
+// fired for any UPDATE that reached the table - including one written by hand in
 // a SQL client or a future script. `$onUpdateFn` is applied by Drizzle when it
 // builds an update statement, so it fires for every write that goes through this
 // schema and not for one that bypasses it. For an application's own writes the
@@ -45,8 +45,8 @@ export { matterTypeValues, provinceValues };
 
 // PostgreSQL enum types are schema-level objects in a single namespace, not a
 // per-column attribute the way MySQL's inline enum was. Two columns both called
-// `status` — a matter's status and a referral's status, which are unrelated
-// lists — would collide on the type name, so the types are given distinct names
+// `status` - a matter's status and a referral's status, which are unrelated
+// lists - would collide on the type name, so the types are given distinct names
 // while the columns keep the names the application already uses.
 //
 // Each is declared here and referenced as a column below rather than inlined,
@@ -87,7 +87,7 @@ export const referralStatus = pgEnum("referral_status", [
  *
  * `openId` holds the Supabase user uuid, as `supabase:<uuid>`; the platform has
  * no OAuth flow of its own. `authUserId` is the same uuid unadorned, and is the
- * column sign-in resolves against — see server/_core/supabaseSession.ts.
+ * column sign-in resolves against - see server/_core/supabaseSession.ts.
  */
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),

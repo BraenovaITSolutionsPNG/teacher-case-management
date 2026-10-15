@@ -13,7 +13,7 @@ import { formatInputError } from "./_core/trpc";
  * What a rejected input looks like to a client.
  *
  * tRPC hands a validation failure the validator's error object as the cause and
- * copies its `message` into the response — for Zod, a JSON document listing
+ * copies its `message` into the response - for Zod, a JSON document listing
  * every issue with its origin, code, limit and path. That string is what a
  * browser puts in a toast, so it is not a debugging detail: it is the interface.
  *
