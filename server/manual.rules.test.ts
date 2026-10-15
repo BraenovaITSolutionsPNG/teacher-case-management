@@ -7,10 +7,12 @@ import {
   MAX_ESCALATION_LEVEL,
   NATIONAL_SECTIONS,
   OFFICER_DUTIES,
+  PENDING_RESPONSE_STATUSES,
   REFERRAL_CRITERIA,
   checkGoldenRule,
   isLegalReferral,
   sectionForCategory,
+  statusAfterReferralResponse,
 } from "../shared/delegation";
 import { appRouter } from "./routers";
 import type { TrpcContext } from "./_core/context";
@@ -449,6 +451,27 @@ describe("§14 escalation ladder", () => {
     expect(Math.max(...ESCALATION_LEVELS.map(l => l.level))).toBe(
       MAX_ESCALATION_LEVEL
     );
+  });
+});
+
+// §5 / §12D: a National Section has responded. The follow-up duty is to keep the
+// matter moving, so the matter must leave the "awaiting response" statuses
+// instead of sitting on them and being counted again as outstanding.
+describe("§5/§12D resuming after a referral response", () => {
+  it("lists exactly the statuses the response resolves", () => {
+    expect([...PENDING_RESPONSE_STATUSES]).toEqual(["REF", "LEG", "ADV"]);
+  });
+
+  it("returns ACT for each awaiting-response status", () => {
+    for (const status of PENDING_RESPONSE_STATUSES) {
+      expect(statusAfterReferralResponse(status), status).toBe("ACT");
+    }
+  });
+
+  it("returns null for statuses already back in provincial workflow", () => {
+    for (const status of ["NEW", "VER", "INV", "ACT", "DEC", "ESC", "RES", "CLS"]) {
+      expect(statusAfterReferralResponse(status), status).toBeNull();
+    }
   });
 });
 

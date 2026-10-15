@@ -307,6 +307,36 @@ export function isLegalReferral(criteriaKeys: string[]): boolean {
 }
 
 // ---------------------------------------------------------------------------
+// §5 / §12D: a National Section has answered.
+// The manual's follow-up duty is to keep the matter moving: once the section
+// has responded, the matter must leave the statuses that mean "still with the
+// National Section" so the register and the reports stop counting an answered
+// matter as outstanding.
+// ---------------------------------------------------------------------------
+
+/** The statuses that mean a matter is awaiting a National Section's response. */
+export const PENDING_RESPONSE_STATUSES: readonly CaseStatus[] = [
+  "REF",
+  "LEG",
+  "ADV",
+];
+
+/**
+ * The provincial status a matter returns to once its referral response arrives.
+ *
+ * Returns `ACT` for a matter sitting in a "awaiting National Section" status
+ * (REF/LEG/AV), and `null` for a matter that is already back in provincial
+ * workflow, so the caller never rewrites a status needlessly.
+ */
+export function statusAfterReferralResponse(
+  currentStatus: string
+): CaseStatus | null {
+  return PENDING_RESPONSE_STATUSES.includes(currentStatus as CaseStatus)
+    ? "ACT"
+    : null;
+}
+
+// ---------------------------------------------------------------------------
 // §14 Escalation System
 // "A matter should not remain indefinitely with an officer."
 // ---------------------------------------------------------------------------

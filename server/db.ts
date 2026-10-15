@@ -11,7 +11,10 @@ import {
   count,
 } from "drizzle-orm";
 import { CLOSED_STATUSES, isOpenStatus, isOverdue } from "../shared/statuses";
-import { briefNeedsDecision } from "../shared/delegation";
+import {
+  briefNeedsDecision,
+  statusAfterReferralResponse,
+} from "../shared/delegation";
 import { drizzle } from "drizzle-orm/node-postgres";
 import {
   caseDocuments,
@@ -598,6 +601,29 @@ export async function recordReferralResponse(input: {
       status: "received",
     })
     .where(eq(referrals.id, input.referralId));
+  // §12D: "keep the matter moving." A response means the matter is no longer with
+  // the National Section, so it must leave the REF/LEG/AV statuses instead of
+  // sitting on them: otherwise the legal-matters list, the Director's weekly
+  // brief and the §17 follow-up check all still count an answered matter as
+  // outstanding. §10's next provincial status is ACT-action being implemented-on
+  // the advice just received. ACT is outside the awaiting-response set, so the
+  // follow-up clock stops here.
+  //
+  // ACT is not exempt from the Golden Rule's "no registered matter without an
+  // assigned action", so this preserves any action already on the matter and
+  // only supplies a default when the field is blank-rather than leaving the
+  // matter in a violation that the register would then have to explain.
+  const before = await getCaseById(referral.caseId);
+  const resume = before ? statusAfterReferralResponse(before.status) : null;
+  if (resume && before?.status !== resume) {
+    const nextAction =
+      before?.actionRequired?.trim() ||
+      `Act on advice received from ${referral.destination}`;
+    await updateCase(referral.caseId, {
+      status: resume,
+      actionRequired: nextAction,
+    });
+  }
   await db.insert(caseEvents).values({
     caseId: referral.caseId,
     eventType: "advice_received",
